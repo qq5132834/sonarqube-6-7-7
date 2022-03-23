@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render issues list 1`] = `
+<div
+  className="issue-list"
+>
+  <Issue
+    displayLocationsCount={true}
+    displayLocationsLink={true}
+    issue={
+      Object {
+        "key": "foo",
+      }
+    }
+    onClick={[Function]}
+    onPopupToggle={[Function]}
+    openPopup={null}
+    selected={true}
+  />
+  <Issue
+    displayLocationsCount={true}
+    displayLocationsLink={true}
+    issue={
+      Object {
+        "key": "bar",
+      }
+    }
+    onClick={[Function]}
+    onPopupToggle={[Function]}
+    openPopup={null}
+    selected={false}
+  />
+</div>
+`;

@@ -1,0 +1,58 @@
+/*
+ * SonarQube
+ * Copyright (C) 2009-2018 SonarSource SA
+ * mailto:info AT sonarsource DOT com
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 3 of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+.navbar-context-favorite {
+  float: left;
+  padding: 7px 10px 0 0;
+}
+
+.navbar-context-title-qualifier {
+  display: inline-block;
+  line-height: 16px;
+  padding-top: 5px;
+  box-sizing: border-box;
+}
+
+.navbar-context-branches {
+  float: left;
+  padding: 8px 0 6px;
+  margin-left: 16px;
+  line-height: 16px;
+}
+
+.navbar-context-meta-branch {
+  margin-top: 3px;
+  line-height: 16px;
+}
+
+.navbar-context-meta-branch-menu-item {
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-context-meta-branch-menu-item-name {
+  flex: 1;
+  max-width: 300px;
+}
+
+.navbar-context-meta-branch-menu-item-actions {
+  height: 12px;
+  margin-left: 32px;
+}

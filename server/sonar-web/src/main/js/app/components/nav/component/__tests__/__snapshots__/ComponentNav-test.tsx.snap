@@ -1,0 +1,94 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders 1`] = `
+<ContextNavBar
+  height={95}
+  id="context-navigation"
+  notif={
+    <ComponentNavBgTaskNotif
+      component={
+        Object {
+          "breadcrumbs": Array [
+            Object {
+              "key": "component",
+              "name": "component",
+              "qualifier": "TRK",
+            },
+          ],
+          "key": "component",
+          "name": "component",
+          "organization": "org",
+          "qualifier": "TRK",
+        }
+      }
+      isInProgress={true}
+      isPending={true}
+    />
+  }
+>
+  <ComponentNavFavorite
+    component="component"
+  />
+  <ComponentNavBreadcrumbs
+    breadcrumbs={
+      Array [
+        Object {
+          "key": "component",
+          "name": "component",
+          "qualifier": "TRK",
+        },
+      ]
+    }
+    component={
+      Object {
+        "breadcrumbs": Array [
+          Object {
+            "key": "component",
+            "name": "component",
+            "qualifier": "TRK",
+          },
+        ],
+        "key": "component",
+        "name": "component",
+        "organization": "org",
+        "qualifier": "TRK",
+      }
+    }
+  />
+  <ComponentNavMeta
+    component={
+      Object {
+        "breadcrumbs": Array [
+          Object {
+            "key": "component",
+            "name": "component",
+            "qualifier": "TRK",
+          },
+        ],
+        "key": "component",
+        "name": "component",
+        "organization": "org",
+        "qualifier": "TRK",
+      }
+    }
+  />
+  <ComponentNavMenu
+    component={
+      Object {
+        "breadcrumbs": Array [
+          Object {
+            "key": "component",
+            "name": "component",
+            "qualifier": "TRK",
+          },
+        ],
+        "key": "component",
+        "name": "component",
+        "organization": "org",
+        "qualifier": "TRK",
+      }
+    }
+    location={Object {}}
+  />
+</ContextNavBar>
+`;
