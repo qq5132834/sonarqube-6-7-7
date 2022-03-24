@@ -19,23 +19,11 @@
  */
 package org.sonar.server.bugtotal;
 
-import org.apache.commons.lang.StringUtils;
 import org.sonar.api.server.ws.Request;
 import org.sonar.api.server.ws.Response;
 import org.sonar.api.server.ws.WebService;
-import org.sonar.ce.queue.CeTask;
-import org.sonar.server.ce.ws.CeWsAction;
 import org.sonar.server.computation.queue.ReportSubmitter;
 import org.sonar.server.organization.DefaultOrganizationProvider;
-import org.sonar.server.ws.WsUtils;
-import org.sonarqube.ws.WsCe;
-
-import java.io.BufferedInputStream;
-import java.io.InputStream;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import static org.sonar.server.ws.WsUtils.checkRequest;
 
 public class BugtotalSubmitAction implements BugtotalWsAction {
 
@@ -71,67 +59,12 @@ public class BugtotalSubmitAction implements BugtotalWsAction {
       .setSince("6.3")
       .setInternal(true);
 
-    action
-      .createParam(PARAM_PROJECT_KEY)
-      .setRequired(true)
-      .setDescription("Key of project")
-      .setExampleValue("my_project");
-
-    action
-      .createParam(PARAM_PROJECT_BRANCH)
-      .setDescription("Optional branch of project")
-      .setExampleValue("branch-1.x");
-
-    action
-      .createParam(PARAM_PROJECT_NAME)
-      .setRequired(false)
-      .setDescription("Optional name of the project, used only if the project does not exist yet.")
-      .setExampleValue("My Project");
-
-    action
-      .createParam(PARAM_REPORT_DATA)
-      .setRequired(true)
-      .setDescription("Report file. Format is not an API, it changes among SonarQube versions.");
-
-    action
-      .createParam(PARAM_ANALYSIS_CHARACTERISTIC)
-      .setRequired(false)
-      .setDescription("Optional characteristic of the analysis. Can be repeated to define multiple characteristics.")
-      .setExampleValue("branchType=long")
-      .setSince("6.6");
   }
 
   @Override
   public void handle(Request wsRequest, Response wsResponse) throws Exception {
-    String organizationKey = wsRequest.getParam(PARAM_ORGANIZATION_KEY)
-      .emptyAsNull()
-      .or(defaultOrganizationProvider.get()::getKey);
-    String projectKey = wsRequest.mandatoryParam(PARAM_PROJECT_KEY);
-    String projectBranch = wsRequest.param(PARAM_PROJECT_BRANCH);
-    String projectName = StringUtils.defaultIfBlank(wsRequest.param(PARAM_PROJECT_NAME), projectKey);
 
-    Map<String, String> characteristics = parseTaskCharacteristics(wsRequest);
-
-    try (InputStream report = new BufferedInputStream(wsRequest.mandatoryParamAsPart(PARAM_REPORT_DATA).getInputStream())) {
-      CeTask task = reportSubmitter.submit(organizationKey, projectKey, projectBranch, projectName, characteristics, report);
-      WsCe.SubmitResponse submitResponse = WsCe.SubmitResponse.newBuilder()
-        .setTaskId(task.getUuid())
-        .setProjectId(task.getComponentUuid())
-        .build();
-      WsUtils.writeProtobuf(submitResponse, wsRequest, wsResponse);
-    }
   }
 
-  private static Map<String, String> parseTaskCharacteristics(Request wsRequest) {
-    Map<String, String> characteristics = new LinkedHashMap<>();
-
-    for (String param : wsRequest.multiParam(PARAM_ANALYSIS_CHARACTERISTIC)) {
-      String[] pair = StringUtils.split(param, "=", 2);
-      checkRequest(pair.length == 2, "Parameter '%s' must be a key-value pair with the format 'key=value'.", PARAM_ANALYSIS_CHARACTERISTIC);
-      checkRequest(!characteristics.containsKey(pair[0]), "Key '%s' was provided twice with parameters '%s'", pair[0], PARAM_ANALYSIS_CHARACTERISTIC);
-      characteristics.put(pair[0], pair[1]);
-    }
-    return characteristics;
-  }
 
 }
