@@ -19,6 +19,7 @@ public class BugtotalWs implements WebService {
                 .setDescription("Get information on Compute Engine tasks.");
         for (BugtotalWsAction action : actions) {
             action.define(controller);
+
         }
         controller.done();
     }

@@ -22,38 +22,22 @@ package org.sonar.server.bugtotal;
 import org.sonar.api.server.ws.Request;
 import org.sonar.api.server.ws.Response;
 import org.sonar.api.server.ws.WebService;
-import org.sonar.server.computation.queue.ReportSubmitter;
-import org.sonar.server.organization.DefaultOrganizationProvider;
+import org.sonar.api.utils.text.JsonWriter;
 
 public class BugtotalSubmitAction implements BugtotalWsAction {
 
-  private static final String PARAM_ORGANIZATION_KEY = "organization";
-  private static final String PARAM_PROJECT_KEY = "projectKey";
-  private static final String PARAM_PROJECT_BRANCH = "projectBranch";
-  private static final String PARAM_PROJECT_NAME = "projectName";
-  private static final String PARAM_REPORT_DATA = "report";
-  private static final String PARAM_ANALYSIS_CHARACTERISTIC = "characteristic";
-
-  private final ReportSubmitter reportSubmitter;
-  private final DefaultOrganizationProvider defaultOrganizationProvider;
-
-  public BugtotalSubmitAction(ReportSubmitter reportSubmitter, DefaultOrganizationProvider defaultOrganizationProvider) {
-    this.reportSubmitter = reportSubmitter;
-    this.defaultOrganizationProvider = defaultOrganizationProvider;
-  }
+  private static final String name = "name";
 
   @Override
   public void define(WebService.NewController controller) {
     WebService.NewAction action = controller.createAction("submit")
-      .setDescription("Submits a scanner report to the queue. Report is processed asynchronously. Requires analysis permission. " +
-        "If the project does not exist, then the provisioning permission is also required.")
-      .setPost(true)
+      .setDescription("helloworld.")
+      .setPost(false)
       .setInternal(true)
       .setSince("5.2")
-      .setHandler(this)
-      .setResponseExample(getClass().getResource("submit-example.json"));
+      .setHandler(this);
 
-    action.createParam(PARAM_ORGANIZATION_KEY)
+    action.createParam(name)
       .setDescription("Key of the organization the project belongs to")
       .setExampleValue("my-org")
       .setSince("6.3")
@@ -63,7 +47,11 @@ public class BugtotalSubmitAction implements BugtotalWsAction {
 
   @Override
   public void handle(Request wsRequest, Response wsResponse) throws Exception {
-
+    JsonWriter jsonWriter =  wsResponse.newJsonWriter();
+    jsonWriter.beginObject();
+    jsonWriter.prop("hello", "world");
+    jsonWriter.endObject();
+    jsonWriter.close();
   }
 
 

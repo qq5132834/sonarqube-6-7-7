@@ -93,7 +93,7 @@ public class WebServer implements Monitored {
       });
     }
     try {
-      Thread.sleep(10 * 1000);
+      Thread.sleep(2 * 1000);
     }catch (Exception e){
       e.printStackTrace();
     }
