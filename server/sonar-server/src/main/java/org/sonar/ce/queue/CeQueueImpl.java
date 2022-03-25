@@ -73,7 +73,7 @@ public class CeQueueImpl implements CeQueue {
     checkState(!submitPaused.get(), "Compute Engine does not currently accept new tasks");
 
     try (DbSession dbSession = dbClient.openSession(false)) {
-      CeQueueDto dto = new CeTaskSubmitToInsertedCeQueueDto(dbSession, dbClient).apply(submission);
+      CeQueueDto dto = new CeTaskSubmitToInsertedCeQueueDto(dbSession, dbClient).apply(submission);  //保存数据到ce-queue中
       CeTask task = loadTask(dbSession, dto);
       dbSession.commit();
       return task;

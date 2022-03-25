@@ -185,7 +185,7 @@ public class ReportSubmitter {
     submit.setType(CeTaskTypes.REPORT);
     submit.setComponentUuid(project.uuid());
     submit.setSubmitterLogin(userSession.getLogin());
-    return queue.submit(submit.build());
+    return queue.submit(submit.build());  //CeQueueImpl，记录数据到ce-queue表中
   }
 
   private CeTaskCharacteristicDto toDto(String taskUuid, String key, String value) {
