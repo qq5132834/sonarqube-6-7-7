@@ -81,6 +81,7 @@ public class WebServerLocal implements Monitored {
    * Can't be started as is. Needs to be bootstrapped by sonar-application
    */
   public static void main(String[] args) {
+    args = new String[]{"C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\server\\sonar-server\\src\\main\\resources\\sq-process-properties"};
     ProcessEntryPoint entryPoint = ProcessEntryPoint.createForArguments(args);
     Props props = entryPoint.getProps();
     new WebServerProcessLogging().configure(props);
