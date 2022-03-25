@@ -66,7 +66,8 @@ public final class ConfigurationUtils {
       throw new IllegalStateException("Could not read properties from file: " + args[0], e);
     } finally {
       IOUtils.closeQuietly(reader);
-      deleteQuietly(propertyFile);
+      //屏蔽删除配置文件
+      //deleteQuietly(propertyFile);
     }
     return new Props(properties);
   }
