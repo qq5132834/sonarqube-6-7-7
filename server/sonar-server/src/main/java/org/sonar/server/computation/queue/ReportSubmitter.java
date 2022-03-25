@@ -175,7 +175,7 @@ public class ReportSubmitter {
     List<CeTaskCharacteristicDto> characteristics = characteristicsMap.entrySet().stream()
       .map(e -> toDto(submit.getUuid(), e.getKey(), e.getValue())).collect(Collectors.toList());
 
-    // the report file must be saved before submitting the task
+    // the report file must be saved before submitting the task， 报告文件必须在提交任务前保存，将报告文件zip包保存到ce-task-input表中
     dbClient.ceTaskInputDao().insert(dbSession, submit.getUuid(), reportInput);
     if (!characteristics.isEmpty()) {
       dbClient.ceTaskCharacteristicsDao().insert(dbSession, characteristics);
