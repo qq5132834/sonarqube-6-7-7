@@ -87,16 +87,6 @@ public class WebServer implements Monitored {
    * Can't be started as is. Needs to be bootstrapped by sonar-application
    */
   public static void main(String[] args) {
-    if(args != null){
-      Arrays.asList(args).stream().forEach(e->{
-        System.out.println(e);
-      });
-    }
-    try {
-      Thread.sleep(2 * 1000);
-    }catch (Exception e){
-      e.printStackTrace();
-    }
     ProcessEntryPoint entryPoint = ProcessEntryPoint.createForArguments(args);
     Props props = entryPoint.getProps();
     new WebServerProcessLogging().configure(props);
