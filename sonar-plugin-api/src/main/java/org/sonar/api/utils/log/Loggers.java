@@ -29,7 +29,8 @@ public abstract class Loggers {
   static {
     try {
       Class.forName("ch.qos.logback.classic.Logger");
-      factory = new LogbackLoggers();
+      // factory = new LogbackLoggers();  //日志文件中输出
+      factory = new ConsoleLoggers();   //控制台输出日志信息
     } catch (Throwable e) {
       // no slf4j -> testing environment
       factory = new ConsoleLoggers();
