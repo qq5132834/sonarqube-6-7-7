@@ -20,6 +20,7 @@
 package org.sonar.server.ce.ws;
 
 import java.io.BufferedInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -109,7 +110,7 @@ public class SubmitAction implements CeWsAction {
     String projectName = StringUtils.defaultIfBlank(wsRequest.param(PARAM_PROJECT_NAME), projectKey);
 
     Map<String, String> characteristics = parseTaskCharacteristics(wsRequest);
-
+    //this.outputFile(wsRequest.mandatoryParamAsPart(PARAM_REPORT_DATA)); //查看客户数扫描提交的zip文件包
     try (InputStream report = new BufferedInputStream(wsRequest.mandatoryParamAsPart(PARAM_REPORT_DATA).getInputStream())) {
       CeTask task = reportSubmitter.submit(organizationKey, projectKey, projectBranch, projectName, characteristics, report);
       WsCe.SubmitResponse submitResponse = WsCe.SubmitResponse.newBuilder()
@@ -130,6 +131,21 @@ public class SubmitAction implements CeWsAction {
       characteristics.put(pair[0], pair[1]);
     }
     return characteristics;
+  }
+
+  private void outputFile(Request.Part part){
+    try{
+      FileOutputStream fos = new FileOutputStream("c:\\" + part.getFileName());
+      byte[] b = new byte[1024 * 1024];
+      int lenght;
+      while ((lenght = part.getInputStream().read(b)) > 0) {
+        fos.write(b, 0, lenght);
+      }
+      part.getInputStream().close();
+      fos.close();
+    }catch (Exception e){
+      e.printStackTrace();
+    }
   }
 
 }
