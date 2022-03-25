@@ -92,9 +92,10 @@ public class ReportSubmitter {
       Optional<ComponentDto> component = dbClient.componentDao().selectByKey(dbSession, effectiveProjectKey);
       validateProject(dbSession, component, projectKey);
       ensureOrganizationIsConsistent(component, organizationDto);
-      ComponentDto project = component.or(() -> createProject(dbSession, organizationDto, projectKey, projectBranch, projectName));
+      ComponentDto project = component.or(() ->   //在projects表中创建记录
+              createProject(dbSession, organizationDto, projectKey, projectBranch, projectName));
       checkScanPermission(project);
-      return submitReport(dbSession, reportInput, project, characteristics);
+      return submitReport(dbSession, reportInput, project, characteristics); //将zip包数据保存至数据库中
     }
   }
 
