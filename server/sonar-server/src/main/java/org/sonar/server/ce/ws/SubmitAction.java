@@ -100,6 +100,15 @@ public class SubmitAction implements CeWsAction {
       .setSince("6.6");
   }
 
+    /***
+     * submitAction接口的主要逻辑：
+     * 1、在projects、ce-queue、ce-task-input三张表中填充数据；
+     * 2、zip报告文档保存在ce-task-input表中；
+     * 3、关联关系，projects的uuid对应ce-queue的component-uuid字段；ce-queue的uuid字段对应ce-task-input的task-uuid字段
+     * @param wsRequest
+     * @param wsResponse
+     * @throws Exception
+     */
   @Override
   public void handle(Request wsRequest, Response wsResponse) throws Exception {
     String organizationKey = wsRequest.getParam(PARAM_ORGANIZATION_KEY)
