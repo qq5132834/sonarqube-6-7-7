@@ -37,6 +37,16 @@
   </issueManagement>
 
   <properties>
+
+    <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
+    <gitRepositoryName>sonar-scanner-cli</gitRepositoryName>
+    <unpack.dir>${project.build.directory}/unpack</unpack.dir>
+    <scanner.jar>${project.build.finalName}.jar</scanner.jar>
+    <jre.version>8u121</jre.version>
+    <jre.dirname.linux>jre1.8.0_121</jre.dirname.linux>
+    <jre.dirname.windows>jre1.8.0_121</jre.dirname.windows>
+    <jre.dirname.macosx>jre1.8.0_121.jre/Contents/Home</jre.dirname.macosx>
+
     <artifactsToPublish>${project.groupId}:${project.artifactId}:zip,${project.groupId}:${project.artifactId}:zip:linux,${project.groupId}:${project.artifactId}:zip:windows,${project.groupId}:${project.artifactId}:zip:macosx</artifactsToPublish>
   </properties>
 
