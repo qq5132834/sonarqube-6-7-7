@@ -7,6 +7,7 @@
   </parent>
 
   <artifactId>sonar-scanner-api-batch-interface</artifactId>
+  <version>6.7.7</version>
   <name>SonarQube Scanner API - Batch Interface</name>
   
 </project>
