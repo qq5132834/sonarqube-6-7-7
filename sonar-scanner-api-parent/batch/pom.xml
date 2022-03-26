@@ -15,17 +15,17 @@
   </properties>
 
   <dependencies>
-<!--    <dependency>-->
-<!--      <groupId>${project.groupId}</groupId>-->
-<!--      <artifactId>sonar-scanner-api-batch-interface</artifactId>-->
-<!--      <version>${project.version}</version>-->
-<!--      <scope>provided</scope>-->
-<!--    </dependency>-->
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>sonar-scanner-api-batch-interface</artifactId>
+      <version>${project.version}</version>
+      <scope>provided</scope>
+    </dependency>
     <dependency>
       <groupId>org.sonarsource.sonarqube</groupId>
       <artifactId>sonar-scanner-engine</artifactId>
       <version>${sonarQubeVersion}</version>
-      <scope>provided</scope>
+<!--      <scope>provided</scope>-->
     </dependency>
 
     <!-- Unit tests -->

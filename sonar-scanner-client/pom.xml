@@ -168,7 +168,7 @@
               <rules>
                 <requireFilesSize>
                   <minsize>540000</minsize>
-                  <maxsize>570000</maxsize>
+                  <maxsize>99999999</maxsize>
                   <files>
                     <file>${project.build.directory}/sonar-scanner-client-${project.version}.zip</file>
                   </files>
