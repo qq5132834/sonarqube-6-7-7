@@ -60,7 +60,7 @@ public class CeProcessingSchedulerImpl implements CeProcessingScheduler {
       chainingCallbacks[i] = new ChainingCallback(worker);
     }
   }
-
+  //ceServer模块中任务处理定时器启动
   @Override
   public void startScheduling() {
     for (ChainingCallback chainingCallback : chainingCallbacks) {
