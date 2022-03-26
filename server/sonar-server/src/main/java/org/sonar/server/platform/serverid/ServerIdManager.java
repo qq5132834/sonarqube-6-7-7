@@ -70,7 +70,7 @@ public class ServerIdManager implements Startable {
 
         dbSession.commit();
       } else {
-        ensureServerIdIsValid(dbSession);
+        //ensureServerIdIsValid(dbSession);
       }
     }
   }
