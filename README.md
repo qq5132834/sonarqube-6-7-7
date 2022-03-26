@@ -18,7 +18,7 @@ Issue tracking: http://jira.sonarsource.com/browse/SONAR
 
 ### 修改
 1. 服务器端: 版本是sonarqube-6.7.7 TLS版本；
-2. 扫描客户端：版本是sonar-scanner-cli-3.3.0.1492 版本；采用这个版本的原因是
+2. 添加sonar-scanner-client模块，功能是扫描客户端，版本是sonar-scanner-cli-3.3.0.1492 版本；采用这个版本的原因是
 
 \<parent\>
 
