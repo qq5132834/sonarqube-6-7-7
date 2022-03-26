@@ -33,7 +33,7 @@
     <module>sonar-testing-harness</module>
     <module>plugins/sonar-xoo-plugin</module>
     <module>sonar-scanner-client</module>
-    <module>sonar-scanner-api</module>
+    <module>sonar-scanner-api-parent</module>
   </modules>
 
   <organization>
