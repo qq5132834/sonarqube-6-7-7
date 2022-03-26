@@ -31,3 +31,15 @@ Issue tracking: http://jira.sonarsource.com/browse/SONAR
 \</parent\>
 
 依赖的版本是49。这个跟sonarqube-6.7.7 TLS版本的依赖是一致的。
+
+3. 添加sonar-scanner-api模块，版本号是sonar-scanner-api-2.12.0.1661。并将
+\<parent\>
+
+\<groupId\>org.sonarsource.parent\</groupId\>
+
+\<artifactId\>parent\</artifactId\>
+
+\<version\>48\</version\>
+
+\</parent\>
+中的48，修改为49。
