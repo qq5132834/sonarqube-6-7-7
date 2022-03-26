@@ -1,0 +1,12 @@
+# Definition of QA pipeline at SonarSource
+
+
+SQ_VERSION:
+  - DEV
+  - LATEST_RELEASE[6.7]
+  - LATEST_RELEASE
+
+JAVA_VERSION:
+  - LATEST_RELEASE
+
+exclude:
