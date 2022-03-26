@@ -70,7 +70,12 @@ public class CeWorkerImpl implements CeWorker {
 
   @Override
   public Result call() throws Exception {
-    return withCustomizedThreadName(this::findAndProcessTask);
+    long startTime = System.currentTimeMillis();
+    LOG.info("CeWorkerImpl中轮询开始:" + startTime);
+    Result result = withCustomizedThreadName(this::findAndProcessTask);
+    long endTime = System.currentTimeMillis();
+    LOG.info("CeWorkerImpl中轮询结束:" + endTime + "，耗时：" + (endTime-startTime));
+    return result;
   }
 
   private <T> T withCustomizedThreadName(Supplier<T> supplier) {
