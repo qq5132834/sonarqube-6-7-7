@@ -63,6 +63,7 @@ public class CeProcessingSchedulerImpl implements CeProcessingScheduler {
   //ceServer模块中任务处理定时器启动
   @Override
   public void startScheduling() {
+    LOG.info("启动CeServer进程中任务定时器");
     for (ChainingCallback chainingCallback : chainingCallbacks) {
       ListenableScheduledFuture<CeWorker.Result> future = executorService.schedule(chainingCallback.worker, delayBetweenEnabledTasks, timeUnit);
       addCallback(future, chainingCallback, executorService);
