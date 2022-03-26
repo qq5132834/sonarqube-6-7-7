@@ -31,33 +31,12 @@
     </license>
   </licenses>
 
-  <scm>
-    <connection>scm:git:git@github.com:SonarSource/sonar-scanner-cli.git</connection>
-    <developerConnection>scm:git:git@github.com:SonarSource/sonar-scanner-cli.git</developerConnection>
-    <url>https://github.com/SonarSource/sonar-scanner-cli</url>
-    <tag>HEAD</tag>
-  </scm>
-
   <issueManagement>
     <system>JIRA</system>
     <url>https://jira.sonarsource.com/browse/SQSCANNER</url>
   </issueManagement>
 
   <properties>
-    <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
-
-    <!-- used for deployment to SonarSource Artifactory -->
-    <gitRepositoryName>sonar-scanner-cli</gitRepositoryName>
-
-    <!-- configuration for assembly of distributions -->
-    <unpack.dir>${project.build.directory}/unpack</unpack.dir>
-    <scanner.jar>${project.build.finalName}.jar</scanner.jar>
-    <jre.version>8u121</jre.version>
-    <jre.dirname.linux>jre1.8.0_121</jre.dirname.linux>
-    <jre.dirname.windows>jre1.8.0_121</jre.dirname.windows>
-    <jre.dirname.macosx>jre1.8.0_121.jre/Contents/Home</jre.dirname.macosx>
-
-    <!-- Release: enable publication to Bintray -->
     <artifactsToPublish>${project.groupId}:${project.artifactId}:zip,${project.groupId}:${project.artifactId}:zip:linux,${project.groupId}:${project.artifactId}:zip:windows,${project.groupId}:${project.artifactId}:zip:macosx</artifactsToPublish>
   </properties>
 
@@ -151,7 +130,7 @@
               <goal>single</goal>
             </goals>
             <configuration>
-              <finalName>sonar-scanner-${project.version}</finalName>
+              <finalName>sonar-scanner-client-${project.version}</finalName>
               <appendAssemblyId>false</appendAssemblyId>
               <escapeString>\</escapeString>
               <descriptors>
@@ -181,7 +160,7 @@
                   <minsize>540000</minsize>
                   <maxsize>570000</maxsize>
                   <files>
-                    <file>${project.build.directory}/sonar-scanner-${project.version}.zip</file>
+                    <file>${project.build.directory}/sonar-scanner-client-${project.version}.zip</file>
                   </files>
                 </requireFilesSize>
               </rules>
@@ -242,7 +221,7 @@
                   <goal>single</goal>
                 </goals>
                 <configuration>
-                  <finalName>sonar-scanner-${project.version}</finalName>
+                  <finalName>sonar-scanner-client-${project.version}</finalName>
                   <escapeString>\</escapeString>
                   <descriptors>
                     <descriptor>src/main/assembly/dist-linux.xml</descriptor>
@@ -300,7 +279,7 @@
                   <goal>single</goal>
                 </goals>
                 <configuration>
-                  <finalName>sonar-scanner-${project.version}</finalName>
+                  <finalName>sonar-scanner-client-${project.version}</finalName>
                   <escapeString>\</escapeString>
                   <descriptors>
                     <descriptor>src/main/assembly/dist-windows.xml</descriptor>
@@ -358,7 +337,7 @@
                   <goal>single</goal>
                 </goals>
                 <configuration>
-                  <finalName>sonar-scanner-${project.version}</finalName>
+                  <finalName>sonar-scanner-client-${project.version}</finalName>
                   <escapeString>\</escapeString>
                   <descriptors>
                     <descriptor>src/main/assembly/dist-macosx.xml</descriptor>
