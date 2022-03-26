@@ -32,6 +32,7 @@
     <module>sonar-ws</module>
     <module>sonar-testing-harness</module>
     <module>plugins/sonar-xoo-plugin</module>
+    <module>sonar-scanner-client</module>
   </modules>
 
   <organization>
