@@ -1,29 +1,29 @@
 #Temporary properties file for command [web]
 #Thu Mar 24 00:56:16 CST 2022
-sonar.jdbc.driverPath=C\:\\Users\\51328\\Desktop\\sonarqube-6-7-7-application\\sonarqube-6.7.7\\sonarqube-6.7.7\\lib\\jdbc\\mysql\\mysql-connector-java-5.1.42.jar
+sonar.jdbc.driverPath=C\:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\server\\sonar-server\\src\\test\\resources\\workdir\\mysql-connector-java-5.1.42.jar
 sonar.wrapped=true
 sonar.jdbc.username=root
 sonar.cluster.node.port=9003
 sonar.cluster.name=sonarqube
-sonar.path.web=C\:\\Users\\51328\\Desktop\\sonarqube-6-7-7-application\\sonarqube-6.7.7\\sonarqube-6.7.7\\web
+sonar.path.web=C\:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\server\\sonar-server\\src\\test\\resources\\web
 sonar.web.javaOpts=-Xmx512m -Xms128m -XX\:+HeapDumpOnOutOfMemoryError
 process.terminationTimeout=60000
 sonar.search.port=9300
 sonar.cluster.web.startupLeader=true
-sonar.path.home=C\:\\Users\\51328\\Desktop\\sonarqube-6-7-7-application\\sonarqube-6.7.7\\sonarqube-6.7.7
-sonar.path.temp=C\:\\Users\\51328\\Desktop\\sonarqube-6-7-7-application\\sonarqube-6.7.7\\sonarqube-6.7.7\\temp
+sonar.path.home=C\:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\server\\sonar-ce\\src\\test\\resources\\workdir
+sonar.path.temp=C\:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\server\\sonar-ce\\src\\test\\resources\\workdir\\temp
 sonar.cluster.node.name=sonarqube-f8931be9-8e3f-4e3f-893f-b08d530cd9b1
 sonar.search.host=192.168.32.139
-sonar.path.data=C\:\\Users\\51328\\Desktop\\sonarqube-6-7-7-application\\sonarqube-6.7.7\\sonarqube-6.7.7\\data
+sonar.path.data=C\:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\server\\sonar-ce\\src\\test\\resources\\workdir\\data
 sonar.jdbc.minEvictableIdleTimeMillis=600000
 sonar.jdbc.minIdle=2
-process.sharedDir=C\:\\Users\\51328\\Desktop\\sonarqube-6-7-7-application\\sonarqube-6.7.7\\sonarqube-6.7.7\\temp
+process.sharedDir=C\:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\server\\sonar-ce\\src\\test\\resources\\workdir\\temp
 sonar.ce.javaAdditionalOpts=
 sonar.web.javaAdditionalOpts=
 sonar.jdbc.maxActive=60
 process.key=ce
 sonar.ce.javaOpts=-Xmx512m -Xms128m -XX\:+HeapDumpOnOutOfMemoryError
-sonar.path.logs=C\:\\Users\\51328\\Desktop\\sonarqube-6-7-7-application\\sonarqube-6.7.7\\sonarqube-6.7.7\\logs
+sonar.path.logs=C\:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\server\\sonar-ce\\src\\test\\resources\\workdir\\logs
 sonar.jdbc.timeBetweenEvictionRunsMillis=30000
 sonar.jdbc.maxIdle=5
 sonar.search.javaAdditionalOpts=
