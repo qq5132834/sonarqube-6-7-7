@@ -115,7 +115,9 @@ public class CeServerLocal implements Monitored {
   }
 
   /**
-   * Can't be started as is. Needs to be bootstrapped by sonar-application
+   * 任务处理主要进程：
+   * 1、定时任务处理位置：CeProcessingSchedulerImpl中
+   * 2、间隔时间30秒
    */
   public static void main(String[] args) {
     args = new String[]{
