@@ -34,6 +34,7 @@
     <module>plugins/sonar-xoo-plugin</module>
     <module>sonar-scanner-api-batch</module>
     <module>sonar-scanner-api</module>
+    <module>sonar-scanner-cli</module>
   </modules>
 
   <organization>
