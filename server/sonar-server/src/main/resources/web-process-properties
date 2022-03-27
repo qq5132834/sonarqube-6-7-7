@@ -13,7 +13,7 @@ sonar.cluster.web.startupLeader=true
 sonar.path.home=C\:\\Users\\51328\\Desktop\\sonarqube-6-7-7-application\\sonarqube-6.7.7\\sonarqube-6.7.7
 sonar.path.temp=C\:\\Users\\51328\\Desktop\\sonarqube-6-7-7-application\\sonarqube-6.7.7\\sonarqube-6.7.7\\temp
 sonar.cluster.node.name=sonarqube-f8931be9-8e3f-4e3f-893f-b08d530cd9b1
-sonar.search.host=192.168.32.139
+sonar.search.host=192.168.32.140
 sonar.path.data=C\:\\Users\\51328\\Desktop\\sonarqube-6-7-7-application\\sonarqube-6.7.7\\sonarqube-6.7.7\\data
 sonar.jdbc.minEvictableIdleTimeMillis=600000
 sonar.jdbc.minIdle=2
@@ -27,7 +27,7 @@ sonar.path.logs=C\:\\Users\\51328\\Desktop\\sonarqube-6-7-7-application\\sonarqu
 sonar.jdbc.timeBetweenEvictionRunsMillis=30000
 sonar.jdbc.maxIdle=5
 sonar.search.javaAdditionalOpts=
-sonar.jdbc.url=jdbc\:mysql\://192.168.32.139\:3306/sonar6?useUnicode\=true&characterEncoding\=utf8&rewriteBatchedStatements\=true&useConfigs\=maxPerformance&useSSL\=false
+sonar.jdbc.url=jdbc\:mysql\://192.168.32.140\:3306/sonar6?useUnicode\=true&characterEncoding\=utf8&rewriteBatchedStatements\=true&useConfigs\=maxPerformance&useSSL\=false
 sonar.jdbc.password=root
 sonar.cluster.enabled=false
 process.index=2
