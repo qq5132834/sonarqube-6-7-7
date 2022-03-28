@@ -84,6 +84,7 @@ class DefaultProfiler extends Profiler {
 
   @Override
   public Profiler startInfo(String message) {
+    logger.info("DefaultProfiler.startInfo执行ceServer任务");
     return doStart(LoggerLevel.INFO, message);
   }
 
