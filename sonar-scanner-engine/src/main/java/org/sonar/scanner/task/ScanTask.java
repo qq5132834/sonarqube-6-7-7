@@ -22,9 +22,13 @@ package org.sonar.scanner.task;
 import org.sonar.api.CoreProperties;
 import org.sonar.api.task.Task;
 import org.sonar.api.task.TaskDefinition;
+import org.sonar.api.utils.log.Logger;
+import org.sonar.api.utils.log.Loggers;
 import org.sonar.core.platform.ComponentContainer;
 import org.sonar.scanner.analysis.AnalysisProperties;
 import org.sonar.scanner.scan.ProjectScanContainer;
+
+import java.util.Map;
 
 public class ScanTask implements Task {
   public static final TaskDefinition DEFINITION = TaskDefinition.builder()
@@ -32,7 +36,7 @@ public class ScanTask implements Task {
     .key(CoreProperties.SCAN_TASK)
     .taskClass(ScanTask.class)
     .build();
-
+  private final Logger LOG = Loggers.get(ScanTask.class);
   private final ComponentContainer taskContainer;
   private final TaskProperties taskProps;
 
@@ -43,8 +47,19 @@ public class ScanTask implements Task {
 
   @Override
   public void execute() {
+    LOG.info("ScanTask.execute:{}", "扫描引擎开始扫描"); this.showProperties();
     AnalysisProperties props = new AnalysisProperties(taskProps.properties(), taskProps.property(CoreProperties.ENCRYPTION_SECRET_KEY_PATH));
     ProjectScanContainer scanContainer = new ProjectScanContainer(taskContainer, props);
     scanContainer.execute();
   }
+
+  private void showProperties(){
+      AnalysisProperties props = new AnalysisProperties(taskProps.properties(), taskProps.property(CoreProperties.ENCRYPTION_SECRET_KEY_PATH));
+      if(props != null && props.properties() != null){
+        for (Map.Entry<String, String> map: props.properties().entrySet()) {
+          LOG.info(map.getKey() + "=" + map.getValue());
+        }
+      }
+  }
+
 }
