@@ -57,6 +57,7 @@ public class IsolatedLauncherFactory implements Closeable {
   }
 
   public IsolatedLauncher createLauncher(Map<String, String> props, ClassloadRules rules) {
+    logger.info("IsolatedLauncherFactory.createLauncher.创建launcher");
     if (props.containsKey(InternalProperties.SCANNER_DUMP_TO_FILE)) {
       String version = props.get(InternalProperties.SCANNER_VERSION_SIMULATION);
       if (version == null) {
