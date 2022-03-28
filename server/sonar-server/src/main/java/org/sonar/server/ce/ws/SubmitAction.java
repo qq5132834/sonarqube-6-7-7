@@ -28,6 +28,8 @@ import org.apache.commons.lang.StringUtils;
 import org.sonar.api.server.ws.Request;
 import org.sonar.api.server.ws.Response;
 import org.sonar.api.server.ws.WebService;
+import org.sonar.api.utils.log.Logger;
+import org.sonar.api.utils.log.Loggers;
 import org.sonar.ce.queue.CeTask;
 import org.sonar.server.computation.queue.ReportSubmitter;
 import org.sonar.server.organization.DefaultOrganizationProvider;
@@ -44,7 +46,7 @@ public class SubmitAction implements CeWsAction {
   private static final String PARAM_PROJECT_NAME = "projectName";
   private static final String PARAM_REPORT_DATA = "report";
   private static final String PARAM_ANALYSIS_CHARACTERISTIC = "characteristic";
-
+  private static final Logger LOGGER = Loggers.get(SubmitAction.class);
   private final ReportSubmitter reportSubmitter;
   private final DefaultOrganizationProvider defaultOrganizationProvider;
 
@@ -119,7 +121,12 @@ public class SubmitAction implements CeWsAction {
     String projectName = StringUtils.defaultIfBlank(wsRequest.param(PARAM_PROJECT_NAME), projectKey);
 
     Map<String, String> characteristics = parseTaskCharacteristics(wsRequest);
-    //this.outputFile(wsRequest.mandatoryParamAsPart(PARAM_REPORT_DATA)); //查看客户数扫描提交的zip文件包
+    LOGGER.info("查看客户数扫描提交的zip文件包");
+    if(false){
+      this.outputFile(wsRequest.mandatoryParamAsPart(PARAM_REPORT_DATA));
+      return; //查看客户数扫描提交的zip文件包
+    }
+
     try (InputStream report = new BufferedInputStream(wsRequest.mandatoryParamAsPart(PARAM_REPORT_DATA).getInputStream())) {
       CeTask task = reportSubmitter.submit(organizationKey, projectKey, projectBranch, projectName, characteristics, report);
       WsCe.SubmitResponse submitResponse = WsCe.SubmitResponse.newBuilder()
@@ -144,7 +151,7 @@ public class SubmitAction implements CeWsAction {
 
   private void outputFile(Request.Part part){
     try{
-      FileOutputStream fos = new FileOutputStream("c:\\" + part.getFileName());
+      FileOutputStream fos = new FileOutputStream("d:\\" + part.getFileName());
       byte[] b = new byte[1024 * 1024];
       int lenght;
       while ((lenght = part.getInputStream().read(b)) > 0) {
