@@ -22,6 +22,9 @@ package org.sonar.server.computation.task.projectanalysis.taskprocessor;
 import java.util.Collections;
 import java.util.Set;
 import javax.annotation.CheckForNull;
+
+import org.sonar.api.utils.log.Logger;
+import org.sonar.api.utils.log.Loggers;
 import org.sonar.ce.queue.CeTask;
 import org.sonar.ce.queue.CeTaskResult;
 import org.sonar.ce.taskprocessor.CeTaskProcessor;
@@ -34,7 +37,7 @@ import org.sonar.server.computation.task.step.ComputationStepExecutor;
 import org.sonar.server.computation.taskprocessor.TaskResultHolder;
 
 public class ReportTaskProcessor implements CeTaskProcessor {
-
+  private static final Logger logger = Loggers.get(ReportTaskProcessor.class);
   private static final Set<String> HANDLED_TYPES = Collections.singleton(CeTaskTypes.REPORT);
 
   private final ContainerFactory containerFactory;
@@ -66,7 +69,7 @@ public class ReportTaskProcessor implements CeTaskProcessor {
   }
 
   @Override
-  public CeTaskResult process(CeTask task) {
+  public CeTaskResult process(CeTask task) { logger.info("ReportTaskProcessor类中处理报告任务");
     try (TaskContainer ceContainer = containerFactory.create(serverContainer, task, componentProviders)) {
       ceContainer.bootup();
 
