@@ -47,7 +47,8 @@ public class ScanTask implements Task {
 
   @Override
   public void execute() {
-    LOG.info("ScanTask.execute:{}", "扫描引擎开始扫描"); this.showProperties();
+    LOG.info("ScanTask.execute:{}", "扫描引擎开始扫描");
+    this.showProperties();
     AnalysisProperties props = new AnalysisProperties(taskProps.properties(), taskProps.property(CoreProperties.ENCRYPTION_SECRET_KEY_PATH));
     ProjectScanContainer scanContainer = new ProjectScanContainer(taskContainer, props);
     scanContainer.execute();
@@ -56,11 +57,11 @@ public class ScanTask implements Task {
   private void showProperties(){
       AnalysisProperties props = new AnalysisProperties(taskProps.properties(), taskProps.property(CoreProperties.ENCRYPTION_SECRET_KEY_PATH));
       if(props != null && props.properties() != null){
-        LOG.info("ScanTask.showProperties:{}", "配置信息开始"); this.showProperties();
+        LOG.info("ScanTask.showProperties:{}", "配置信息开始");
         for (Map.Entry<String, String> map: props.properties().entrySet()) {
           LOG.info(map.getKey() + "=" + map.getValue());
         }
-        LOG.info("ScanTask.showProperties:{}", "配置信息完成"); this.showProperties();
+        LOG.info("ScanTask.showProperties:{}", "配置信息完成");
       }
   }
 
