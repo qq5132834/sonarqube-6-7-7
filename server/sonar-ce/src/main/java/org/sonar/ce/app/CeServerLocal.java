@@ -116,7 +116,7 @@ public class CeServerLocal implements Monitored {
 
   /**
    * 任务处理主要进程：
-   * 1、定时任务处理位置：CeProcessingSchedulerImpl、CeWorkerImpl类中
+   * 1、定时任务处理位置：CeProcessingSchedulerImpl、CeWorkerImpl、ReportTaskProcessor具体执行report任务
    * 2、间隔时间2秒
    *
    */
