@@ -37,7 +37,7 @@ public class XooRulesDefinition implements RulesDefinition {
 
   @Override
   public void define(Context context) {
-    defineRulesXoo(context);
+    defineRulesXoo(context);  //sonarqube服务器端启动时webServer模块调用加载
     defineRulesXoo2(context);
   }
 
