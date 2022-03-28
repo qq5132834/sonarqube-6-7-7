@@ -40,6 +40,8 @@ import org.sonar.api.batch.ScannerSide;
 import org.sonar.api.ce.ComputeEngineSide;
 import org.sonar.api.config.PropertyDefinitions;
 import org.sonar.api.server.ServerSide;
+import org.sonar.api.utils.log.Logger;
+import org.sonar.api.utils.log.Loggers;
 
 import static com.google.common.collect.ImmutableList.copyOf;
 import static java.util.Objects.requireNonNull;
@@ -49,7 +51,7 @@ import static java.util.Objects.requireNonNull;
 @ComputeEngineSide
 public class ComponentContainer implements ContainerPopulator.Container {
   public static final int COMPONENTS_IN_EMPTY_COMPONENT_CONTAINER = 2;
-
+  private static final Logger LOG = Loggers.get(ComponentContainer.class);
   private static final class ExtendedDefaultPicoContainer extends DefaultPicoContainer {
     private ExtendedDefaultPicoContainer(ComponentFactory componentFactory, LifecycleStrategy lifecycleStrategy, PicoContainer parent,
       ComponentMonitor componentMonitor) {
@@ -131,6 +133,7 @@ public class ComponentContainer implements ContainerPopulator.Container {
   public ComponentContainer startComponents() {
     try {
       doBeforeStart();
+      LOG.info("sonar-core模块中ComponentContainer.startComponents组件容器");
       pico.start();
       doAfterStart();
       return this;
