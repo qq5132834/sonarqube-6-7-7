@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.Nullable;
 import org.sonar.api.utils.MessageException;
+import org.sonar.api.utils.log.Logger;
+import org.sonar.api.utils.log.Loggers;
 import org.sonar.scanner.bootstrap.GlobalContainer;
 
 /**
@@ -41,7 +43,7 @@ public final class Batch {
   private List<Object> components;
   private Map<String, String> globalProperties = new HashMap<>();
   private GlobalContainer bootstrapContainer;
-
+  private Logger LOG = Loggers.get(Batch.class);
   private Batch(Builder builder) {
     components = new ArrayList<>();
     components.addAll(builder.components);
@@ -65,6 +67,7 @@ public final class Batch {
   }
 
   public synchronized Batch execute() {
+    LOG.info("Batch.execute.断点");
     configureLogging();
     doStart();
     try {
