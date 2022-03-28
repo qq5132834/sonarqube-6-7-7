@@ -48,7 +48,7 @@ public class ScanTask implements Task {
   @Override
   public void execute() {
     LOG.info("ScanTask.execute:{}", "扫描引擎开始扫描"); this.showProperties();
-    System.out.println("ScanTask.execute:" + "扫描引擎开始扫描");
+    System.out.println(this.getClass().getSimpleName() + ": " + "ScanTask.execute:" + "扫描引擎开始扫描");
     AnalysisProperties props = new AnalysisProperties(taskProps.properties(), taskProps.property(CoreProperties.ENCRYPTION_SECRET_KEY_PATH));
     ProjectScanContainer scanContainer = new ProjectScanContainer(taskContainer, props);
     scanContainer.execute();
@@ -58,8 +58,8 @@ public class ScanTask implements Task {
       AnalysisProperties props = new AnalysisProperties(taskProps.properties(), taskProps.property(CoreProperties.ENCRYPTION_SECRET_KEY_PATH));
       if(props != null && props.properties() != null){
         for (Map.Entry<String, String> map: props.properties().entrySet()) {
-          LOG.info(this.getClass().getSimpleName() + ": " + map.getKey() + "=" + map.getValue());
-          System.out.println(map.getKey() + "=" + map.getValue());
+          LOG.info(map.getKey() + "=" + map.getValue());
+          System.out.println(this.getClass().getSimpleName() + ": " + map.getKey() + "=" + map.getValue());
         }
       }
   }
