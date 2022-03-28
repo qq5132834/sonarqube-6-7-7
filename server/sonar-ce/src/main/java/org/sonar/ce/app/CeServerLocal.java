@@ -116,8 +116,9 @@ public class CeServerLocal implements Monitored {
 
   /**
    * 任务处理主要进程：
-   * 1、定时任务处理位置：CeProcessingSchedulerImpl中
-   * 2、间隔时间30秒
+   * 1、定时任务处理位置：CeProcessingSchedulerImpl、CeWorkerImpl类中
+   * 2、间隔时间2秒
+   *
    */
   public static void main(String[] args) {
     args = new String[]{
