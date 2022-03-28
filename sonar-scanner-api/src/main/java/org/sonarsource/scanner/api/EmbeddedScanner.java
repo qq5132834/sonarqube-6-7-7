@@ -128,6 +128,8 @@ public class EmbeddedScanner {
   }
 
   public void execute(Map<String, String> taskProps) {
+    logger.info("执行嵌入式扫描器EmbeddedScanner.execute");
+    System.out.println(this.getClass().getName() + "执行嵌入式扫描器EmbeddedScanner.execute");
     checkLauncherExists();
     try (IsolatedLauncherFactory launcherFactoryToBeClosed = launcherFactory) {
       Map<String, String> allProps = new HashMap<>();
