@@ -46,6 +46,7 @@ public final class ComputationStepExecutor {
   }
 
   public void execute() {
+    LOGGER.info("ComputationStepExecutor.execute.处理zip包中信息");
     Profiler stepProfiler = Profiler.create(LOGGER);
     boolean allStepsExecuted = false;
     try {
