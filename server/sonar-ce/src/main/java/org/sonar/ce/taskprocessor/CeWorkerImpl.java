@@ -185,6 +185,7 @@ public class CeWorkerImpl implements CeWorker {
   private static Profiler startActivityProfiler(CeTask task) {
     Profiler profiler = Profiler.create(LOG);
     addContext(profiler, task);
+    LOG.info("初始化profiler并，开始执行任务");
     return profiler.startInfo("Execute task");
   }
 
