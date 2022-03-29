@@ -116,7 +116,70 @@ public class CeServerLocal implements Monitored {
 
   /**
    * 任务处理主要进程：
-   * 1、定时任务处理位置：CeProcessingSchedulerImpl、CeWorkerImpl、ReportTaskProcessor具体执行report任务
+   * 1、定时任务处理位置：
+   *    CeProcessingSchedulerImpl；
+   *    CeWorkerImpl；
+   *    ReportTaskProcessor；
+   *    ContainerFactoryImpl；
+   *    TaskContainer;
+   *    ComputationStepExecutor:
+   *        ExtractReportStep 从数据库中获取zip包，并解压到临时目录中
+   *        PersistScannerContextStep
+   *        GenerateAnalysisUuid
+   *        LoadReportAnalysisMetadataHolderStep   √
+   *        ExecuteStatelessInitExtensionsStep
+   *        VerifyBillingStep.execute
+   *        BuildComponentTreeStep.execute  √
+   *        ValidateProjectStep.execute √
+   *        LoadQualityGateStep  质量阈quality_gate表中
+   *        LoadPeriodsStep
+   *        FileMoveDetectionStep
+   *        LoadDuplicationsFromReportStep  从报告步骤加载副本
+   *        LoadCrossProjectDuplicationsRepositoryStep
+   *        SizeMeasuresStep 度量
+   *        NewCoverageMeasuresStep 新的覆盖措施
+   *        CoverageMeasuresStep
+   *        CommentMeasuresStep 评论
+   *        CustomMeasuresCopyStep
+   *        DuplicationMeasuresStep 重复
+   *        DuplicationDataMeasuresStep
+   *        NewSizeMeasuresStep
+   *        LanguageDistributionMeasuresStep
+   *        UnitTestMeasuresStep
+   *        ComplexityMeasuresStep 复杂性
+   *        LoadMeasureComputersStep
+   *        ExecuteVisitorsStep
+   *        ComputeMeasureVariationsStep
+   *        QualityGateMeasuresStep
+   *        ComputeQProfileMeasureStep
+   *        QualityProfileEventsStep
+   *        QualityGateEventsStep
+   *        PersistComponentsStep  √
+   *        PersistAnalysisStep  √ 持续分析步骤
+   *        PersistAnalysisPropertiesStep
+   *        PersistMeasuresStep
+   *        PersistIssuesStep   √
+   *
+   *        PersistFileSourcesStep
+   *        PersistTestsStep
+   *        PersistCrossProjectDuplicationIndexStep
+   *        EnableAnalysisStep
+   *        UpdateQualityProfilesLastUsedDateStep
+   *        PurgeDatastoresStep
+   *        IndexAnalysisStep
+   *        SendIssueNotificationsStep
+   *        PublishTaskResultStep
+   *
+   *
+   *
+   *
+   *
+   *
+   *
+   *
+   *
+   *
+   *    具体执行report任务
    * 2、间隔时间2秒
    *
    */
