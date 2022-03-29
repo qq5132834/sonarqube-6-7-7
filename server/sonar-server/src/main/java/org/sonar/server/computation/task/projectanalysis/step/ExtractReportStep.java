@@ -61,6 +61,7 @@ public class ExtractReportStep implements ComputationStep {
 
   @Override
   public void execute() {
+    LOGGER.info("ExtractReportStep.execute从数据中获取zip包，并解压至临时目录");
     try (DbSession dbSession = dbClient.openSession(false)) {
       Optional<CeTaskInputDao.DataStream> opt = dbClient.ceTaskInputDao().selectData(dbSession, task.getUuid());
       if (opt.isPresent()) {
