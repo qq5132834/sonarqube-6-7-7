@@ -21,13 +21,16 @@ package org.sonar.scanner.protocol.output;
 
 import java.io.File;
 import javax.annotation.CheckForNull;
+
+import org.sonar.api.utils.log.Logger;
+import org.sonar.api.utils.log.Loggers;
 import org.sonar.core.util.CloseableIterator;
 import org.sonar.core.util.Protobuf;
 
 import static org.sonar.core.util.CloseableIterator.emptyCloseableIterator;
 
 public class ScannerReportReader {
-
+  private final static Logger LOGGER = Loggers.get(ScannerReportReader.class);
   private final FileStructure fileStructure;
 
   public ScannerReportReader(File dir) {
@@ -39,6 +42,7 @@ public class ScannerReportReader {
     if (!fileExists(file)) {
       throw new IllegalStateException("Metadata file is missing in analysis report: " + file);
     }
+    LOGGER.info("读取metadata.bp文件数据，路径：" + file.getAbsolutePath());
     return Protobuf.read(file, ScannerReport.Metadata.parser());
   }
 
