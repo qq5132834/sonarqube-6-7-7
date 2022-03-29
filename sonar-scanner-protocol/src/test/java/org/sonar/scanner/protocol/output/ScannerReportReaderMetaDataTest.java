@@ -9,6 +9,7 @@ public class ScannerReportReaderMetaDataTest {
 
     /***
      * 读取metadata.bp文件内容
+     * 测试ScannerReportReader.java中获取readMetadata方法：测试ScannerReportReader.readMetadata
      * @throws Exception
      */
     @Test
