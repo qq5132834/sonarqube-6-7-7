@@ -20,6 +20,8 @@
 package org.sonar.server.ws;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -29,6 +31,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.sonar.api.server.ws.WebService;
+import org.sonar.api.utils.log.Logger;
+import org.sonar.api.utils.log.Loggers;
 import org.sonar.api.web.ServletFilter;
 import org.sonar.core.util.stream.MoreCollectors;
 
@@ -46,7 +50,7 @@ import static org.sonar.server.ws.WebServiceReroutingFilter.MOVED_WEB_SERVICES;
  * </ul>
  */
 public class WebServiceFilter extends ServletFilter {
-
+  private final static Logger LOGGER = Loggers.get(WebServiceFilter.class);
   private final WebServiceEngine webServiceEngine;
   private final Set<String> includeUrls;
   private final Set<String> excludeUrls;
@@ -81,6 +85,19 @@ public class WebServiceFilter extends ServletFilter {
   public void doFilter(javax.servlet.ServletRequest servletRequest, javax.servlet.ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
     HttpServletRequest request = (HttpServletRequest) servletRequest;
     HttpServletResponse response = (HttpServletResponse) servletResponse;
+    String url = request.getRequestURI();
+    LOGGER.info(url);
+    Map<String, String[]> map = request.getParameterMap();
+    for (Map.Entry<String, String[]> entry : map.entrySet()) {
+      String key = entry.getKey();
+      String[] vals = entry.getValue();
+      StringBuilder sb = new StringBuilder();
+      Arrays.stream(vals).forEach(e->{
+        sb.append(e);
+        sb.append(",");
+      });
+      LOGGER.info(key + "=" + sb.toString());
+    }
     ServletRequest wsRequest = new ServletRequest(request);
     ServletResponse wsResponse = new ServletResponse(response);
     webServiceEngine.execute(wsRequest, wsResponse);
