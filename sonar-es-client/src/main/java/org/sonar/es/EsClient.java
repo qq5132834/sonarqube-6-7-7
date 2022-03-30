@@ -17,6 +17,9 @@ public class EsClient {
         // 设置elasticsearch集群名称
         Settings settings = Settings.builder()
                 .put("cluster.name", "my-application")
+                //如果开启嗅探功能，即自动检测集群内其他的节点和新加入的节点，
+                //不需要全部都是用addTransportAddress添加
+                .put("client.transport.sniff", true)
                 .build();
 
         TransportClient client = new PreBuiltTransportClient(settings);
