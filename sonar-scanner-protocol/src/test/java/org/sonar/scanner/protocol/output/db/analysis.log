@@ -1,0 +1,19 @@
+SonarQube plugins:
+  - Xoo 6.7.7 (xoo)
+  - SonarJava 4.15.0-SNAPSHOT (java)
+Global properties:
+  - sonar.core.id=F6E46446-AX_BKMM8crke7Nn3nssl
+  - sonar.core.startTime=2022-03-28T14:54:52+0800
+Settings for module: 024c1fa9d50e4aeca3c1595085e0a7c3
+  - sonar.host.url=http://127.0.0.1:9000
+  - sonar.java.binaries=C:\Users\51328\Desktop\sonarqube-6.7.7\sonarqube-6.7.7\sonar-scanner-cli\target\classes
+  - sonar.projectBaseDir=C:\Users\51328\Desktop\sonarqube-6.7.7\sonarqube-6.7.7
+  - sonar.projectKey=024c1fa9d50e4aeca3c1595085e0a7c3
+  - sonar.projectName=024c1fa9d50e4aeca3c1595085e0a7c3
+  - sonar.projectVersion=1.0
+  - sonar.scanner.app=ScannerCli
+  - sonar.scanner.appVersion=6.7.7
+  - sonar.sourceEncoding=UTF-8
+  - sonar.sources=C:\Users\51328\Desktop\sonarqube-6.7.7\sonarqube-6.7.7\sonar-scanner-cli\src\test\resources\org\sonarsource\scanner\cli\pluginTest
+  - sonar.verbose=true
+  - sonar.working.directory=C:\Users\51328\Desktop\sonarqube-6.7.7\sonarqube-6.7.7\.scannerwork

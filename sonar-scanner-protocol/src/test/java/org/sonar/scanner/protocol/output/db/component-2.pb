@@ -1,0 +1,1 @@
+Ssonar-scanner-cli/src/test/resources/org/sonarsource/scanner/cli/pluginTest/foo.xoo 2xooXh
