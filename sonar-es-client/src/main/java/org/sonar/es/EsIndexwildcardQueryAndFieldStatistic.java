@@ -18,6 +18,11 @@ import org.elasticsearch.search.SearchHits;
 import java.io.IOException;
 import java.util.*;
 
+/***
+ * https://blog.csdn.net/m0_47333020/article/details/108803321
+ *
+ * http://192.168.32.140:5601/app/kibana#/dev_tools/console?_g=()
+ */
 public class EsIndexwildcardQueryAndFieldStatistic {
     private static Client client;
     private static String index = "blog21";
