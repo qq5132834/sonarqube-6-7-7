@@ -1,5 +1,7 @@
 package org.sonar.es;
 
+import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
+import org.elasticsearch.action.admin.indices.mapping.put.PutMappingRequest;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexResponse;
@@ -8,6 +10,7 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateResponse;
+import org.elasticsearch.client.Requests;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
@@ -23,6 +26,8 @@ import java.util.Map;
 
 public class TransportClientTest {
 
+    private static String index = "blog21";
+    private static String type = "article21";
     private TransportClient transportClient;
 
     public TransportClientTest() {
@@ -33,8 +38,28 @@ public class TransportClientTest {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
+        TransportClientTest transportClientTest = new TransportClientTest();
+        transportClientTest.testAdd();
+    }
 
+    public void createIndex() throws Exception {
+        String index = "blog21";
+        String type = "article21";
+        // 创建索引
+        CreateIndexResponse indexResponse = transportClient.admin().indices()
+                .prepareCreate(index).get();
+        // 建立映射
+        XContentBuilder mapping = XContentFactory.jsonBuilder().startObject()
+                .startObject("properties").startObject("PolicyCode")
+                .field("type", "keyword").field("store", "yes").endObject()
+                .startObject("ServiceId").field("type", "keyword")
+                .field("store", "yes").endObject().startObject("CreateTime")
+                .field("type", "date").field("format", "yyyy-MM-dd HH:mm:ss")
+                .field("store", "yes").endObject().endObject().endObject();
+        PutMappingRequest mappingRequest = Requests.putMappingRequest(index)
+                .source(mapping).type(type);
+        transportClient.admin().indices().putMapping(mappingRequest).actionGet();
     }
 
     public void testAdd() throws Exception {
