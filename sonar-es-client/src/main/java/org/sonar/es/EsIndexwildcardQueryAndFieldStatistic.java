@@ -8,38 +8,26 @@ import org.elasticsearch.client.Requests;
 import org.elasticsearch.cluster.ClusterState;
 import org.elasticsearch.cluster.metadata.IndexMetaData;
 import org.elasticsearch.cluster.metadata.MappingMetaData;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
-import org.elasticsearch.transport.client.PreBuiltTransportClient;
 
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.*;
 
 public class EsIndexwildcardQueryAndFieldStatistic {
     private static Client client;
-    private static Settings settings;
     private static String index = "blog21";
     private static String type = "article21";
 
     // 注意区分5.X系列的ES版本client初始化
     static {
-        settings = Settings.builder()
-                .put("cluster.name", "backup_elasticsearch")
-                .put("client.transport.sniff", true).build();
         try {
-            client = new PreBuiltTransportClient(settings)
-                    .addTransportAddress(new InetSocketTransportAddress(
-                            InetAddress.getByName("172.17.173.21"), 9300));
-        } catch (UnknownHostException e) {
-
+            client = new EsClient().client();
+        }catch (Exception e) {
             e.printStackTrace();
         }
     }
