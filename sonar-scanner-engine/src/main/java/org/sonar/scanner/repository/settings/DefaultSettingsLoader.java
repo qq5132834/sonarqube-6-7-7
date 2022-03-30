@@ -50,6 +50,7 @@ public class DefaultSettingsLoader implements SettingsLoader {
 
   @Override
   public Map<String, String> load(@Nullable String componentKey) {
+    LOG.info("调用加载默认配置api/settings/values.protobuf，componentKey：{}", componentKey);
     String url = "api/settings/values.protobuf";
     Profiler profiler = Profiler.create(LOG);
     if (componentKey != null) {
@@ -61,7 +62,11 @@ public class DefaultSettingsLoader implements SettingsLoader {
     try (InputStream is = wsClient.call(new GetRequest(url)).contentStream()) {
       ValuesWsResponse values = ValuesWsResponse.parseFrom(is);
       profiler.stopInfo();
-      return toMap(values.getSettingsList());
+      Map<String, String> map = toMap(values.getSettingsList());
+      for (Map.Entry<String, String> entry : map.entrySet()) {
+        LOG.info(entry.getKey() + "=" + entry.getValue());
+      }
+      return map;
     } catch (IOException e) {
       throw new IllegalStateException("Failed to load server settings", e);
     }
