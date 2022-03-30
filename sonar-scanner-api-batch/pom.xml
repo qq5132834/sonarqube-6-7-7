@@ -2,33 +2,29 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>sonarqube</artifactId>
         <groupId>org.sonarsource.sonarqube</groupId>
+        <artifactId>sonarqube</artifactId>
         <version>6.7.7</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
 
     <artifactId>sonar-scanner-api-batch</artifactId>
-    <name>SonarQube Scanner API - Batch</name>
-
-    <properties>
-        <sonarQubeVersion>6.7.7</sonarQubeVersion>
-    </properties>
+    <name>sonar-scanner-api-batch</name>
 
     <dependencies>
 
         <dependency>
-            <groupId>org.sonarsource.sonarqube</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>sonar-scanner-engine</artifactId>
-            <version>${sonarQubeVersion}</version>
+            <version>${project.version}</version>
         </dependency>
 
         <!-- Unit tests -->
         <dependency>
-            <groupId>org.sonarsource.sonarqube</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>sonar-testing-harness</artifactId>
-            <version>${sonarQubeVersion}</version>
+            <version>${project.version}</version>
             <scope>test</scope>
             <exclusions>
                 <exclusion>
