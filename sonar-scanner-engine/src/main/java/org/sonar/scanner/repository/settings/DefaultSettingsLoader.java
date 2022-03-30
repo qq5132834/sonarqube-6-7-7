@@ -50,7 +50,7 @@ public class DefaultSettingsLoader implements SettingsLoader {
 
   @Override
   public Map<String, String> load(@Nullable String componentKey) {
-    LOG.info("调用加载默认配置api/settings/values.protobuf，componentKey：{}", componentKey);
+    LOG.info("DefaultSettingsLoader调用加载默认配置api/settings/values.protobuf，componentKey：{}", componentKey);
     String url = "api/settings/values.protobuf";
     Profiler profiler = Profiler.create(LOG);
     if (componentKey != null) {
@@ -64,7 +64,7 @@ public class DefaultSettingsLoader implements SettingsLoader {
       profiler.stopInfo();
       Map<String, String> map = toMap(values.getSettingsList());
       for (Map.Entry<String, String> entry : map.entrySet()) {
-        LOG.info(entry.getKey() + "=" + entry.getValue());
+        LOG.info("DefaultSettingsLoader配置：" + entry.getKey() + "=" + entry.getValue());
       }
       return map;
     } catch (IOException e) {
