@@ -31,6 +31,8 @@ import org.picocontainer.Startable;
 import org.sonar.api.Plugin;
 import org.sonar.api.ce.ComputeEngineSide;
 import org.sonar.api.server.ServerSide;
+import org.sonar.api.utils.log.Logger;
+import org.sonar.api.utils.log.Loggers;
 import org.sonar.core.platform.PluginInfo;
 import org.sonar.core.platform.PluginRepository;
 
@@ -47,7 +49,7 @@ import static com.google.common.collect.Lists.newArrayList;
 @ServerSide
 @ComputeEngineSide
 public class DebtModelPluginRepository implements Startable {
-
+  private static final Logger LOGGER = Loggers.get(DebtModelPluginRepository.class);
   public static final String DEFAULT_MODEL = "technical-debt";
 
   private static final String XML_FILE_SUFFIX = "-model.xml";
@@ -80,6 +82,7 @@ public class DebtModelPluginRepository implements Startable {
    */
   @Override
   public void start() {
+    LOGGER.info("获取技术债插件中的<pluginKey>-model.xml插件");
     findAvailableXMLFiles();
   }
 
@@ -92,8 +95,13 @@ public class DebtModelPluginRepository implements Startable {
         String pluginKey = pluginInfo.getKey();
         Plugin plugin = pluginRepository.getPluginInstance(pluginKey);
         ClassLoader classLoader = plugin.getClass().getClassLoader();
-        if (classLoader.getResource(getXMLFilePath(pluginKey)) != null) {
+        String xmlFilePath = getXMLFilePath(pluginKey);
+        if (classLoader.getResource(xmlFilePath) != null) {
+          LOGGER.info("---技术债文件路径:{}, exist:{}", xmlFilePath, "存在");
           contributingPluginKeyToClassLoader.put(pluginKey, classLoader);
+        }
+        else {
+          LOGGER.info("---技术债文件路径:{}, exist:{}", xmlFilePath, "不存在");
         }
       }
     }
