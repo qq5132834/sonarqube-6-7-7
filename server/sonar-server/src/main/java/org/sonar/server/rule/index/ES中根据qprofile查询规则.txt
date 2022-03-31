@@ -1,0 +1,95 @@
+1、在es中根据qprofile查询规则；
+GET rules/rule/_search
+{
+  "from" : 0,
+  "size" : 500,
+  "query" : {
+    "bool" : {
+      "must" : [
+        {
+          "match_all" : {
+            "boost" : 1.0
+          }
+        }
+      ],
+      "filter" : [
+        {
+          "bool" : {
+            "must" : [
+              {
+                "terms" : {
+                  "lang" : [
+                    "xoo"
+                  ],
+                  "boost" : 1.0
+                }
+              },
+              {
+                "has_child" : {
+                  "query" : {
+                    "bool" : {
+                      "must" : [
+                        {
+                          "term" : {
+                            "ruleProfile" : {
+                              "value" : "AX_Yn1Erxq3C8tijECgF",
+                              "boost" : 1.0
+                            }
+                          }
+                        }
+                      ],
+                      "disable_coord" : false,
+                      "adjust_pure_negative" : true,
+                      "boost" : 1.0
+                    }
+                  },
+                  "type" : "activeRule",
+                  "score_mode" : "none",
+                  "min_children" : 0,
+                  "max_children" : 2147483647,
+                  "ignore_unmapped" : false,
+                  "boost" : 1.0
+                }
+              },
+              {
+                "bool" : {
+                  "must_not" : [
+                    {
+                      "term" : {
+                        "status" : {
+                          "value" : "REMOVED",
+                          "boost" : 1.0
+                        }
+                      }
+                    }
+                  ],
+                  "disable_coord" : false,
+                  "adjust_pure_negative" : true,
+                  "boost" : 1.0
+                }
+              }
+            ],
+            "disable_coord" : false,
+            "adjust_pure_negative" : true,
+            "boost" : 1.0
+          }
+        }
+      ],
+      "disable_coord" : false,
+      "adjust_pure_negative" : true,
+      "boost" : 1.0
+    }
+  },
+  "sort" : [
+    {
+      "updatedAt" : {
+        "order" : "desc"
+      }
+    },
+    {
+      "key.sortable_analyzer" : {
+        "order" : "asc"
+      }
+    }
+  ]
+}
