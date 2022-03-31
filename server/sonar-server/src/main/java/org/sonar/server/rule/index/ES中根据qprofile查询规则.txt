@@ -6,7 +6,30 @@
             must_not：查询字句，必须不能匹配
             filter：必须匹配，不贡献算分
 
-2、在提交的数据
+2、在db中根据qprofile查询有效规则；
+SELECT
+	a.id,
+	a.profile_id AS "profileId",
+	a.rule_id AS "ruleId",
+	a.failure_level AS "severity",
+	a.inheritance AS "inheritance",
+	r.plugin_rule_key AS "rulefield",
+	r.plugin_name AS "repository",
+	rp.kee AS "ruleProfileUuid",
+	a.created_at AS "createdAt",
+	a.updated_at AS "updatedAt",
+	oqp.organization_uuid AS "organizationUuid",
+	oqp.uuid AS "profileUuid"
+FROM
+	active_rules a
+	INNER JOIN rules_profiles rp ON rp.id = a.profile_id
+	INNER JOIN org_qprofiles oqp ON oqp.rules_profile_uuid = rp.kee
+	INNER JOIN rules r ON r.id = a.rule_id
+	AND r.STATUS != 'REMOVED'
+WHERE
+	oqp.uuid = 'AX_Yn1E1xq3C8tijECgH'
+
+3、在提交的数据
 GET rules/rule/_search
 {
   "from" : 0,
