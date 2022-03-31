@@ -24,12 +24,15 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ListMultimap;
 import java.lang.annotation.Annotation;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.annotation.Nullable;
 import org.sonar.api.ExtensionProvider;
 import org.sonar.api.Plugin;
 import org.sonar.api.SonarRuntime;
+import org.sonar.api.profiles.ProfileDefinition;
+import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.utils.AnnotationUtils;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
@@ -69,7 +72,7 @@ public abstract class ServerExtensionInstaller {
 
   public void installExtensions(ComponentContainer container) {
     ListMultimap<PluginInfo, Object> installedExtensionsByPlugin = ArrayListMultimap.create();
-    LOGGER.info("安装插件中Context中添加的extension，ServerExtensionInstaller.installExtensions()");
+    LOGGER.info("安装插件中Context中添加的extension，并将extension注入到pico容器中，ServerExtensionInstaller.installExtensions()");
     for (PluginInfo pluginInfo : pluginRepository.getPluginInfos()) {
       try {
         String pluginKey = pluginInfo.getKey();
@@ -79,7 +82,7 @@ public abstract class ServerExtensionInstaller {
         Plugin.Context context = new Plugin.Context(sonarRuntime);
         plugin.define(context);
         for (Object extension : context.getExtensions()) {
-          if (installExtension(container, pluginInfo, extension, true) != null) {
+          if (installExtension(container, pluginInfo, extension, true) != null) {  //这里注入容易
             LOGGER.info("------extension.class:{}, toString:{}", extension.getClass().getName(), extension.toString());
             installedExtensionsByPlugin.put(pluginInfo, extension);  //extension实例保存在以pluginInfo为key的map列表中
           } else {
@@ -91,6 +94,13 @@ public abstract class ServerExtensionInstaller {
         throw new IllegalStateException(String.format("Fail to load plugin %s [%s]", pluginInfo.getName(), pluginInfo.getKey()), e);
       }
     }
+    //从容器中获取plugin中定义的规则定义实例
+    LOGGER.info("从容器中获取plugin中定义的规则定义实例，如：RulesDefinition、ProfileDefinition....");
+    List<RulesDefinition> rulesDefinitionList = container.getComponentsByType(RulesDefinition.class);//这个在
+    rulesDefinitionList.stream().forEach(e->{LOGGER.info(e.getClass().getSimpleName());});
+    List<ProfileDefinition> profileDefinitionList = container.getComponentsByType(ProfileDefinition.class);
+    profileDefinitionList.stream().forEach(e->{LOGGER.info(e.getClass().getSimpleName());});
+
     for (Map.Entry<PluginInfo, Object> entry : installedExtensionsByPlugin.entries()) {
       PluginInfo pluginInfo = entry.getKey();
       try {
@@ -125,7 +135,7 @@ public abstract class ServerExtensionInstaller {
         if (!acceptProvider && isExtensionProvider(extension)) {
           throw new IllegalStateException("ExtensionProvider can not include providers itself: " + extension);
         }
-        container.addExtension(pluginInfo, extension);
+        container.addExtension(pluginInfo, extension);  //注入容器
         return extension;
       }
     }
