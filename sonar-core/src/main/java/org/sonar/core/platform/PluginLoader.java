@@ -29,6 +29,7 @@ import java.util.Map;
 import java.util.Set;
 import org.apache.commons.lang.SystemUtils;
 import org.sonar.api.Plugin;
+import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
 import org.sonar.updatecenter.common.Version;
 
@@ -50,7 +51,7 @@ import static java.util.Collections.unmodifiableSet;
  * This class is stateless. It does not keep pointers to classloaders and {@link org.sonar.api.Plugin}.
  */
 public class PluginLoader {
-
+  private static final Logger LOG = Loggers.get(PluginLoader.class);
   private static final String[] DEFAULT_SHARED_RESOURCES = {"org/sonar/plugins", "com/sonar/plugins", "com/sonarsource/plugins"};
   /**
    * Defines the base keys (defined by {@link #basePluginKey(PluginInfo, Map)}) of the plugins which are allowed to
@@ -139,7 +140,9 @@ public class PluginLoader {
         String pluginKey = mainClassEntry.getKey();
         String mainClass = mainClassEntry.getValue();
         try {
-          instancesByPluginKey.put(pluginKey, (Plugin) classLoader.loadClass(mainClass).newInstance());
+          Plugin plugin = (Plugin) classLoader.loadClass(mainClass).newInstance();
+          LOG.info("PluginLoader实例化插件对象:pluginKey:{},mainClass:{},plugin:{}" + pluginKey, mainClass, plugin.getClass().getName());
+          instancesByPluginKey.put(pluginKey, plugin);
         } catch (UnsupportedClassVersionError e) {
           throw new IllegalStateException(String.format("The plugin [%s] does not support Java %s",
             pluginKey, SystemUtils.JAVA_VERSION_TRIMMED), e);
