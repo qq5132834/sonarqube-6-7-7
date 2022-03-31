@@ -315,6 +315,7 @@ public class ServerPluginRepository implements PluginRepository, Startable {
   }
 
   private void loadInstances() {
+      LOG.info("WebServer实例化plugin对象");
     pluginInstancesByKeys.putAll(loader.load(pluginInfosByKeys));
 
     for (Map.Entry<String, Plugin> e : pluginInstancesByKeys.entrySet()) {
