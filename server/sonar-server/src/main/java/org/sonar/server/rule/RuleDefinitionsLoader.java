@@ -52,7 +52,7 @@ public class RuleDefinitionsLoader {
   }
 
   public RulesDefinition.Context load() {
-    LOGGER.info("加载规则定义-RuleDefinitionsLoader.load");
+    LOGGER.info("加载规则定义-RuleDefinitionsLoader.load。注，pluginDefs 数据的初始化是在 ServerExtensionInstaller 中完成容器的注入。");
     RulesDefinition.Context context = new RulesDefinition.Context();
     for (RulesDefinition pluginDefinition : pluginDefs) {
       context.setCurrentPluginKey(serverPluginRepository.getPluginKey(pluginDefinition));
