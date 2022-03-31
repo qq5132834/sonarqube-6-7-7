@@ -239,6 +239,8 @@ public class ComponentContainer implements ContainerPopulator.Container {
   public ComponentContainer addExtension(@Nullable PluginInfo pluginInfo, Object extension) {
     Object key = componentKeys.of(extension);
     try {
+      // LOG.info(extension.getClass().getSimpleName() + "注入pico容器");
+      // LOG.info("注入到pico容器中,extension:{}, toString:{}", extension.getClass().getSimpleName(), extension.toString());
       pico.as(Characteristics.CACHE).addComponent(key, extension);
     } catch (Throwable t) {
       throw new IllegalStateException("Unable to register extension " + getName(extension) + (pluginInfo != null ? (" from plugin '" + pluginInfo.getKey() + "'") : ""), t);
