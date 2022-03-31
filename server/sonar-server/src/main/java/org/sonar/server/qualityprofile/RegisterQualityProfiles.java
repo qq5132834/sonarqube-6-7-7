@@ -64,6 +64,7 @@ public class RegisterQualityProfiles {
   }
 
   public void start() {
+    LOGGER.info("在服务器启动期间同步质量配置文件，RegisterQualityProfiles.start()");
     List<BuiltInQProfile> builtInQProfiles = builtInQProfileRepository.get();
     if (builtInQProfiles.isEmpty()) {
       return;
