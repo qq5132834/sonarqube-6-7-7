@@ -20,6 +20,8 @@
 package org.sonar.server.rule;
 
 import org.sonar.api.server.rule.RulesDefinition;
+import org.sonar.api.utils.log.Logger;
+import org.sonar.api.utils.log.Loggers;
 import org.sonar.server.plugins.ServerPluginRepository;
 
 /**
@@ -27,7 +29,7 @@ import org.sonar.server.plugins.ServerPluginRepository;
  * and restore of debt model backup.
  */
 public class RuleDefinitionsLoader {
-
+  private final static Logger LOGGER = Loggers.get(RuleDefinitionsLoader.class);
   private final DeprecatedRulesDefinitionLoader deprecatedDefConverter;
   private final CommonRuleDefinitions coreCommonDefs;
   private final RulesDefinition[] pluginDefs;
@@ -50,6 +52,7 @@ public class RuleDefinitionsLoader {
   }
 
   public RulesDefinition.Context load() {
+    LOGGER.info("加载规则定义-RuleDefinitionsLoader.load");
     RulesDefinition.Context context = new RulesDefinition.Context();
     for (RulesDefinition pluginDefinition : pluginDefs) {
       context.setCurrentPluginKey(serverPluginRepository.getPluginKey(pluginDefinition));
