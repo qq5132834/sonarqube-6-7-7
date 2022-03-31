@@ -89,6 +89,7 @@ public class DefaultI18n implements I18n, Startable {
 
   @VisibleForTesting
   void doStart(ClassLoader classloader) {
+    LOG.info("加载汉化包DefaultI18n.doStart");
     this.classloader = classloader;
     this.propertyToBundles = new HashMap<>();
 
