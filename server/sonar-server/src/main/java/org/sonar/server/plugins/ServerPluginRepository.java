@@ -142,6 +142,7 @@ public class ServerPluginRepository implements PluginRepository, Startable {
    */
   private void loadPreInstalledPlugins() {
     for (File file : listJarFiles(fs.getInstalledPluginsDir())) {
+      LOG.info("安装插件:" + file.getAbsolutePath());
       PluginInfo info = PluginInfo.create(file);
       registerPluginInfo(info);
     }
