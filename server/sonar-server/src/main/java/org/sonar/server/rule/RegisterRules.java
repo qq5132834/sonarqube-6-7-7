@@ -96,6 +96,7 @@ public class RegisterRules implements Startable {
   @Override
   public void start() {
     Profiler profiler = Profiler.create(LOG).startInfo("Register rules");
+    LOG.info("注册规则-RegisterRules");
     try (DbSession dbSession = dbClient.openSession(false)) {
       Map<RuleKey, RuleDefinitionDto> allRules = loadRules(dbSession);
       List<RuleKey> keysToIndex = new ArrayList<>();
