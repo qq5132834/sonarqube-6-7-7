@@ -31,6 +31,8 @@ import org.sonar.api.ExtensionProvider;
 import org.sonar.api.Plugin;
 import org.sonar.api.SonarRuntime;
 import org.sonar.api.utils.AnnotationUtils;
+import org.sonar.api.utils.log.Logger;
+import org.sonar.api.utils.log.Loggers;
 import org.sonar.core.platform.ComponentContainer;
 import org.sonar.core.platform.PluginInfo;
 import org.sonar.core.platform.PluginRepository;
@@ -42,7 +44,7 @@ import static java.util.Objects.requireNonNull;
  * Loads the plugins server extensions and injects them to DI container
  */
 public abstract class ServerExtensionInstaller {
-
+  private final static Logger LOGGER = Loggers.get(ServerExtensionInstaller.class);
   private final SonarRuntime sonarRuntime;
   private final PluginRepository pluginRepository;
   private final Set<Class<? extends Annotation>> supportedAnnotationTypes;
@@ -67,18 +69,19 @@ public abstract class ServerExtensionInstaller {
 
   public void installExtensions(ComponentContainer container) {
     ListMultimap<PluginInfo, Object> installedExtensionsByPlugin = ArrayListMultimap.create();
-
+    LOGGER.info("安装插件中Context中添加的extension，ServerExtensionInstaller.installExtensions()");
     for (PluginInfo pluginInfo : pluginRepository.getPluginInfos()) {
       try {
         String pluginKey = pluginInfo.getKey();
         Plugin plugin = pluginRepository.getPluginInstance(pluginKey);
         container.addExtension(pluginInfo, plugin);
-
+        LOGGER.info("---安装pluginKey:{};plugin:{}", pluginKey, plugin.getClass().getName());
         Plugin.Context context = new Plugin.Context(sonarRuntime);
         plugin.define(context);
         for (Object extension : context.getExtensions()) {
           if (installExtension(container, pluginInfo, extension, true) != null) {
-            installedExtensionsByPlugin.put(pluginInfo, extension);
+            LOGGER.info("------extension.class:{}, toString:{}", extension.getClass().getName(), extension.toString());
+            installedExtensionsByPlugin.put(pluginInfo, extension);  //extension实例保存在以pluginInfo为key的map列表中
           } else {
             container.declareExtension(pluginInfo, extension);
           }
