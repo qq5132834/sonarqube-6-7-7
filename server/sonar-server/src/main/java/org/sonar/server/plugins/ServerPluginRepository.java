@@ -107,7 +107,6 @@ public class ServerPluginRepository implements PluginRepository, Startable {
   @Override
   public void start() {
     LOG.info("在服务器启动时安装和加载插件的入口点。ServerPluginRepository.start");
-    System.out.println("在服务器启动时安装和加载插件的入口点。ServerPluginRepository.start");
     loadPreInstalledPlugins();
     copyBundledPlugins();
     moveDownloadedPlugins();
