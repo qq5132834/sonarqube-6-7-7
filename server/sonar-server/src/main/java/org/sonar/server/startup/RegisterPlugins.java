@@ -59,7 +59,7 @@ public class RegisterPlugins implements Startable {
   @Override
   public void start() {
     Profiler profiler = Profiler.create(LOG).startInfo("Register plugins");
-    LOG.info("注册插件-RegisterPlugins.start");
+    LOG.info("注册插件-RegisterPlugins.start：即更新plugins表，无则插入，有则判断md5是否一致，不一致则修改");
     updateDB(repository.getPluginInfos());
     profiler.stopDebug();
   }
