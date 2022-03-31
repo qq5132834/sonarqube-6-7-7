@@ -65,7 +65,7 @@ public class CePluginRepository implements PluginRepository, Startable {
 
   @Override
   public void start() {
-    LOGGER.info("Load plugins");
+    LOGGER.info("CeServer加载插件，CePluginRepository.start()");
     for (File file : listJarFiles(fs.getInstalledPluginsDir())) {
       PluginInfo info = PluginInfo.create(file);
       pluginInfosByKeys.put(info.getKey(), info);
