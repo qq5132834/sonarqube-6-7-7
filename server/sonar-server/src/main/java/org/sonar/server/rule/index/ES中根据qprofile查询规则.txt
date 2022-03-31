@@ -29,7 +29,16 @@ FROM
 WHERE
 	oqp.uuid = 'AX_Yn1E1xq3C8tijECgH'
 
-3、在提交的数据
+
+3、获取加载插件的有效规则SQL逻辑
+SELECT organization_uuid, qprofile_uuid, `language` FROM default_qprofiles where `language` in ('xoo', 'xoo2');
+SELECT rules_profile_uuid FROM org_qprofiles WHERE uuid = 'AX_Yn1E1xq3C8tijECgH';  --uuid 对应 default_qprofiles.qprofile_uuid
+SELECT id FROM rules_profiles WHERE kee = 'AX_Yn1Erxq3C8tijECgF'; --kee 对应 org_qprofiles.rules_profile_uuid
+SELECT rule_id FROM active_rules where profile_id = 13;  -- profile_id 对应 rules_profiles.id
+SELECT * FROM rules where id in (835,836);
+
+
+4、在提交的数据
 GET rules/rule/_search
 {
   "from" : 0,
