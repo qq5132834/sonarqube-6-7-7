@@ -1,4 +1,12 @@
 1、在es中根据qprofile查询规则；
+
+    1.1 在 ES 当中提供了 bool 查询，一个 bool 查询可以包含一个或多个查询字句，支持以下四种查询：
+            must：必须匹配，贡献算分
+            should：选择性匹配，贡献算分
+            must_not：查询字句，必须不能匹配
+            filter：必须匹配，不贡献算分
+
+2、在提交的数据
 GET rules/rule/_search
 {
   "from" : 0,
