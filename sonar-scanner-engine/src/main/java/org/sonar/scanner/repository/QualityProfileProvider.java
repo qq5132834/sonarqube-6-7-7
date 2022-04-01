@@ -39,6 +39,7 @@ public class QualityProfileProvider extends ProviderAdapter {
     if (this.profiles == null) {
       List<QualityProfile> profileList;
       Profiler profiler = Profiler.create(LOG).startInfo(LOG_MSG);
+      LOG.info("加载质量概况，qualityProfiles");
       if (!projectRepositories.exists()) {
         profileList = loader.loadDefault(getSonarProfile(props));
       } else {
