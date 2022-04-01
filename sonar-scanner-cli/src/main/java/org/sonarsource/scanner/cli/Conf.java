@@ -83,9 +83,10 @@ class Conf {
     properties.put("sonar.projectName", uuid);
     properties.put("sonar.projectKey", uuid);
     properties.put("sonar.projectVersion", "1.0");
-    properties.put("sonar.sources", "C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\sonar-scanner-cli\\src\\test\\resources\\org\\sonarsource\\scanner\\cli\\pluginTest");
+    properties.put("sonar.sources",       "C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\sonar-scanner-cli\\src\\test\\resources\\org\\sonarsource\\scanner\\cli\\pluginTest");
     properties.put("sonar.java.binaries", "C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\sonar-scanner-cli\\target\\classes");
-    properties.put("sonar.host.url", "http://192.168.32.140:9000");
+    //properties.put("sonar.host.url", "http://192.168.32.140:9000");
+    properties.put("sonar.host.url", "http://127.0.0.1:9000");
     properties.put("sonar.sourceEncoding", "UTF-8");
     return properties;
   }

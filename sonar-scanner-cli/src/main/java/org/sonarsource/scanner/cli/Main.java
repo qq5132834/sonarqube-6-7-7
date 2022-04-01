@@ -35,6 +35,20 @@ import org.sonarsource.scanner.api.ScanProperties;
  * <li>project.settings: optional path to project settings. Default value is ${project.home}/sonar-project.properties.</li>
  * </ul>
  *
+ *  扫描访问的接口：
+ *  1、/batch/index
+ *  2、/api/settings/values.protobuf
+ *  3、/api/plugins/installed
+ *  4、/batch/project.protobuf
+ *  5、/api/qualityprofiles/search.protobuf
+ *  6、/api/rules/search.protobuf
+ *  7、/api/rules/search.protobuf
+ *  8、/api/rules/search.protobuf
+ *  9、/api/metrics/search
+ *  10、/api/rules/list.protobuf
+ *  11、/api/ce/submit
+ *
+ *
  * @since 1.0
  */
 public class Main {
