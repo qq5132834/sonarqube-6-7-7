@@ -100,7 +100,7 @@ public class RuleIndexer implements ResilientIndexer {
       .map(RuleIndexer::createQueueDtoForRule)
       .collect(MoreCollectors.toArrayList());
 
-    dbClient.esQueueDao().insert(dbSession, items);
+    dbClient.esQueueDao().insert(dbSession, items); //记入es-queue队列中
     dbSession.commit();
     postCommit(dbSession, items);
   }
@@ -132,7 +132,7 @@ public class RuleIndexer implements ResilientIndexer {
     }
     return result;
   }
-
+  //每次启动保持DB与ES数据的一致性处理过程
   private IndexingResult doIndexRules(DbSession dbSession, List<EsQueueDto> items) {
     BulkIndexer bulkIndexer = createBulkIndexer(Size.REGULAR, new OneToOneResilientIndexingListener(dbClient, dbSession, items));
     bulkIndexer.start();
@@ -158,7 +158,7 @@ public class RuleIndexer implements ResilientIndexer {
 
     return bulkIndexer.stop();
   }
-
+  //每次启动保持DB与ES数据的一致性处理过程
   private IndexingResult doIndexRuleExtensions(DbSession dbSession, List<EsQueueDto> items) {
     BulkIndexer bulkIndexer = createBulkIndexer(Size.REGULAR, new OneToOneResilientIndexingListener(dbClient, dbSession, items));
     bulkIndexer.start();
