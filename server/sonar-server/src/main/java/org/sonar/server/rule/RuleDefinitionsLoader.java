@@ -55,12 +55,13 @@ public class RuleDefinitionsLoader {
     LOGGER.info("加载规则定义-RuleDefinitionsLoader.load。注，pluginDefs 数据的初始化是在 ServerExtensionInstaller 中完成容器的注入。");
     RulesDefinition.Context context = new RulesDefinition.Context();
     for (RulesDefinition pluginDefinition : pluginDefs) {
-      context.setCurrentPluginKey(serverPluginRepository.getPluginKey(pluginDefinition));
-      pluginDefinition.define(context);
+      String pluginKey = serverPluginRepository.getPluginKey(pluginDefinition);
+      context.setCurrentPluginKey(pluginKey);
+      pluginDefinition.define(context); //在这里，在context中存入插件中定义的全部规则内容。可以直接debug到Oxx插件的RuleDefintion查看过程。
     }
     deprecatedDefConverter.complete(context);
     context.setCurrentPluginKey(null);
-    coreCommonDefs.define(context);
+    coreCommonDefs.define(context);  //添加sonarqube自带通用规则
     return context;
   }
 }
