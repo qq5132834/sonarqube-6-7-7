@@ -101,7 +101,7 @@ public class RegisterRules implements Startable {
       Map<RuleKey, RuleDefinitionDto> allRules = loadRules(dbSession);
       List<RuleKey> keysToIndex = new ArrayList<>();
 
-      RulesDefinition.Context context = defLoader.load();
+      RulesDefinition.Context context = defLoader.load(); //获取插件中的规则和自带common-通用规则
       boolean orgsEnabled = organizationFlags.isEnabled(dbSession);
       for (RulesDefinition.ExtendedRepository repoDef : getRepositories(context)) {
         if (languages.get(repoDef.language()) != null) {
@@ -117,7 +117,7 @@ public class RegisterRules implements Startable {
               }
               continue;
             }
-            boolean relevantForIndex = registerRule(ruleDef, allRules, dbSession);
+            boolean relevantForIndex = registerRule(ruleDef, allRules, dbSession);  //数据全量写入规则：rules、rules_parameters 表
             if (relevantForIndex) {
               keysToIndex.add(ruleKey);
             }
@@ -130,22 +130,22 @@ public class RegisterRules implements Startable {
       dbSession.commit();
       keysToIndex.addAll(removedRules.stream().map(RuleDefinitionDto::getKey).collect(Collectors.toList()));
 
-      persistRepositories(dbSession, context.repositories());
-      ruleIndexer.commitAndIndex(dbSession, keysToIndex);
-      activeRuleIndexer.commitAndIndex(dbSession, changes);
+      persistRepositories(dbSession, context.repositories()); //对rule_repositories表中数据，全部删除、再重新写入
+      ruleIndexer.commitAndIndex(dbSession, keysToIndex); //向ES搜索引擎中写入规则数据
+      activeRuleIndexer.commitAndIndex(dbSession, changes); //向ES搜索引擎中写入修改的数据
       profiler.stopDebug();
 
-      webServerRuleFinder.startCaching();
+      webServerRuleFinder.startCaching(); //将全部规则写入JVM缓存中
     }
   }
 
   private void persistRepositories(DbSession dbSession, List<RulesDefinition.Repository> repositories) {
-    dbClient.ruleRepositoryDao().truncate(dbSession);
+    dbClient.ruleRepositoryDao().truncate(dbSession); //删除rule_repositories中全部数据
     List<RuleRepositoryDto> dtos = repositories
       .stream()
       .map(r -> new RuleRepositoryDto(r.key(), r.language(), r.name()))
       .collect(MoreCollectors.toList(repositories.size()));
-    dbClient.ruleRepositoryDao().insert(dbSession, dtos);
+    dbClient.ruleRepositoryDao().insert(dbSession, dtos); //重新写入到rule_repositories表中
     dbSession.commit();
   }
 
@@ -161,19 +161,19 @@ public class RegisterRules implements Startable {
     boolean newRule;
     RuleDefinitionDto rule;
     if (existingRule == null) {
-      rule = createRuleDto(ruleDef, session);
-      newRule = true;
+      rule = createRuleDto(ruleDef, session);  //insert into rule 表中
+      newRule = true; //插件规则在数据库中已存在
     } else {
       rule = existingRule;
-      newRule = false;
+      newRule = false; //不存在
     }
 
     boolean executeUpdate = false;
-    if (mergeRule(ruleDef, rule)) {
+    if (mergeRule(ruleDef, rule)) {//合并规则
       executeUpdate = true;
     }
 
-    if (mergeDebtDefinitions(ruleDef, rule)) {
+    if (mergeDebtDefinitions(ruleDef, rule)) {//合并债务定义
       executeUpdate = true;
     }
 
@@ -182,10 +182,10 @@ public class RegisterRules implements Startable {
     }
 
     if (executeUpdate) {
-      update(session, rule);
+      update(session, rule);  //update rule 表数据
     }
 
-    mergeParams(ruleDef, rule, session);
+    mergeParams(ruleDef, rule, session); //delete、update、insert  rules_parameters 数据表
     return newRule || executeUpdate;
   }
 
