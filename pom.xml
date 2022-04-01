@@ -36,7 +36,7 @@
     <module>sonar-scanner-api</module>
     <module>sonar-scanner-cli</module>
     <module>sonar-es-client</module>
-    <module>sonar-customer-plugin</module>
+    <module>plugins/sonar-customer-plugin</module>
     <module>plugins/sonar-custom-plugin-example-5.6</module>
   </modules>
 
