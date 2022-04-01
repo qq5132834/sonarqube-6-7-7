@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.sonarsource.sonarqube</groupId>
+    <artifactId>sonarqube</artifactId>
+    <version>6.7.7</version>
+  </parent>
+
+  <artifactId>sonar-customer-plugin</artifactId>
+
+  <name>sonar-customer-plugin</name>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+    <dependency>
+    <groupId>com.google.guava</groupId>
+    <artifactId>guava</artifactId>
+    <version>18.0</version>
+  </dependency>
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.4</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+      <version>2.6</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.findbugs</groupId>
+      <artifactId>jsr305</artifactId>
+      <version>3.0.2</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>sonar-plugin-api</artifactId>
+      <version>${project.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- unit testing -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <!--      <scope>test</scope>-->
+    </dependency>
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <version>3.9.1</version>
+      <!--      <scope>test</scope>-->
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>2.22.0</version>
+      <!--      <scope>test</scope>-->
+    </dependency>
+  </dependencies>
+
+
+<!--  <build>-->
+<!--    <plugins>-->
+<!--      <plugin>-->
+<!--        <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>-->
+<!--        <artifactId>sonar-packaging-maven-plugin</artifactId>-->
+<!--        <version>1.18.0.372</version>-->
+<!--        <configuration>-->
+<!--          <pluginKey>txt</pluginKey>-->
+<!--          <pluginName>txt</pluginName>-->
+<!--          <pluginClass>org.sonar.txt.TxtPlugin</pluginClass>-->
+<!--          <sonarLintSupported>true</sonarLintSupported>-->
+<!--        </configuration>-->
+<!--      </plugin>-->
+<!--    </plugins>-->
+<!--  </build>-->
+
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
+        <artifactId>sonar-packaging-maven-plugin</artifactId>
+        <version>1.17</version>
+        <extensions>true</extensions>
+        <configuration>
+          <pluginKey>txt</pluginKey>
+          <pluginName>txt</pluginName>
+          <pluginClass>org.sonar.txt.TxtPlugin</pluginClass>
+          <sonarLintSupported>true</sonarLintSupported>
+          <sonarQubeMinVersion>6.7</sonarQubeMinVersion>
+<!--          <basePlugin>cobol</basePlugin>-->
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.6.0</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+
+</project>
