@@ -24,6 +24,8 @@ import org.sonar.api.resources.Languages;
 import org.sonar.api.rule.Severity;
 import org.sonar.api.server.rule.RuleParamType;
 import org.sonar.api.server.rule.RulesDefinition;
+import org.sonar.api.utils.log.Logger;
+import org.sonar.api.utils.log.Loggers;
 
 import static org.sonar.server.rule.CommonRuleKeys.commonRepositoryForLang;
 
@@ -34,7 +36,7 @@ import static org.sonar.server.rule.CommonRuleKeys.commonRepositoryForLang;
 // this class must not be mixed with other RulesDefinition so it does implement the interface RulesDefinitions.
 // It replaces the common-rules that are still embedded within plugins.
 public class CommonRuleDefinitionsImpl implements CommonRuleDefinitions {
-
+  private final static Logger LOGGER = Loggers.get(CommonRuleDefinitionsImpl.class);
   private final Languages languages;
 
   public CommonRuleDefinitionsImpl(Languages languages) {
@@ -43,8 +45,12 @@ public class CommonRuleDefinitionsImpl implements CommonRuleDefinitions {
 
   @Override
   public void define(RulesDefinition.Context context) {
+    LOGGER.info("通用规则定义-CommonRuleDefinitionsImpl.define()");
     for (Language language : languages.all()) {
-      RulesDefinition.NewRepository repo = context.createRepository(commonRepositoryForLang(language.getKey()), language.getKey());
+      String lan = language.getKey();
+      String commonRepositoryKey = commonRepositoryForLang(lan);
+      LOGGER.info("commonRepository:{}, language:{}", commonRepositoryKey, lan);
+      RulesDefinition.NewRepository repo = context.createRepository(commonRepositoryKey, lan);
       repo.setName("Common " + language.getName());
       defineBranchCoverageRule(repo);
       defineLineCoverageRule(repo);
