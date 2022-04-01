@@ -52,12 +52,12 @@ public class CommonRuleDefinitionsImpl implements CommonRuleDefinitions {
       LOGGER.info("commonRepository:{}, language:{}", commonRepositoryKey, lan);
       RulesDefinition.NewRepository repo = context.createRepository(commonRepositoryKey, lan);
       repo.setName("Common " + language.getName());
-      defineBranchCoverageRule(repo);
-      defineLineCoverageRule(repo);
-      defineCommentDensityRule(repo);
-      defineDuplicatedBlocksRule(repo);
-      defineFailedUnitTestRule(repo);
-      defineSkippedUnitTestRule(repo);
+      defineBranchCoverageRule(repo);  //分支覆盖率规则
+      defineLineCoverageRule(repo);   //行覆盖率规则
+      defineCommentDensityRule(repo); //评论密度规则
+      defineDuplicatedBlocksRule(repo); //重复块规则
+      defineFailedUnitTestRule(repo); //单元测试失败规则
+      defineSkippedUnitTestRule(repo); //跳过单元测试规则
       repo.done();
     }
   }
