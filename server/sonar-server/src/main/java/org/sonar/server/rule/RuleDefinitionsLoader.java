@@ -59,7 +59,7 @@ public class RuleDefinitionsLoader {
       context.setCurrentPluginKey(pluginKey);
       pluginDefinition.define(context); //在这里，在context中存入插件中定义的全部规则内容。可以直接debug到Oxx插件的RuleDefintion查看过程。
     }
-    deprecatedDefConverter.complete(context);
+    deprecatedDefConverter.complete(context); //规则债务
     context.setCurrentPluginKey(null);
     coreCommonDefs.define(context);  //添加sonarqube自带通用规则
     return context;
