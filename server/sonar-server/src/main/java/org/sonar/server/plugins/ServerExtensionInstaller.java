@@ -32,6 +32,7 @@ import org.sonar.api.ExtensionProvider;
 import org.sonar.api.Plugin;
 import org.sonar.api.SonarRuntime;
 import org.sonar.api.profiles.ProfileDefinition;
+import org.sonar.api.rules.RuleRepository;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.utils.AnnotationUtils;
 import org.sonar.api.utils.log.Logger;
@@ -100,6 +101,8 @@ public abstract class ServerExtensionInstaller {
     rulesDefinitionList.stream().forEach(e->{LOGGER.info(e.getClass().getSimpleName());});
     List<ProfileDefinition> profileDefinitionList = container.getComponentsByType(ProfileDefinition.class);
     profileDefinitionList.stream().forEach(e->{LOGGER.info(e.getClass().getSimpleName());});
+    List<RuleRepository> ruleRepositoryList = container.getComponentsByType(RuleRepository.class);
+    ruleRepositoryList.stream().forEach(e->{LOGGER.info(e.getClass().getSimpleName());});
 
     for (Map.Entry<PluginInfo, Object> entry : installedExtensionsByPlugin.entries()) {
       PluginInfo pluginInfo = entry.getKey();
