@@ -1,1 +1,1 @@
-Ssonar-scanner-cli/src/test/resources/org/sonarsource/scanner/cli/pluginTest/foo.xoo 2xooXh
+Zsonar-scanner-cli/src/test/resources/org/sonarsource/scanner/cli/pluginTest/helloworld.txt 2txtXh

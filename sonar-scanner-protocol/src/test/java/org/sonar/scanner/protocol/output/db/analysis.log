@@ -1,15 +1,15 @@
 SonarQube plugins:
-  - Xoo 6.7.7 (xoo)
+  - txt 6.7.7 (txt)
   - SonarJava 4.15.0-SNAPSHOT (java)
 Global properties:
-  - sonar.core.id=F6E46446-AX_BKMM8crke7Nn3nssl
-  - sonar.core.startTime=2022-03-28T14:54:52+0800
-Settings for module: 024c1fa9d50e4aeca3c1595085e0a7c3
+  - sonar.core.id=BE13F35A-AX_pkVouQsUlRuriXxgz
+  - sonar.core.startTime=2022-04-02T23:44:20+0800
+Settings for module: 73d12f8e4e08444aa03a8e48d797db30
   - sonar.host.url=http://127.0.0.1:9000
   - sonar.java.binaries=C:\Users\51328\Desktop\sonarqube-6.7.7\sonarqube-6.7.7\sonar-scanner-cli\target\classes
   - sonar.projectBaseDir=C:\Users\51328\Desktop\sonarqube-6.7.7\sonarqube-6.7.7
-  - sonar.projectKey=024c1fa9d50e4aeca3c1595085e0a7c3
-  - sonar.projectName=024c1fa9d50e4aeca3c1595085e0a7c3
+  - sonar.projectKey=73d12f8e4e08444aa03a8e48d797db30
+  - sonar.projectName=73d12f8e4e08444aa03a8e48d797db30
   - sonar.projectVersion=1.0
   - sonar.scanner.app=ScannerCli
   - sonar.scanner.appVersion=6.7.7

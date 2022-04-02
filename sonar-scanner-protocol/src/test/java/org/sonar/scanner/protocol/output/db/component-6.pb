@@ -1,1 +1,0 @@
-Usonar-scanner-cli/src/test/resources/org/sonarsource/scanner/cli/pluginTest/Main.java 2javaX¢h
