@@ -141,7 +141,7 @@ public class PluginLoader {
         String mainClass = mainClassEntry.getValue();
         try {
           Plugin plugin = (Plugin) classLoader.loadClass(mainClass).newInstance();
-          LOG.info("PluginLoader实例化插件对象:pluginKey:{},mainClass:{},plugin:{}" + pluginKey, mainClass, plugin.getClass().getName());
+          LOG.info("PluginLoader实例化插件对象:pluginKey:{},mainClass:{},plugin:{}", pluginKey, mainClass, plugin.getClass().getName());
           instancesByPluginKey.put(pluginKey, plugin);
         } catch (UnsupportedClassVersionError e) {
           throw new IllegalStateException(String.format("The plugin [%s] does not support Java %s",
