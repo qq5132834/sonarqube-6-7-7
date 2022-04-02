@@ -63,6 +63,34 @@ public class ScannerReportReaderMetaDataTest {
         System.out.println();
     }
 
+    /***
+     * 高亮
+     */
+    @Test
+    public void readHighlightingTest(){
+        CloseableIterator<ScannerReport.SyntaxHighlightingRule> highlightingRuleCloseableIterator = this.scannerReportReader.readComponentSyntaxHighlighting(3);
+        while (highlightingRuleCloseableIterator.hasNext()){
+            ScannerReport.SyntaxHighlightingRule syntaxHighlightingRule = highlightingRuleCloseableIterator.next();
+            System.out.println(syntaxHighlightingRule.getType() + "," +syntaxHighlightingRule.getRange().toString().replaceAll("\n", ", "));
+        }
+    }
 
+    /***
+     * 问题
+     */
+    @Test
+    public void readIssueTest(){
+        CloseableIterator<ScannerReport.Issue> issueCloseableIterator = this.scannerReportReader.readComponentIssues(3);
+        while (issueCloseableIterator.hasNext()){
+            ScannerReport.Issue issue = issueCloseableIterator.next();
+            issue.getGap();
+            issue.getSeverity();
+            issue.getMsg();
+            issue.getRuleKey();
+            issue.getTextRange();
+            issue.getRuleRepository();
+            System.out.println();
+        }
+    }
 
 }
