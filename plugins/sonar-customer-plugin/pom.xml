@@ -10,7 +10,7 @@
   </parent>
 
   <artifactId>sonar-customer-plugin</artifactId>
-
+  <packaging>sonar-plugin</packaging><!-- 这个非常重要 -->
   <name>sonar-customer-plugin</name>
 
   <properties>
