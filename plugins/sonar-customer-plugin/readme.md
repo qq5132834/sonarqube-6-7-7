@@ -1,7 +1,9 @@
+1、目前插件的问题
+    1.1 无法默认规则有效；
+    1.2 无法获取有效规则。
 
+2、清理数据
 show tables;
-
-
 select * from active_rule_parameters ;  DELETE FROM active_rule_parameters ;
 select * from active_rules ;    DELETE FROM active_rules ;
 select * from analysis_properties ;

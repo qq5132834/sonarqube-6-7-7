@@ -10,6 +10,7 @@ public class TxtPlugin implements Plugin {
         context.addExtension(TxtProfileDefinition.class);
         context.addExtension(TxtSensor.class);
         context.addExtension(TxtContainRuleDefinition.class);
+        context.addExtension(SayHelloFromScanner.class);
 
 //        context.addExtensions(
 //                TxtLanguage.class,

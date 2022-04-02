@@ -9,22 +9,24 @@ import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.sensor.SensorDescriptor;
 import org.sonar.api.batch.sensor.issue.NewIssue;
 import org.sonar.api.rule.RuleKey;
+import org.sonar.api.utils.log.Logger;
+import org.sonar.api.utils.log.Loggers;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStreamReader;
 
-public abstract class TxtSensor implements Sensor {
+public class TxtSensor implements Sensor {
 
-    private final FileSystem fs;
     private final ActiveRules activeRules;
+    private final static Logger LOGGER = Loggers.get(TxtSensor.class);
     public static final String RULE_KEY = "txt";
 
-    public TxtSensor(FileSystem fs, ActiveRules activeRules) {
-        this.fs = fs;
+    public TxtSensor(ActiveRules activeRules) {
         this.activeRules = activeRules;
     }
 
-    public ActiveRules getActiveRules(){
+   public ActiveRules getActiveRules(){
         return this.activeRules;
     }
 
@@ -34,8 +36,9 @@ public abstract class TxtSensor implements Sensor {
 
     @Override
     public void describe(SensorDescriptor descriptor) {
-        descriptor.onlyOnLanguage(TxtLanguage.KEY)
-                .createIssuesForRuleRepository(TxtContainRuleDefinition.TXT_REPOSITORY);
+        descriptor.name(getClass().getName());
+//        descriptor.onlyOnLanguage(TxtLanguage.KEY)
+//                .createIssuesForRuleRepository(TxtContainRuleDefinition.TXT_REPOSITORY);
     }
 
     @Override
@@ -44,11 +47,16 @@ public abstract class TxtSensor implements Sensor {
     }
 
     private void doAnalyse(SensorContext context, String languageKey) {
+        FileSystem fs = context.fileSystem();
         RuleKey ruleKey = RuleKey.of(TxtContainRuleDefinition.TXT_REPOSITORY, getRuleKey());
-        if (activeRules.find(ruleKey) == null) {
-            return;
-        }
+//        if (activeRules.find(ruleKey) == null) {
+//            return;
+//        }
         for (InputFile inputFile : fs.inputFiles(fs.predicates().hasLanguage(languageKey))) {
+            String fileName = inputFile.filename();
+            boolean isFile = inputFile.isFile();
+            File file = inputFile.file();
+            LOGGER.info("fileName:{},isFile:{},path:{}", fileName, isFile, file.getAbsolutePath());
             processFile(inputFile, context, ruleKey, languageKey);
         }
     }

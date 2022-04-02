@@ -25,9 +25,13 @@ public class TxtProfileDefinition extends ProfileDefinition {
     }
 
     private List<ActiveRule> getActiveRuleList(){
+
+        Rule rule = Rule.create(TxtContainRuleDefinition.TXT_REPOSITORY, TxtSensor.RULE_KEY);
+        //rule.setStatus("");
+
         List<ActiveRule> activeRuleList = new ArrayList<>();
         ActiveRule activeRule = new ActiveRule();
-        activeRule.setRule(Rule.create(TxtContainRuleDefinition.TXT_REPOSITORY, TxtSensor.RULE_KEY));
+        activeRule.setRule(rule);
         activeRule.setPriority(RulePriority.MAJOR);
         return activeRuleList;
     }
