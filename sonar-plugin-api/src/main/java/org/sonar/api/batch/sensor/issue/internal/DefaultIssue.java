@@ -32,6 +32,8 @@ import org.sonar.api.batch.sensor.issue.IssueLocation;
 import org.sonar.api.batch.sensor.issue.NewIssue;
 import org.sonar.api.batch.sensor.issue.NewIssueLocation;
 import org.sonar.api.rule.RuleKey;
+import org.sonar.api.utils.log.Logger;
+import org.sonar.api.utils.log.Loggers;
 
 import static com.google.common.base.Preconditions.checkState;
 import static java.lang.String.format;
@@ -40,7 +42,7 @@ import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toList;
 
 public class DefaultIssue extends DefaultStorable implements Issue, NewIssue {
-
+  private final static Logger LOGGER = Loggers.get(DefaultIssue.class);
   private RuleKey ruleKey;
   private Double gap;
   private Severity overriddenSeverity;
@@ -143,6 +145,7 @@ public class DefaultIssue extends DefaultStorable implements Issue, NewIssue {
 
   @Override
   public void doSave() {
+    LOGGER.info("DefaultIssue.doSave().存储issue");
     requireNonNull(this.ruleKey, "ruleKey is mandatory on issue");
     checkState(primaryLocation != null, "Primary location is mandatory on every issue");
     storage.store(this);
