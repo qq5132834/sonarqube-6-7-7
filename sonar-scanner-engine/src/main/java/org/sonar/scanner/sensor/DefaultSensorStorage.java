@@ -202,6 +202,7 @@ public class DefaultSensorStorage implements SensorStorage {
 
   @Override
   public void store(Measure newMeasure) {
+    LOG.info("DefaultSensorStorage.store.存储Measure");
     if (newMeasure.inputComponent() instanceof DefaultInputFile) {
       DefaultInputFile defaultInputFile = (DefaultInputFile) newMeasure.inputComponent();
       if (shouldSkipStorage(defaultInputFile)) {
@@ -363,6 +364,7 @@ public class DefaultSensorStorage implements SensorStorage {
    */
   @Override
   public void store(Issue issue) {
+    LOG.info("DefaultSensorStorage.store.存储Issue");
     if (issue.primaryLocation().inputComponent() instanceof DefaultInputFile) {
       DefaultInputFile defaultInputFile = (DefaultInputFile) issue.primaryLocation().inputComponent();
       if (shouldSkipStorage(defaultInputFile)) {
@@ -375,6 +377,7 @@ public class DefaultSensorStorage implements SensorStorage {
 
   @Override
   public void store(DefaultHighlighting highlighting) {
+    LOG.info("DefaultSensorStorage.store.存储DefaultHighlighting");
     ScannerReportWriter writer = reportPublisher.getWriter();
     DefaultInputFile inputFile = (DefaultInputFile) highlighting.inputFile();
     if (shouldSkipStorage(inputFile)) {
@@ -439,6 +442,7 @@ public class DefaultSensorStorage implements SensorStorage {
 
   @Override
   public void store(DefaultCoverage defaultCoverage) {
+    LOG.info("DefaultSensorStorage.store.存储DefaultCoverage");
     DefaultInputFile inputFile = (DefaultInputFile) defaultCoverage.inputFile();
     if (shouldSkipStorage(inputFile)) {
       return;
