@@ -19,6 +19,7 @@
  */
 package org.sonar.server.source;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 import org.sonar.core.util.stream.MoreCollectors;
@@ -67,11 +68,20 @@ public class SourceService {
     if (dto == null) {
       return Optional.empty();
     }
-    return Optional.of(dto.getSourceData().getLinesList().stream()
-      .filter(line -> line.hasLine() && line.getLine() >= from)
-      .limit((toInclusive - from) + 1L)
-      .map(function)
-      .collect(MoreCollectors.toList()));
+
+    java.util.List<org.sonar.db.protobuf.DbFileSources.Line> lineList = dto.getSourceData().getLinesList();
+    lineList.stream().forEach(line->{
+      System.out.println(line.getLine());
+      System.out.println(line.getSource());
+      System.out.println(line.getHighlighting());
+      System.out.println(line.getLineHits());
+    });
+    List list = lineList.stream()
+            .filter(line -> line.hasLine() && line.getLine() >= from)
+            .limit((toInclusive - from) + 1L)
+            .map(function)
+            .collect(MoreCollectors.toList());
+    return Optional.of(list);
   }
 
   private static void verifyLine(int line) {

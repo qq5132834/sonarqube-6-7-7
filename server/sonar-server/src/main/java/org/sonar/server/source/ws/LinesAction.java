@@ -136,7 +136,7 @@ public class LinesAction implements SourcesWsAction {
       Iterable<DbFileSources.Line> lines = checkFoundWithOptional(sourceService.getLines(dbSession, file.uuid(), from, to), "No source found for file '%s'", file.getDbKey());
       try (JsonWriter json = response.newJsonWriter()) {
         json.beginObject();
-        writeSource(lines, json);
+        writeSource(lines, json); //处理高亮
         json.endObject();
       }
     }
