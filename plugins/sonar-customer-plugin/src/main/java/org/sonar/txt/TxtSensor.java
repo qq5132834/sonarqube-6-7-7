@@ -118,17 +118,17 @@ public class TxtSensor implements Sensor {
                             .save();
 
                     //
-                    Metric<Integer> FILENAME_SIZE = new Metric.Builder("filename_size", "Filename Size", Metric.ValueType.INT)
-                            .setDescription("Number of characters of file names")
-                            .setDirection(Metric.DIRECTION_BETTER)
-                            .setQualitative(false)
-                            .setDomain(CoreMetrics.DOMAIN_GENERAL)
-                            .create();
-                    context.<Integer>newMeasure()
-                            .forMetric(FILENAME_SIZE)
-                            .on(inputFile)
-                            .withValue(inputFile.file().getName().length())
-                            .save();
+//                    Metric<Integer> FILENAME_SIZE = new Metric.Builder("filename_size", "Filename Size", Metric.ValueType.INT)
+//                            .setDescription("Number of characters of file names")
+//                            .setDirection(Metric.DIRECTION_BETTER)
+//                            .setQualitative(false)
+//                            .setDomain(CoreMetrics.DOMAIN_GENERAL)
+//                            .create();
+//                    context.<Integer>newMeasure()
+//                            .forMetric(FILENAME_SIZE)
+//                            .on(inputFile)
+//                            .withValue(inputFile.file().getName().length())
+//                            .save();
 
 
 //                    context.newSymbolTable()
