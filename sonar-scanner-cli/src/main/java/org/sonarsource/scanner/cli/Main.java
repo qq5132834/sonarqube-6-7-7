@@ -79,12 +79,6 @@ public class Main {
       "-Dsonar.java.binaries=C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\sonar-scanner-cli\\target\\classes"
     };
 
-
-
-
-
-
-
     Arrays.stream(args).forEach(e->{
       System.out.println(e);
     });
