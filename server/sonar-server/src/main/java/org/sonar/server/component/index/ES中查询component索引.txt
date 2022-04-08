@@ -27,3 +27,13 @@ GET components/component/_search
     "match_all": {}
   }
 }
+
+#根据uuid精确查找
+GET components/component/_search
+{
+  "query" : {
+    "term" : {
+      "uuid" : "AX_o3CxvZYXdWtzFjkcV"
+    }
+  }
+}
