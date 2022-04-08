@@ -152,6 +152,8 @@ public class ComponentDto {
 
   private Date createdAt;
 
+  private String userId; //新增userId字段
+
   public static String formatUuidPathFromParent(ComponentDto parent) {
     checkArgument(!Strings.isNullOrEmpty(parent.getUuidPath()));
     checkArgument(!Strings.isNullOrEmpty(parent.uuid()));
@@ -419,6 +421,13 @@ public class ComponentDto {
     return this;
   }
 
+  public String getUserId() { return userId; }
+
+  public ComponentDto setUserId(String userId){
+    this.userId = userId;
+    return this;
+  }
+
   public boolean isRootProject() {
     return moduleUuid == null && Scopes.PROJECT.equals(scope);
   }
@@ -495,6 +504,7 @@ public class ComponentDto {
       .append("language", language)
       .append("enabled", enabled)
       .append("private", isPrivate)
+      .append("userId", userId)
       .toString();
   }
 
@@ -525,6 +535,7 @@ public class ComponentDto {
     copy.enabled = enabled;
     copy.isPrivate = isPrivate;
     copy.createdAt = createdAt;
+    copy.userId = userId;
     return copy;
   }
 
