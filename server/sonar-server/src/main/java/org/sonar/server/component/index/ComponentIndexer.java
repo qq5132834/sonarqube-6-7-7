@@ -121,6 +121,7 @@ public class ComponentIndexer implements ProjectIndexer, NeedAuthorizationIndexe
       // TODO allow scrolling multiple projects at the same time
       dbClient.componentDao().scrollForIndexing(dbSession, branchUuid, context -> {
         ComponentDto dto = context.getResultObject();
+        dto.setUserId("admin");
         ComponentDoc componentDoc = toDocument(dto);
         LOGGER.info("将DB.projects表中的数据写入到ES索引components.componets中");
         bulkIndexer.add(newIndexRequest(componentDoc));
@@ -194,7 +195,7 @@ public class ComponentIndexer implements ProjectIndexer, NeedAuthorizationIndexe
       .setOrganization(component.getOrganizationUuid())
       .setLanguage(component.language())
       .setQualifier(component.qualifier())
-      .setUserId("admin")
+      .setUserId(component.getUserId())
       ;
   }
 }
