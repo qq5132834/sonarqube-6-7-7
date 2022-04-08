@@ -7,6 +7,19 @@ GET components/_settings
 #查看component索引的全部数据
 GET components/_search
 
+#查看components/component的映射关系
+GET components/component/_mapping
+
+#向components/component中添加一个字段
+PUT components/component/_mapping
+{
+  "properties": {
+      "user_id": {
+        "type": "keyword"
+      }
+  }
+}
+
 #查看索引index为components中type为component的全部数据
 GET components/component/_search
 {
