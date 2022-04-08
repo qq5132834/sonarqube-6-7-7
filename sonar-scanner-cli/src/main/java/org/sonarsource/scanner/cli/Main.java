@@ -69,7 +69,22 @@ public class Main {
   }
 
   public static void main(String[] args) {
-    args = new String[]{"-X"};
+    args = new String[]{
+      "-X",
+      "-Dsonar.sorceEncoding=UTF-8",
+      "-Dsonar.login=admin",
+      "-Dsonar.password=admin",
+      "-Dsonar.host.url=http://127.0.0.1:9000",
+      "-Dsonar.sources=C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\sonar-scanner-cli\\src\\test\\resources\\org\\sonarsource\\scanner\\cli\\pluginTest",
+      "-Dsonar.java.binaries=C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\sonar-scanner-cli\\target\\classes"
+    };
+
+
+
+
+
+
+
     Arrays.stream(args).forEach(e->{
       System.out.println(e);
     });
