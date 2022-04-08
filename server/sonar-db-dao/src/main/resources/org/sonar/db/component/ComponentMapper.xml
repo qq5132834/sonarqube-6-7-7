@@ -26,7 +26,8 @@
     p.copy_component_uuid as copyComponentUuid,
     p.developer_uuid as developerUuid,
     p.private as isPrivate,
-    p.created_at as createdAt
+    p.created_at as createdAt,
+    p.user_id as userId
   </sql>
 
   <select id="selectByKey" parameterType="String" resultType="Component">
@@ -531,7 +532,8 @@
       b_module_uuid_path,
       b_name,
       b_path,
-      b_qualifier
+      b_qualifier,
+      user_id
     )
     VALUES (
     #{organizationUuid,jdbcType=VARCHAR},
@@ -567,7 +569,8 @@
     null,
     null,
     null,
-    null
+    null,
+    #{userId,jdbcType=VARCHAR}
     )
   </insert>
 
