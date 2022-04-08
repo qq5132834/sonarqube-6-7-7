@@ -42,6 +42,7 @@ public class ComponentIndexDefinition implements IndexDefinition {
   public static final String FIELD_NAME = "name";
   public static final String FIELD_QUALIFIER = "qualifier";
   public static final String FIELD_LANGUAGE = "language";
+  public static final String FIELD_USER_ID = "user_id"; //新增components.component索引中新增user_id字段
 
   private static final int DEFAULT_NUMBER_OF_SHARDS = 5;
 

@@ -30,6 +30,8 @@ import javax.annotation.Nullable;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.sonar.api.utils.log.Logger;
+import org.sonar.api.utils.log.Loggers;
 import org.sonar.core.util.stream.MoreCollectors;
 import org.sonar.db.DbClient;
 import org.sonar.db.DbSession;
@@ -49,7 +51,7 @@ import static java.util.Collections.emptyList;
 import static org.sonar.server.component.index.ComponentIndexDefinition.INDEX_TYPE_COMPONENT;
 
 public class ComponentIndexer implements ProjectIndexer, NeedAuthorizationIndexer {
-
+  private static final Logger LOGGER = Loggers.get(ComponentIndexer.class);
   private static final AuthorizationScope AUTHORIZATION_SCOPE = new AuthorizationScope(INDEX_TYPE_COMPONENT, project -> true);
   private static final ImmutableSet<IndexType> INDEX_TYPES = ImmutableSet.of(INDEX_TYPE_COMPONENT);
 
@@ -119,7 +121,9 @@ public class ComponentIndexer implements ProjectIndexer, NeedAuthorizationIndexe
       // TODO allow scrolling multiple projects at the same time
       dbClient.componentDao().scrollForIndexing(dbSession, branchUuid, context -> {
         ComponentDto dto = context.getResultObject();
-        bulkIndexer.add(newIndexRequest(toDocument(dto)));
+        ComponentDoc componentDoc = toDocument(dto);
+        LOGGER.info("写入数据到ES索引components.componets中");
+        bulkIndexer.add(newIndexRequest(componentDoc));
         remaining.remove(dto.projectUuid());
       });
     }
@@ -189,6 +193,8 @@ public class ComponentIndexer implements ProjectIndexer, NeedAuthorizationIndexe
       .setProjectUuid(component.projectUuid())
       .setOrganization(component.getOrganizationUuid())
       .setLanguage(component.language())
-      .setQualifier(component.qualifier());
+      .setQualifier(component.qualifier())
+      .setUserId("admin")
+      ;
   }
 }

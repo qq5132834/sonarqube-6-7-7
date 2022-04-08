@@ -25,13 +25,7 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nullable;
 import org.sonar.server.es.BaseDoc;
 
-import static org.sonar.server.component.index.ComponentIndexDefinition.FIELD_KEY;
-import static org.sonar.server.component.index.ComponentIndexDefinition.FIELD_LANGUAGE;
-import static org.sonar.server.component.index.ComponentIndexDefinition.FIELD_NAME;
-import static org.sonar.server.component.index.ComponentIndexDefinition.FIELD_ORGANIZATION_UUID;
-import static org.sonar.server.component.index.ComponentIndexDefinition.FIELD_PROJECT_UUID;
-import static org.sonar.server.component.index.ComponentIndexDefinition.FIELD_QUALIFIER;
-import static org.sonar.server.component.index.ComponentIndexDefinition.FIELD_UUID;
+import static org.sonar.server.component.index.ComponentIndexDefinition.*;
 
 public class ComponentDoc extends BaseDoc {
 
@@ -117,4 +111,15 @@ public class ComponentDoc extends BaseDoc {
     setField(FIELD_ORGANIZATION_UUID, s);
     return this;
   }
+
+  /***
+   * ES搜索引擎components.component索引中新增user_id字段
+   * @param s
+   * @return
+   */
+  public ComponentDoc setUserId(String s){
+    setField(FIELD_USER_ID, s);
+    return this;
+  }
+
 }
