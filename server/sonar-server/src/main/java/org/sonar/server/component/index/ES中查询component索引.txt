@@ -1,0 +1,8 @@
+#查看所有索引
+GET _cat/indices
+
+#查看component索引的设置
+GET components/_settings
+
+#查看component索引的全部数据
+GET components/_search
