@@ -122,7 +122,7 @@ public class ComponentIndexer implements ProjectIndexer, NeedAuthorizationIndexe
       dbClient.componentDao().scrollForIndexing(dbSession, branchUuid, context -> {
         ComponentDto dto = context.getResultObject();
         ComponentDoc componentDoc = toDocument(dto);
-        LOGGER.info("写入数据到ES索引components.componets中");
+        LOGGER.info("将DB.projects表中的数据写入到ES索引components.componets中");
         bulkIndexer.add(newIndexRequest(componentDoc));
         remaining.remove(dto.projectUuid());
       });
