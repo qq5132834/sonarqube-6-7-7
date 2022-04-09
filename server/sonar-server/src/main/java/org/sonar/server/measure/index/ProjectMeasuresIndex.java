@@ -51,6 +51,8 @@ import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.sonar.api.ce.ComputeEngineSide;
 import org.sonar.api.server.ServerSide;
 import org.sonar.api.utils.System2;
+import org.sonar.api.utils.log.Logger;
+import org.sonar.api.utils.log.Loggers;
 import org.sonar.core.util.stream.MoreCollectors;
 import org.sonar.server.es.DefaultIndexSettingsElement;
 import org.sonar.server.es.EsClient;
@@ -108,7 +110,7 @@ import static org.sonarqube.ws.client.project.ProjectsWsParameters.MAX_PAGE_SIZE
 @ComputeEngineSide
 @ServerSide
 public class ProjectMeasuresIndex {
-
+  private static final Logger LOGGER = Loggers.get(ProjectMeasuresIndex.class);
   public static final List<String> SUPPORTED_FACETS = ImmutableList.of(
     NCLOC_KEY,
     NEW_LINES_KEY,
@@ -179,6 +181,8 @@ public class ProjectMeasuresIndex {
 
     addFacets(requestBuilder, searchOptions, filters, query);
     addSort(query, requestBuilder);
+    LOGGER.info("SearchRequestBuilder中source属性的数据，就是提交给es的查询条件.");
+    //requestBuilder.get()获取查询的结果
     return new SearchIdResult<>(requestBuilder.get(), id -> id, system2.getDefaultTimeZone());
   }
 
