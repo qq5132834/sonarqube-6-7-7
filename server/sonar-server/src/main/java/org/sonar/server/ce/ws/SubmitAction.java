@@ -33,6 +33,7 @@ import org.sonar.api.utils.log.Loggers;
 import org.sonar.ce.queue.CeTask;
 import org.sonar.server.computation.queue.ReportSubmitter;
 import org.sonar.server.organization.DefaultOrganizationProvider;
+import org.sonar.server.user.UserSession;
 import org.sonar.server.ws.WsUtils;
 import org.sonarqube.ws.WsCe;
 
@@ -49,10 +50,12 @@ public class SubmitAction implements CeWsAction {
   private static final Logger LOGGER = Loggers.get(SubmitAction.class);
   private final ReportSubmitter reportSubmitter;
   private final DefaultOrganizationProvider defaultOrganizationProvider;
+  private final UserSession userSession;
 
-  public SubmitAction(ReportSubmitter reportSubmitter, DefaultOrganizationProvider defaultOrganizationProvider) {
+  public SubmitAction(ReportSubmitter reportSubmitter, DefaultOrganizationProvider defaultOrganizationProvider, UserSession userSession) {
     this.reportSubmitter = reportSubmitter;
     this.defaultOrganizationProvider = defaultOrganizationProvider;
+    this.userSession = userSession;
   }
 
   @Override
@@ -126,7 +129,9 @@ public class SubmitAction implements CeWsAction {
       this.outputFile(wsRequest.mandatoryParamAsPart(PARAM_REPORT_DATA));
       return; //查看客户数扫描提交的zip文件包
     }
-
+    Integer userId = this.userSession.getUserId();
+    String name = this.userSession.getName();
+    String login = this.userSession.getLogin();
     try (InputStream report = new BufferedInputStream(wsRequest.mandatoryParamAsPart(PARAM_REPORT_DATA).getInputStream())) {
       CeTask task = reportSubmitter.submit(organizationKey, projectKey, projectBranch, projectName, characteristics, report);
       WsCe.SubmitResponse submitResponse = WsCe.SubmitResponse.newBuilder()
