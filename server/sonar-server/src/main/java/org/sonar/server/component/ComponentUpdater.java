@@ -27,6 +27,8 @@ import org.sonar.api.i18n.I18n;
 import org.sonar.api.resources.Qualifiers;
 import org.sonar.api.resources.Scopes;
 import org.sonar.api.utils.System2;
+import org.sonar.api.utils.log.Logger;
+import org.sonar.api.utils.log.Loggers;
 import org.sonar.core.component.ComponentKeys;
 import org.sonar.core.util.Uuids;
 import org.sonar.db.DbClient;
@@ -45,7 +47,7 @@ import static org.sonar.core.component.ComponentKeys.isValidModuleKey;
 import static org.sonar.server.ws.WsUtils.checkRequest;
 
 public class ComponentUpdater {
-
+  private final static Logger LOGGER = Loggers.get(ComponentUpdater.class);
   private final DbClient dbClient;
   private final I18n i18n;
   private final System2 system2;
@@ -72,7 +74,7 @@ public class ComponentUpdater {
    */
   public ComponentDto create(DbSession dbSession, NewComponent newComponent, @Nullable Integer userId) {
     checkKeyFormat(newComponent.qualifier(), newComponent.key());
-    ComponentDto componentDto = createRootComponent(dbSession, newComponent);
+    ComponentDto componentDto = createRootComponent(dbSession, newComponent, userId);
     if (isRootProject(componentDto)) {
       createBranch(dbSession, componentDto.uuid());
     }
@@ -82,7 +84,7 @@ public class ComponentUpdater {
     return componentDto;
   }
 
-  private ComponentDto createRootComponent(DbSession session, NewComponent newComponent) {
+  private ComponentDto createRootComponent(DbSession session, NewComponent newComponent, Integer userId) {
     checkBranchFormat(newComponent.qualifier(), newComponent.branch());
     String keyWithBranch = ComponentKeys.createKey(newComponent.key(), newComponent.branch());
     checkRequest(!dbClient.componentDao().selectByKey(session, keyWithBranch).isPresent(),
@@ -104,9 +106,10 @@ public class ComponentUpdater {
       .setScope(Scopes.PROJECT)
       .setQualifier(newComponent.qualifier())
       .setPrivate(newComponent.isPrivate())
-      .setCreatedAt(new Date(system2.now()));
+      .setCreatedAt(new Date(system2.now()))
+      .setUserId(String.valueOf(userId)); //记录提交用户信息
     dbClient.componentDao().insert(session, component);
-
+    LOGGER.info("插入数据到projects表中");
     return component;
   }
 
