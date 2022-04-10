@@ -113,6 +113,15 @@ public class ESIndexTest {
         @JsonFormat(pattern = "yyyy-MM-dd")
         private Date birthday;
 
+        public PersonMan(){}
+
+        public PersonMan(Integer id, String name, Integer age, Date birthday){
+            this.id = id;
+            this.name = name;
+            this.age = age;
+            this.birthday = birthday;
+        }
+
         public Integer getId() {
             return id;
         }
