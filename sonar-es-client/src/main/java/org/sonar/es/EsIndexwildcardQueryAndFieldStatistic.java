@@ -31,7 +31,7 @@ public class EsIndexwildcardQueryAndFieldStatistic {
     // 注意区分5.X系列的ES版本client初始化
     static {
         try {
-            client = new EsClient().client();
+            client = new MyEsClient().getTransportClient();
         }catch (Exception e) {
             e.printStackTrace();
         }

@@ -7,6 +7,7 @@ import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.sonar.api.utils.System2;
 import org.sonar.server.component.index.ComponentIndex;
 import org.sonar.server.component.index.ComponentQuery;
+import org.sonar.server.es.EsClient;
 import org.sonar.server.es.SearchIdResult;
 import org.sonar.server.es.SearchOptions;
 import org.sonar.server.permission.index.AuthorizationTypeSupport;
@@ -14,9 +15,9 @@ import org.sonar.server.permission.index.AuthorizationTypeSupport;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-public class EsClient {
+public class MyEsClient {
 
-    public TransportClient client() throws UnknownHostException {
+    public static TransportClient getTransportClient() throws UnknownHostException {
         // 设置elasticsearch集群地址 ip和端口
         InetSocketTransportAddress address = new InetSocketTransportAddress(InetAddress.getByName("192.168.32.146"), 9300);
 
@@ -33,16 +34,9 @@ public class EsClient {
         return client;
     }
 
-    public static void main(String[] args) throws Exception {
-        EsClient esClient = new EsClient();
-        TransportClient transportClient = esClient.client();
-        System.out.println("hello es.");
 
-        org.sonar.server.es.EsClient client = new org.sonar.server.es.EsClient(transportClient);
-        ComponentIndex componentIndex = new ComponentIndex(client, new AuthorizationTypeSupport(new UserSessionRule()), System2.INSTANCE);
-        ComponentQuery query = ComponentQuery.builder().build();
-        SearchIdResult<String> stringSearchIdResult = componentIndex.search(query, new SearchOptions().setOffset(0).setLimit(50));
-        System.out.println();
+    public static EsClient getEsClient(TransportClient transportClient){
+        return new org.sonar.server.es.EsClient(transportClient);
     }
 
 }

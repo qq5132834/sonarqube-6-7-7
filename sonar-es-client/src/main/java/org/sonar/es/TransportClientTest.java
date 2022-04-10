@@ -32,7 +32,7 @@ public class TransportClientTest {
 
     public TransportClientTest() {
         try {
-            this.transportClient = new EsClient().client();
+            this.transportClient = new MyEsClient().getTransportClient();
         }catch (Exception e) {
             e.printStackTrace();
         }
