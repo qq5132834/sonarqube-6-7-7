@@ -38,6 +38,46 @@ public class EsMatchQueryTest {
         this.client = MyEsClient.getTransportClient();
     }
 
+    /***
+     * 多个 field
+     * 例如：
+     * GET components/component/_search
+     * {
+     *   "query": {
+     *      "multi_match": {
+     *        "query": "test scanner",
+     *        "fields": ["qualifier", "name"]
+     *      }
+     *     }
+     *   }
+     * }
+     *
+     */
+    @Test
+    public void multi_matchQuery() throws Exception{
+
+        SearchSourceBuilder builder = new SearchSourceBuilder();
+        builder.from(0);
+        builder.size(5);
+        builder.query(QueryBuilders.multiMatchQuery("test scanner", "qualifier", "name"));
+
+        SearchRequest searchRequest = new SearchRequest(this.index);
+        searchRequest.types(type);
+        searchRequest.source(builder);
+
+        //执行查询
+        SearchResponse searchResponse = this.client.search(searchRequest).get();
+
+        //
+        long total = searchResponse.getHits().getTotalHits();
+        SearchHit[] searchHits = searchResponse.getHits().getHits();
+        for (SearchHit searchHit : searchHits) {
+            Map<String, Object> map = searchHit.getSourceAsMap();
+            System.out.println(map.toString());
+        }
+
+    }
+
 
     /***
      * GET components/component/_search
