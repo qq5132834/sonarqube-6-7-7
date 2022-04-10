@@ -39,17 +39,17 @@
       </exclusions>
     </dependency>
 
-<!--    <dependency>-->
-<!--      <groupId>${project.groupId}</groupId>-->
-<!--      <artifactId>sonar-server</artifactId>-->
-<!--      <version>${project.version}</version>-->
-<!--&lt;!&ndash;      <exclusions>&ndash;&gt;-->
-<!--&lt;!&ndash;        <exclusion>&ndash;&gt;-->
-<!--&lt;!&ndash;          <groupId>org.elasticsearch.client</groupId>&ndash;&gt;-->
-<!--&lt;!&ndash;          <artifactId>transport</artifactId>&ndash;&gt;-->
-<!--&lt;!&ndash;        </exclusion>&ndash;&gt;-->
-<!--&lt;!&ndash;      </exclusions>&ndash;&gt;-->
-<!--    </dependency>-->
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>sonar-server</artifactId>
+      <version>${project.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.elasticsearch.client</groupId>
+          <artifactId>transport</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
 
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
