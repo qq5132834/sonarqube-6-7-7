@@ -1,5 +1,7 @@
 package org.sonarsource;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.elasticsearch.action.ActionFuture;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
@@ -17,6 +19,7 @@ import org.junit.Test;
 import org.sonar.es.MyEsClient;
 
 import java.net.UnknownHostException;
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 
@@ -27,8 +30,8 @@ public class ESIndexTest {
 
     private Client client;
 
-    private String index = "person";
-    private String type = "man";
+    public static String index = "person";
+    public static String type = "man";
 
     @Before
     public void createClient() throws UnknownHostException {
@@ -73,7 +76,7 @@ public class ESIndexTest {
         CreateIndexResponse createIndexResponse = this.client.admin().indices().create(request).get();
 
         //输出
-        System.out.println(createIndexResponse);
+        System.out.println(createIndexResponse.isAcknowledged());
 
     }
 
@@ -98,6 +101,49 @@ public class ESIndexTest {
         request.indices(this.index);
         DeleteIndexResponse deleteIndexResponse = this.client.admin().indices().delete(request).get();
         System.out.println(deleteIndexResponse.isAcknowledged()); //是否响应
+    }
+
+
+    public static class PersonMan {
+        @JsonIgnore
+        private Integer id;
+        private String name;
+        private Integer age;
+
+        @JsonFormat(pattern = "yyyy-MM-dd")
+        private Date birthday;
+
+        public Integer getId() {
+            return id;
+        }
+
+        public void setId(Integer id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public Integer getAge() {
+            return age;
+        }
+
+        public void setAge(Integer age) {
+            this.age = age;
+        }
+
+        public Date getBirthday() {
+            return birthday;
+        }
+
+        public void setBirthday(Date birthday) {
+            this.birthday = birthday;
+        }
     }
 
 }
