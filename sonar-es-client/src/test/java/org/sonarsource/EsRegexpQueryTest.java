@@ -1,5 +1,6 @@
 package org.sonarsource;
 
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
@@ -12,9 +13,11 @@ import org.junit.Test;
 import org.sonar.es.MyEsClient;
 
 /***
- * range范围查询，只针对数值类型，对某一个field进行大于小于范围指定。
+ * 正则查询，通过编写的正则表达式去匹配内容
+ *
+ * prefix、fuzzy、wildCard、regexp 查询效率比较低
  */
-public class EsRangeQueryTest {
+public class EsRegexpQueryTest {
 
     private String index = "components";
     private String type = "component";
@@ -27,29 +30,15 @@ public class EsRangeQueryTest {
         this.client = MyEsClient.getTransportClient();
     }
 
-    /**
-     * 年龄大于等于10，小于等于20
-     * 例如：
-     * GET components/component/_search
-     * {
-     *   "query" : {
-     *     "range": {
-     *       "age": {
-     *         "gte": 10,   //大于等于    gt 大于
-     *         "lte": 20    //小于等于    lt 小于
-     *       }
-     *     }
-     *   }
-     * }
-     * */
+
     @Test
-    public void rangeTest() throws Exception {
+    public void regexpTest() throws Exception {
         SearchRequest searchRequest = new SearchRequest(this.index);
         searchRequest.types(type);
 
         //
         SearchSourceBuilder builder = new SearchSourceBuilder();
-        builder.query(QueryBuilders.rangeQuery("age").gte(10).lte(20));  //大于等于10，小于等于20
+        builder.query(QueryBuilders.regexpQuery("mobile", "180[0-9]{8}")); //电话号是180开头的电话号码
 
         //
         searchRequest.source(builder);
