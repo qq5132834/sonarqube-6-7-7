@@ -4,9 +4,13 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.sonarsource.sonarqube</groupId>
+  <parent>
+    <groupId>org.sonarsource.sonarqube</groupId>
+    <artifactId>server</artifactId>
+    <version>6.7.7</version>
+  </parent>
+
   <artifactId>sonar-es-client</artifactId>
-  <version>6.7.7</version>
 
   <name>sonar-es-client</name>
   <properties>
@@ -35,11 +39,22 @@
     </dependency>
 
     <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-core</artifactId>
-      <version>2.9.1</version>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>sonar-server</artifactId>
+      <version>${project.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.elasticsearch.client</groupId>
+          <artifactId>transport</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
+<!--    <dependency>-->
+<!--      <groupId>org.apache.logging.log4j</groupId>-->
+<!--      <artifactId>log4j-core</artifactId>-->
+<!--      <version>2.9.1</version>-->
+<!--    </dependency>-->
 
   </dependencies>
 
