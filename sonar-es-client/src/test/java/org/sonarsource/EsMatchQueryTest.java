@@ -35,6 +35,45 @@ public class EsMatchQueryTest {
         this.client = MyEsClient.getTransportClient();
     }
 
+
+    /***
+     * GET components/component/_search
+     * {
+     *   "query": {
+     *     "match": {
+     *       "name": "test scanner"
+     *     }
+     *   }
+     * }
+     *
+     * 这里会对查询字段 name的查询值进行分词为  test、 scanner 两个词
+     */
+    @Test
+    public void matchQuery() throws Exception{
+
+        SearchSourceBuilder builder = new SearchSourceBuilder();
+        builder.from(0);
+        builder.size(5);
+        builder.query(QueryBuilders.matchQuery("name", "test scanner"));
+        //这里会对"test scanner"进行分词为 test、scanner 两个单词。term 就不会进行分词
+
+        SearchRequest searchRequest = new SearchRequest(this.index);
+        searchRequest.types(type);
+        searchRequest.source(builder);
+
+        //执行查询
+        SearchResponse searchResponse = this.client.search(searchRequest).get();
+
+        //
+        long total = searchResponse.getHits().getTotalHits();
+        SearchHit[] searchHits = searchResponse.getHits().getHits();
+        for (SearchHit searchHit : searchHits) {
+            Map<String, Object> map = searchHit.getSourceAsMap();
+            System.out.println(map.toString());
+        }
+
+    }
+
     /***
      * 例如：
      * GET components/component/_search
@@ -47,7 +86,7 @@ public class EsMatchQueryTest {
      * }
      */
     @Test
-    public void matchQuery() throws Exception{
+    public void matchAllQuery() throws Exception{
 
         SearchSourceBuilder builder = new SearchSourceBuilder();
         builder.from(0);
