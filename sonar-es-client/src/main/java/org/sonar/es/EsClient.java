@@ -12,7 +12,7 @@ public class EsClient {
 
     public TransportClient client() throws UnknownHostException {
         // 设置elasticsearch集群地址 ip和端口
-        InetSocketTransportAddress address = new InetSocketTransportAddress(InetAddress.getByName("192.168.32.140"), 9300);
+        InetSocketTransportAddress address = new InetSocketTransportAddress(InetAddress.getByName("192.168.32.146"), 9300);
 
         // 设置elasticsearch集群名称
         Settings settings = Settings.builder()
@@ -30,6 +30,13 @@ public class EsClient {
     public static void main(String[] args) throws Exception {
         EsClient esClient = new EsClient();
         TransportClient transportClient = esClient.client();
+        System.out.println("hello es.");
+
+//        org.sonar.server.es.EsClient client = new org.sonar.server.es.EsClient(transportClient);
+//        ComponentIndex componentIndex = new ComponentIndex(client, new AuthorizationTypeSupport(new UserSessionRule()), System2.INSTANCE);
+//        ComponentQuery query = ComponentQuery.builder().build();
+//        SearchIdResult<String> stringSearchIdResult = componentIndex.search(query, new SearchOptions().setOffset(0).setLimit(50));
+//        System.out.println();
     }
 
 }
