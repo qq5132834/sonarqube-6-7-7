@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
+import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -20,7 +21,9 @@ import java.util.Map;
  * 3.如果查询的内容是一个可以被分词的内容（text），match会将你指定的查询内容根据一定的方式去分词。去分词库中匹配指定的内容；
  *
  * 4.match查询，底层实际就是多个term查询，将多个term查询的结果给你封装到了一起；
- * 5.match_all查询
+ * 5.match_all查询；
+ * 6、match查询；
+ * 7、布尔match查询；
  */
 public class EsMatchQueryTest {
 
@@ -46,7 +49,20 @@ public class EsMatchQueryTest {
      *   }
      * }
      *
-     * 这里会对查询字段 name的查询值进行分词为  test、 scanner 两个词
+     * 这里会对查询字段 name的查询值进行分词为  test、 scanner 两个词，匹配包含test 或 scanner的。与下面的方式等价
+     *
+     * GET components/component/_search
+     * {
+     *   "query": {
+     *     "match": {
+     *       "name": {
+     *         "query": "test scanner",
+     *         "operator": "or"  # or、and
+     *       }
+     *     }
+     *   }
+     * }
+     *
      */
     @Test
     public void matchQuery() throws Exception{
@@ -55,7 +71,9 @@ public class EsMatchQueryTest {
         builder.from(0);
         builder.size(5);
         builder.query(QueryBuilders.matchQuery("name", "test scanner"));
-        //这里会对"test scanner"进行分词为 test、scanner 两个单词。term 就不会进行分词
+        //这里会对"test scanner"进行分词为 test、scanner 两个单词，只需要匹配其中一个即可。term 就不会进行分词
+        builder.query(QueryBuilders.matchQuery("name", "test scanner").operator(Operator.OR));  //or的布尔match与上面等价
+        builder.query(QueryBuilders.matchQuery("name", "test scanner").operator(Operator.AND)); //同事匹配两个分词结果
 
         SearchRequest searchRequest = new SearchRequest(this.index);
         searchRequest.types(type);
