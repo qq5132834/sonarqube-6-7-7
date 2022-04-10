@@ -4,6 +4,12 @@ import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
+import org.sonar.api.utils.System2;
+import org.sonar.server.component.index.ComponentIndex;
+import org.sonar.server.component.index.ComponentQuery;
+import org.sonar.server.es.SearchIdResult;
+import org.sonar.server.es.SearchOptions;
+import org.sonar.server.permission.index.AuthorizationTypeSupport;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -32,11 +38,11 @@ public class EsClient {
         TransportClient transportClient = esClient.client();
         System.out.println("hello es.");
 
-//        org.sonar.server.es.EsClient client = new org.sonar.server.es.EsClient(transportClient);
-//        ComponentIndex componentIndex = new ComponentIndex(client, new AuthorizationTypeSupport(new UserSessionRule()), System2.INSTANCE);
-//        ComponentQuery query = ComponentQuery.builder().build();
-//        SearchIdResult<String> stringSearchIdResult = componentIndex.search(query, new SearchOptions().setOffset(0).setLimit(50));
-//        System.out.println();
+        org.sonar.server.es.EsClient client = new org.sonar.server.es.EsClient(transportClient);
+        ComponentIndex componentIndex = new ComponentIndex(client, new AuthorizationTypeSupport(new UserSessionRule()), System2.INSTANCE);
+        ComponentQuery query = ComponentQuery.builder().build();
+        SearchIdResult<String> stringSearchIdResult = componentIndex.search(query, new SearchOptions().setOffset(0).setLimit(50));
+        System.out.println();
     }
 
 }
