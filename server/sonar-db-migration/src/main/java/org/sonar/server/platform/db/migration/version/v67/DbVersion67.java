@@ -35,6 +35,7 @@ public class DbVersion67 implements DbVersion {
       .add(1836, "Migrate 'previous_analysis' leak periods to 'previous_version'", MigratePreviousAnalysisToPreviousVersion.class)
       .add(1837, "Drop old licenses", DropOldLicenses.class)
       .add(1838, "Update PERMISSION_TEMPLATE.KEYS", UpdatePermissionTooLongTemplateKeys.class)
+      .add(1839, "在projects表中添加一个user_id字段", AddUserIdColumnToProjectsTable.class)
     ;
   }
 }
