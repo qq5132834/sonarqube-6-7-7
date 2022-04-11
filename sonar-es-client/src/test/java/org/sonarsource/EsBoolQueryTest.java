@@ -105,7 +105,7 @@ public class EsBoolQueryTest {
         SearchResponse searchResponse = this.client.search(searchRequest).get();
 
         //
-        long total = searchResponse.getHits().totalHits;
+        //long total = searchResponse.getHits().totalHits;
         for (SearchHit hit : searchResponse.getHits()) {
             System.out.println(hit.getSourceAsMap());
         }
