@@ -158,6 +158,7 @@ public class FileIndexer {
   }
 
   private Void indexFile(Path sourceFile, InputFile.Type type, Progress progress) throws IOException {
+    LOG.info("扫描文件忽略");
     // get case of real file without resolving link
     Path realAbsoluteFile = sourceFile.toRealPath(LinkOption.NOFOLLOW_LINKS).toAbsolutePath().normalize();
     if (!realAbsoluteFile.startsWith(module.getBaseDir())) {
