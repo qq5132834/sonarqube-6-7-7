@@ -104,6 +104,7 @@ class ServerConnection {
    * @throws IllegalStateException if HTTP code is different than 2xx
    */
   private ResponseBody callUrl(String url) throws IOException {
+    logger.info("请求服务器ServerConnection.callUrl:" + url);
     try {
       Request request = new Request.Builder()
         .url(url)
