@@ -74,17 +74,20 @@ public class Main {
   //  java -Djava.awt.headless=true -classpath /home/ubuntu/sonar-scanner-cli/lib/sonar-scanner-cli-4.6.2-SNAPSHOT.jar org.sonarsource.scanner.cli.Main  -Dsonar.sorceEncoding=UTF-8 -Dsonar.login=test -Dsonar.password=test  -Dsonar.host.url=http://192.168.52.1:9000  -Dsonar.sources=/home/ubuntu/sonar-scanner-cli/lib/pluginTest   -Dsonar.projectKey=a4 -Dsonar.projectName=a4
 
   public static void main(String[] args) {
-//    args = new String[]{
-//      "-Dsonar.projectKey=" + UUID.randomUUID().toString().replaceAll("-", ""),
-//      "-Dsonar.projectName=HelloWorld",
-//      "-X",
-//      "-Dsonar.sorceEncoding=UTF-8",
-//      "-Dsonar.login=test",
-//      "-Dsonar.password=test",
+    args = new String[]{
+      "-Dsonar.projectKey=" + UUID.randomUUID().toString().replaceAll("-", ""),
+      "-Dsonar.projectName=HelloWorld",
+      "-X",
+      "-Dsonar.sorceEncoding=UTF-8",
+      "-Dsonar.login=test",
+      "-Dsonar.password=test",
 //      "-Dsonar.host.url=http://127.0.0.1:9000",
-//      "-Dsonar.sources=C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\sonar-scanner-cli\\src\\test\\resources\\org\\sonarsource\\scanner\\cli\\pluginTest",
-//      "-Dsonar.java.binaries=C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\sonar-scanner-cli\\target\\classes"
-//    };
+      "-Dsonar.host.url=http://192.168.52.1:9000",
+      //"-Dsonar.sources=C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\sonar-scanner-cli\\src\\test\\resources\\org\\sonarsource\\scanner\\cli\\pluginTest",
+      "-Dsonar.sources=D:\\pluginTest" ,
+      "-Dsonar.projectBaseDir=D:\\pluginTest",
+      "-Dsonar.java.binaries=C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\sonar-scanner-cli\\target\\classes"
+    };
 
     Arrays.stream(args).forEach(e->{
       System.out.println(e);
