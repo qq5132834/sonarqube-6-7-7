@@ -11,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.sonar.es.MyEsClient;
 
-import java.net.UnknownHostException;
 import java.util.Date;
 
 /***
@@ -34,9 +33,9 @@ public class EsBulkTest {
     @Test
     public void bulkCreateDoc() throws Exception {
         //1.准备多个数据
-        ESIndexTest.PersonMan p1 = new ESIndexTest.PersonMan(1, "张三", 20, new Date());
-        ESIndexTest.PersonMan p2 = new ESIndexTest.PersonMan(2, "李四", 21, new Date());
-        ESIndexTest.PersonMan p3 = new ESIndexTest.PersonMan(3, "王五", 22, new Date());
+        IndexTest.PersonMan p1 = new IndexTest.PersonMan(1, "张三", 20, new Date());
+        IndexTest.PersonMan p2 = new IndexTest.PersonMan(2, "李四", 21, new Date());
+        IndexTest.PersonMan p3 = new IndexTest.PersonMan(3, "王五", 22, new Date());
 
         String json1 = mapper.writeValueAsString(p1);
         String json2 = mapper.writeValueAsString(p2);
@@ -44,9 +43,9 @@ public class EsBulkTest {
 
         //2.创建request，封装数据
         BulkRequest bulkRequest = new BulkRequest();
-        bulkRequest.add(new IndexRequest(ESIndexTest.index, ESIndexTest.type, p1.getId().toString()).source(json1, XContentType.JSON));
-        bulkRequest.add(new IndexRequest(ESIndexTest.index, ESIndexTest.type, p2.getId().toString()).source(json2, XContentType.JSON));
-        bulkRequest.add(new IndexRequest(ESIndexTest.index, ESIndexTest.type, p3.getId().toString()).source(json3, XContentType.JSON));
+        bulkRequest.add(new IndexRequest(IndexTest.index, IndexTest.type, p1.getId().toString()).source(json1, XContentType.JSON));
+        bulkRequest.add(new IndexRequest(IndexTest.index, IndexTest.type, p2.getId().toString()).source(json2, XContentType.JSON));
+        bulkRequest.add(new IndexRequest(IndexTest.index, IndexTest.type, p3.getId().toString()).source(json3, XContentType.JSON));
 
         //3、用client执行
         BulkResponse bulkResponse = this.client.bulk(bulkRequest).get();
@@ -62,9 +61,9 @@ public class EsBulkTest {
     @Test
     public void bulkDeleteDoc() throws Exception {
         BulkRequest request = new BulkRequest();
-        request.add(new DeleteRequest(ESIndexTest.index, ESIndexTest.type, "1"));
-        request.add(new DeleteRequest(ESIndexTest.index, ESIndexTest.type, "2"));
-        request.add(new DeleteRequest(ESIndexTest.index, ESIndexTest.type, "3"));
+        request.add(new DeleteRequest(IndexTest.index, IndexTest.type, "1"));
+        request.add(new DeleteRequest(IndexTest.index, IndexTest.type, "2"));
+        request.add(new DeleteRequest(IndexTest.index, IndexTest.type, "3"));
 
         BulkResponse bulkResponse = this.client.bulk(request).get();
 

@@ -26,7 +26,7 @@ import java.util.concurrent.ExecutionException;
 /***
  * 索引的增、存在、删
  */
-public class ESIndexTest {
+public class IndexTest {
 
     private Client client;
 

@@ -1,13 +1,6 @@
 package org.sonarsource;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
-import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
-import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
-import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
-import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsRequest;
-import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsResponse;
 import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.index.IndexRequest;
@@ -15,10 +8,7 @@ import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.Client;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentType;
-import org.elasticsearch.common.xcontent.json.JsonXContent;
 import org.junit.Before;
 import org.junit.Test;
 import org.sonar.es.MyEsClient;
@@ -51,7 +41,7 @@ public class ESDocTest {
     public void createDoc() throws Exception {
 
         //准备json
-        ESIndexTest.PersonMan personMan = new ESIndexTest.PersonMan();
+        IndexTest.PersonMan personMan = new IndexTest.PersonMan();
         personMan.setId(1);
         personMan.setAge(23);
         personMan.setName("张三");
@@ -60,7 +50,7 @@ public class ESDocTest {
         System.out.println(json);
 
         //准备requeset对象，手动指定id
-        IndexRequest indexRequest = new IndexRequest(ESIndexTest.index, ESIndexTest.type, personMan.getId().toString());
+        IndexRequest indexRequest = new IndexRequest(IndexTest.index, IndexTest.type, personMan.getId().toString());
         indexRequest.source(json, XContentType.JSON);
 
         //通过client执行添加
@@ -79,7 +69,7 @@ public class ESDocTest {
     public void deleteDoc() throws Exception{
         //创建request对象封装数据
         String docId = "1";
-        DeleteRequest deleteRequest = new DeleteRequest(ESIndexTest.index, ESIndexTest.type, docId);
+        DeleteRequest deleteRequest = new DeleteRequest(IndexTest.index, IndexTest.type, docId);
 
         //client执行
         DeleteResponse response = this.client.delete(deleteRequest).get();
@@ -100,7 +90,7 @@ public class ESDocTest {
         String docId = "1";
 
         //创建request对象，封装对象
-        UpdateRequest updateRequest = new UpdateRequest(ESIndexTest.index, ESIndexTest.type, docId);
+        UpdateRequest updateRequest = new UpdateRequest(IndexTest.index, IndexTest.type, docId);
         updateRequest.doc(doc);
 
         //通过client对象执行
