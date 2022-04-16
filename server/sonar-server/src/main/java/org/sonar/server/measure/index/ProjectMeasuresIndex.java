@@ -179,6 +179,7 @@ public class ProjectMeasuresIndex {
     Map<String, QueryBuilder> filters = createFilters(query);
 
     //添加一个userid查询
+    LOGGER.info("添加一个userid查询，用作数据隔离");
     QueryBuilder useridQueryBuilder = QueryBuilders.termQuery("userid", "1");
     esFilter.must(useridQueryBuilder);
 
