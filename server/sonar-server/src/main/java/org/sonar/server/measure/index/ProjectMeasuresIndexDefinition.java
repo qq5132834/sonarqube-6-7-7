@@ -51,6 +51,8 @@ public class ProjectMeasuresIndexDefinition implements IndexDefinition {
   public static final String FIELD_DISTRIB_LANGUAGE = "language";
   public static final String FIELD_DISTRIB_NCLOC = "ncloc";
 
+  public static final String FILED_USERID = "userid";  //创建userid字段
+
   private final Configuration config;
 
   public ProjectMeasuresIndexDefinition(Configuration settings) {
@@ -70,6 +72,7 @@ public class ProjectMeasuresIndexDefinition implements IndexDefinition {
       .requireProjectAuthorization();
 
     mapping.keywordFieldBuilder(FIELD_UUID).disableNorms().build();
+    mapping.keywordFieldBuilder(FILED_USERID).disableNorms().build(); //创建userid字段，并且属性为keyword
     mapping.keywordFieldBuilder(FIELD_ORGANIZATION_UUID).disableNorms().build();
     mapping.keywordFieldBuilder(FIELD_KEY).disableNorms().addSubFields(SORTABLE_ANALYZER).build();
     mapping.keywordFieldBuilder(FIELD_NAME).addSubFields(SORTABLE_ANALYZER, SEARCH_GRAMS_ANALYZER).build();
