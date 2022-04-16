@@ -36,6 +36,7 @@ import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AbstractAggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.MultiBucketsAggregation.Bucket;
@@ -176,6 +177,11 @@ public class ProjectMeasuresIndex {
 
     BoolQueryBuilder esFilter = boolQuery();
     Map<String, QueryBuilder> filters = createFilters(query);
+
+    //添加一个userid查询
+    QueryBuilder useridQueryBuilder = QueryBuilders.termQuery("userid", "1");
+    esFilter.must(useridQueryBuilder);
+
     filters.values().forEach(esFilter::must);
     requestBuilder.setQuery(esFilter);
 
@@ -352,7 +358,7 @@ public class ProjectMeasuresIndex {
 
   private Map<String, QueryBuilder> createFilters(ProjectMeasuresQuery query) {
     Map<String, QueryBuilder> filters = new HashMap<>();
-    filters.put("__authorization", authorizationTypeSupport.createQueryFilter());
+    // filters.put("__authorization", authorizationTypeSupport.createQueryFilter());
     Multimap<String, MetricCriterion> metricCriterionMultimap = ArrayListMultimap.create();
     query.getMetricCriteria().forEach(metricCriterion -> metricCriterionMultimap.put(metricCriterion.getMetricKey(), metricCriterion));
     metricCriterionMultimap.asMap().forEach((key, value) -> {
