@@ -62,6 +62,7 @@ public class ProjectMeasuresDoc extends BaseDoc {
   }
 
   public ProjectMeasuresDoc setId(String s) {
+
     LOGGER.info("ES中projectMeasures/projectMeasure索引添加uuid/userid属性值");
     setField(FIELD_UUID, s);
     setField(FILED_USERID, 1); //默认userid为1,  1通常是admin用户
