@@ -27,29 +27,19 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nullable;
+
+import org.sonar.api.utils.log.Logger;
+import org.sonar.api.utils.log.Loggers;
 import org.sonar.core.util.stream.MoreCollectors;
 import org.sonar.server.es.BaseDoc;
 
 import static org.sonar.api.measures.Metric.Level.ERROR;
 import static org.sonar.api.measures.Metric.Level.OK;
 import static org.sonar.api.measures.Metric.Level.WARN;
-import static org.sonar.server.measure.index.ProjectMeasuresIndexDefinition.FIELD_ANALYSED_AT;
-import static org.sonar.server.measure.index.ProjectMeasuresIndexDefinition.FIELD_DISTRIB_LANGUAGE;
-import static org.sonar.server.measure.index.ProjectMeasuresIndexDefinition.FIELD_DISTRIB_NCLOC;
-import static org.sonar.server.measure.index.ProjectMeasuresIndexDefinition.FIELD_KEY;
-import static org.sonar.server.measure.index.ProjectMeasuresIndexDefinition.FIELD_LANGUAGES;
-import static org.sonar.server.measure.index.ProjectMeasuresIndexDefinition.FIELD_MEASURES;
-import static org.sonar.server.measure.index.ProjectMeasuresIndexDefinition.FIELD_MEASURES_KEY;
-import static org.sonar.server.measure.index.ProjectMeasuresIndexDefinition.FIELD_MEASURES_VALUE;
-import static org.sonar.server.measure.index.ProjectMeasuresIndexDefinition.FIELD_NAME;
-import static org.sonar.server.measure.index.ProjectMeasuresIndexDefinition.FIELD_NCLOC_LANGUAGE_DISTRIBUTION;
-import static org.sonar.server.measure.index.ProjectMeasuresIndexDefinition.FIELD_ORGANIZATION_UUID;
-import static org.sonar.server.measure.index.ProjectMeasuresIndexDefinition.FIELD_QUALITY_GATE_STATUS;
-import static org.sonar.server.measure.index.ProjectMeasuresIndexDefinition.FIELD_TAGS;
-import static org.sonar.server.measure.index.ProjectMeasuresIndexDefinition.FIELD_UUID;
+import static org.sonar.server.measure.index.ProjectMeasuresIndexDefinition.*;
 
 public class ProjectMeasuresDoc extends BaseDoc {
-
+  private final static Logger LOGGER = Loggers.get(ProjectMeasuresDoc.class);
   public static final Map<String, Integer> QUALITY_GATE_STATUS = ImmutableMap.of(OK.name(), 1, WARN.name(), 2, ERROR.name(), 3);
 
   public ProjectMeasuresDoc() {
@@ -72,7 +62,9 @@ public class ProjectMeasuresDoc extends BaseDoc {
   }
 
   public ProjectMeasuresDoc setId(String s) {
+    LOGGER.info("ES中projectMeasures/projectMeasure索引添加uuid/userid属性值");
     setField(FIELD_UUID, s);
+    setField(FILED_USERID, 1); //默认userid为1,  1通常是admin用户
     return this;
   }
 
