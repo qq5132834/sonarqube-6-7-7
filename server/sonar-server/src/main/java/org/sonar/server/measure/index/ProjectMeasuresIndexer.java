@@ -30,6 +30,8 @@ import java.util.Set;
 import javax.annotation.Nullable;
 import org.elasticsearch.action.index.IndexRequest;
 import org.sonar.api.resources.Qualifiers;
+import org.sonar.api.utils.log.Logger;
+import org.sonar.api.utils.log.Loggers;
 import org.sonar.core.util.stream.MoreCollectors;
 import org.sonar.db.DbClient;
 import org.sonar.db.DbSession;
@@ -50,7 +52,7 @@ import org.sonar.server.permission.index.NeedAuthorizationIndexer;
 import static org.sonar.server.measure.index.ProjectMeasuresIndexDefinition.INDEX_TYPE_PROJECT_MEASURES;
 
 public class ProjectMeasuresIndexer implements ProjectIndexer, NeedAuthorizationIndexer {
-
+  private final static Logger LOGGER = Loggers.get(ProjectMeasuresIndexer.class);
   private static final AuthorizationScope AUTHORIZATION_SCOPE = new AuthorizationScope(INDEX_TYPE_PROJECT_MEASURES, project -> Qualifiers.PROJECT.equals(project.getQualifier()));
   private static final ImmutableSet<IndexType> INDEX_TYPES = ImmutableSet.of(INDEX_TYPE_PROJECT_MEASURES);
 
@@ -161,10 +163,12 @@ public class ProjectMeasuresIndexer implements ProjectIndexer, NeedAuthorization
   }
 
   private static ProjectMeasuresDoc toProjectMeasuresDoc(ProjectMeasures projectMeasures) {
+    LOGGER.info("ProjectMeasures数据库转入ProjectMeasuresDoc数据，然后写入ES中");
     ProjectMeasuresIndexerIterator.Project project = projectMeasures.getProject();
     Long analysisDate = project.getAnalysisDate();
     return new ProjectMeasuresDoc()
       .setId(project.getUuid())
+      .setUserid("1")  //默认userid为1,  1通常是admin用户
       .setOrganizationUuid(project.getOrganizationUuid())
       .setKey(project.getKey())
       .setName(project.getName())
