@@ -9,8 +9,6 @@ import org.sonar.server.es.SearchIdResult;
 import org.sonar.server.es.SearchOptions;
 import org.sonar.server.permission.index.AuthorizationTypeSupport;
 
-import java.net.UnknownHostException;
-
 /***
  *
  */
@@ -25,7 +23,10 @@ public class MyComponentIndex {
         ComponentIndex componentIndex = new ComponentIndex(MyEsClient.getEsClient(MyEsClient.getTransportClient()),
                 new AuthorizationTypeSupport(new UserSessionRule()),
                 System2.INSTANCE);
-        ComponentQuery query = ComponentQuery.builder().build();
+        ComponentQuery query = ComponentQuery.builder()
+                                           // .setQuery("f9d5a50ca66a4d7c99e9801b1173bae5")
+                                            .build();
+        //默认按name降序排列
         SearchIdResult<String> stringSearchIdResult = componentIndex.search(query, new SearchOptions().setOffset(0).setLimit(50));
         System.out.println();
     }

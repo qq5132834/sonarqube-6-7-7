@@ -22,7 +22,7 @@ import java.util.Map;
 /***
  *
  */
-public class ESDocTest {
+public class DocTest {
 
     private Client client;
     private ObjectMapper mapper = new ObjectMapper();

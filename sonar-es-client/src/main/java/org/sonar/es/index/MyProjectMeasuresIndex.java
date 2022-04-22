@@ -32,5 +32,8 @@ public class MyProjectMeasuresIndex {
         query.setAsc(true);
         SearchIdResult<String> stringSearchIdResult = projectMeasuresIndex.search(query, new SearchOptions().setOffset(0).setLimit(50));
         System.out.println();
+
+        //projectMeasuresIndex怎么写入数据
+
     }
 }
