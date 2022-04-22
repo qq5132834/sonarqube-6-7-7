@@ -64,7 +64,7 @@ public class SubmitActionTest {
   private DefaultOrganizationProvider defaultOrganizationProvider = TestDefaultOrganizationProvider.fromUuid("org1");
   private String organizationKey = defaultOrganizationProvider.get().getKey();
   private ReportSubmitter reportSubmitter = mock(ReportSubmitter.class);
-  private SubmitAction underTest = new SubmitAction(reportSubmitter, defaultOrganizationProvider);
+  private SubmitAction underTest = new SubmitAction(reportSubmitter, defaultOrganizationProvider, null);
   private WsActionTester tester = new WsActionTester(underTest);
 
   @Before
