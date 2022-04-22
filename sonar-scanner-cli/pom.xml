@@ -30,6 +30,15 @@
 
     <!-- Release: enable publication to Bintray -->
     <artifactsToPublish>${project.groupId}:${project.artifactId}:zip,${project.groupId}:${project.artifactId}:zip:linux,${project.groupId}:${project.artifactId}:zip:windows,${project.groupId}:${project.artifactId}:zip:macosx</artifactsToPublish>
+
+
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <java.version>1.8</java.version>
+    <sonar.host.url>http://127.0.0.1:9000</sonar.host.url>
+    <sonar.login>admin</sonar.login>
+    <sonar.password>admin</sonar.password>
+
   </properties>
 
   <dependencies>
@@ -358,6 +367,14 @@
               </execution>
             </executions>
           </plugin>
+
+
+          <plugin>
+            <groupId>org.sonarsource.scanner.maven</groupId>
+            <artifactId>sonar-maven-plugin</artifactId>
+            <version>3.7.0.1746</version>
+          </plugin>
+
         </plugins>
       </build>
     </profile>
