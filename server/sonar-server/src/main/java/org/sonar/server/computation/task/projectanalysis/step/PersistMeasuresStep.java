@@ -26,6 +26,7 @@ import com.google.common.collect.Multimap;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import javax.annotation.Nonnull;
 
 import org.sonar.api.utils.log.Logger;
@@ -128,6 +129,12 @@ public class PersistMeasuresStep implements ComputationStep {
           measureDao.insert(session, measureDto);
           inserts++;
         }
+        //随机写入50以内的sca值
+        Measure measure = Measure.newMeasureBuilder().create(String.valueOf(new Random().nextInt(50)));
+        metric = metricRepository.getByKey("sca");
+        MeasureDto measureDto = measureToMeasureDto.toMeasureDto(measure, metric, component);
+        measureDao.insert(session, measureDto);
+        inserts++;
       }
     }
 
