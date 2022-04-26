@@ -27,6 +27,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Nonnull;
+
+import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
 import org.sonar.db.DbClient;
 import org.sonar.db.DbSession;
@@ -66,6 +68,8 @@ public class PersistMeasuresStep implements ComputationStep {
   private final MeasureToMeasureDto measureToMeasureDto;
   private final TreeRootHolder treeRootHolder;
   private final MeasureRepository measureRepository;
+
+  private final static Logger LOGGER = Loggers.get(PersistMeasuresStep.class);
 
   public PersistMeasuresStep(DbClient dbClient, MetricRepository metricRepository, MeasureToMeasureDto measureToMeasureDto,
     TreeRootHolder treeRootHolder, MeasureRepository measureRepository) {
@@ -107,6 +111,9 @@ public class PersistMeasuresStep implements ComputationStep {
     }
 
     private void persistMeasures(Component component, Multimap<String, Measure> batchReportMeasures) {
+
+      LOGGER.info("PersistMeasuresStep.persistMeasures.批量插入报告数据Measure");
+
       for (Map.Entry<String, Collection<Measure>> measures : batchReportMeasures.asMap().entrySet()) {
         String metricKey = measures.getKey();
         if (NOT_TO_PERSIST_ON_FILE_METRIC_KEYS.contains(metricKey) && component.getType() == Component.Type.FILE) {
