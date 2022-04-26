@@ -84,9 +84,6 @@ public class ProjectMeasuresIndexerIterator extends CloseableIterator<ProjectMea
     "AND pm.person_id IS NULL " +
     "AND m.enabled = ? ";
 
-  // SELECT * FROM metrics where name in
-  // ('coverage', 'alert_status', 'lines', 'duplicated_lines_density', 'ncloc', 'ncloc_language_distribution', 'new_coverage', 'new_duplicated_lines_density', 'new_lines', 'new_maintainability_rating', 'new_reliability_rating', 'new_security_rating', 'reliability_rating', 'security_rating', 'sqale_rating')
-
   private static final boolean ENABLED = true;
   private static final int FIELD_METRIC_NAME = 1;
   private static final int FIELD_MEASURE_VALUE = 2;
@@ -154,7 +151,9 @@ public class ProjectMeasuresIndexerIterator extends CloseableIterator<ProjectMea
 
   private static PreparedStatement createMeasuresStatement(DbSession session) throws SQLException {
     try {
-      String metricNameQuestionMarks = METRIC_KEYS.stream().map(x -> "?").collect(Collectors.joining(","));
+        // SELECT * FROM metrics where name in
+        // ('coverage', 'alert_status', 'lines', 'duplicated_lines_density', 'ncloc', 'ncloc_language_distribution', 'new_coverage', 'new_duplicated_lines_density', 'new_lines', 'new_maintainability_rating', 'new_reliability_rating', 'new_security_rating', 'reliability_rating', 'security_rating', 'sqale_rating')
+        String metricNameQuestionMarks = METRIC_KEYS.stream().map(x -> "?").collect(Collectors.joining(","));
       String sql = StringUtils.replace(SQL_MEASURES, "{metricNames}", metricNameQuestionMarks);
       return session.getConnection().prepareStatement(sql);
     } catch (SQLException e) {
