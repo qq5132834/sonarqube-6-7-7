@@ -83,6 +83,10 @@ public class ProjectMeasuresIndexerIterator extends CloseableIterator<ProjectMea
     "AND (pm.value IS NOT NULL OR pm.variation_value_1 IS NOT NULL OR pm.text_value IS NOT NULL) " +
     "AND pm.person_id IS NULL " +
     "AND m.enabled = ? ";
+
+  // SELECT * FROM metrics where name in
+  // ('coverage', 'alert_status', 'lines', 'duplicated_lines_density', 'ncloc', 'ncloc_language_distribution', 'new_coverage', 'new_duplicated_lines_density', 'new_lines', 'new_maintainability_rating', 'new_reliability_rating', 'new_security_rating', 'reliability_rating', 'security_rating', 'sqale_rating')
+
   private static final boolean ENABLED = true;
   private static final int FIELD_METRIC_NAME = 1;
   private static final int FIELD_MEASURE_VALUE = 2;
