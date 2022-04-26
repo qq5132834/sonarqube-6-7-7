@@ -19,73 +19,10 @@
  */
 package org.sonar.server.app;
 
-import com.google.common.collect.ImmutableMap;
-import org.sonar.process.*;
-import org.sonar.process.sharedmemoryfile.DefaultProcessCommands;
+public class WebServerLocal {
 
-import java.io.File;
-
-public class WebServerLocal implements Monitored {
-  public static final String PROPERTY_SHARED_PATH = "process.sharedDir";
-
-  private final File sharedDir;
-  private final EmbeddedTomcat tomcat;
-
-  WebServerLocal(Props props) {
-    new MinimumViableSystem()
-      .checkWritableTempDir()
-      .checkRequiredJavaOptions(ImmutableMap.of("file.encoding", "UTF-8"));
-    this.sharedDir = getSharedDir(props);
-    this.tomcat = new EmbeddedTomcat(props);
-  }
-
-  private static File getSharedDir(Props props) {
-    return props.nonNullValueAsFile(PROPERTY_SHARED_PATH);
-  }
-
-  @Override
-  public void start() {
-    tomcat.start();
-  }
-
-  @Override
-  public Status getStatus() {
-    switch (tomcat.getStatus()) {
-      case DOWN:
-        return Status.DOWN;
-      case UP:
-        return isOperational() ? Status.OPERATIONAL : Status.UP;
-      case FAILED:
-      default:
-        return Status.FAILED;
-    }
-  }
-
-  private boolean isOperational() {
-    try (DefaultProcessCommands processCommands = DefaultProcessCommands.secondary(sharedDir, ProcessId.WEB_SERVER.getIpcIndex())) {
-      return processCommands.isOperational();
-    }
-  }
-
-  @Override
-  public void stop() {
-    tomcat.terminate();
-  }
-
-  @Override
-  public void awaitStop() {
-    tomcat.awaitTermination();
-  }
-
-  /**
-   * Can't be started as is. Needs to be bootstrapped by sonar-application
-   */
   public static void main(String[] args) {
     args = new String[]{"C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\server\\sonar-server\\src\\main\\resources\\web-process-properties"};
-    ProcessEntryPoint entryPoint = ProcessEntryPoint.createForArguments(args);
-    Props props = entryPoint.getProps();
-    new WebServerProcessLogging().configure(props);
-    WebServerLocal server = new WebServerLocal(props);
-    entryPoint.launch(server);
+    WebServer.main(args);
   }
 }
