@@ -36,6 +36,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.sonar.api.ce.ComputeEngineSide;
+import org.sonar.api.utils.log.Logger;
+import org.sonar.api.utils.log.Loggers;
 import org.sonar.core.util.UuidFactory;
 import org.sonar.db.DbClient;
 import org.sonar.db.DbSession;
@@ -49,7 +51,7 @@ import com.google.common.collect.ImmutableMap;
 
 @ComputeEngineSide
 public class CeQueueImpl implements CeQueue {
-
+  private final Logger LOG = Loggers.get(CeQueueImpl.class);
   private final DbClient dbClient;
   private final UuidFactory uuidFactory;
   private final DefaultOrganizationProvider defaultOrganizationProvider;
@@ -70,6 +72,7 @@ public class CeQueueImpl implements CeQueue {
 
   @Override
   public CeTask submit(CeTaskSubmit submission) {
+    LOG.info("Webserver保存数据到queue队列中componentUuid:{},submitLogin:{}", submission.getComponentUuid(), submission.getSubmitterLogin());
     checkState(!submitPaused.get(), "Compute Engine does not currently accept new tasks");
 
     try (DbSession dbSession = dbClient.openSession(false)) {
