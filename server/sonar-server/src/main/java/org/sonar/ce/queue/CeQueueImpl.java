@@ -51,7 +51,7 @@ import com.google.common.collect.ImmutableMap;
 
 @ComputeEngineSide
 public class CeQueueImpl implements CeQueue {
-  private final Logger LOG = Loggers.get(CeQueueImpl.class);
+  private final static Logger LOG = Loggers.get(CeQueueImpl.class);
   private final DbClient dbClient;
   private final UuidFactory uuidFactory;
   private final DefaultOrganizationProvider defaultOrganizationProvider;
@@ -72,11 +72,16 @@ public class CeQueueImpl implements CeQueue {
 
   @Override
   public CeTask submit(CeTaskSubmit submission) {
-    LOG.info("Webserver保存数据到queue队列中componentUuid:{},submitLogin:{}", submission.getComponentUuid(), submission.getSubmitterLogin());
+    LOG.info("Webserver保存数据到queue队列中componentUuid:{},submitLogin:{},uuid:{},type:{}",
+            submission.getComponentUuid(),
+            submission.getSubmitterLogin(),
+            submission.getUuid(),
+            submission.getType());
+
     checkState(!submitPaused.get(), "Compute Engine does not currently accept new tasks");
 
     try (DbSession dbSession = dbClient.openSession(false)) {
-      CeQueueDto dto = new CeTaskSubmitToInsertedCeQueueDto(dbSession, dbClient).apply(submission);  //保存数据到ce-queue中
+      CeQueueDto dto = new CeTaskSubmitToInsertedCeQueueDto(dbSession, dbClient).apply(submission);  //保存数据到ce-queue表中
       CeTask task = loadTask(dbSession, dto);
       dbSession.commit();
       return task;
@@ -235,6 +240,7 @@ public class CeQueueImpl implements CeQueue {
       dto.setSubmitterLogin(submission.getSubmitterLogin());
       dto.setStartedAt(null);
       dbClient.ceQueueDao().insert(dbSession, dto);
+      LOG.info("CeQueueImpl保存提交的数据到ce_queue表中");
       return dto;
     }
   }
