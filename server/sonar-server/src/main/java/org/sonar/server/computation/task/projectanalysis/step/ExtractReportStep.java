@@ -66,6 +66,7 @@ public class ExtractReportStep implements ComputationStep {
       Optional<CeTaskInputDao.DataStream> opt = dbClient.ceTaskInputDao().selectData(dbSession, task.getUuid());
       if (opt.isPresent()) {
         File unzippedDir = tempFolder.newDir();
+        LOGGER.info("ExtractReportStep.execute从数据中获取zip包，并解压至临时目录:{}", unzippedDir.getAbsolutePath());
         try (CeTaskInputDao.DataStream reportStream = opt.get();
              InputStream zipStream = new BufferedInputStream(reportStream.getInputStream())) {
           ZipUtils.unzip(zipStream, unzippedDir);
