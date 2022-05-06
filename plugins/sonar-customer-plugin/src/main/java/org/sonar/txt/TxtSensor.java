@@ -118,6 +118,11 @@ public class TxtSensor implements Sensor {
                             .save();
 
                     //
+                    context.newCustomData()
+                            .setData("hell, this is my custom data.")
+                            .save();
+
+                    //
 //                    Metric<Integer> FILENAME_SIZE = new Metric.Builder("filename_size", "Filename Size", Metric.ValueType.INT)
 //                            .setDescription("Number of characters of file names")
 //                            .setDirection(Metric.DIRECTION_BETTER)

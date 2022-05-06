@@ -51,6 +51,8 @@ import org.sonar.api.batch.sensor.coverage.NewCoverage;
 import org.sonar.api.batch.sensor.coverage.internal.DefaultCoverage;
 import org.sonar.api.batch.sensor.cpd.NewCpdTokens;
 import org.sonar.api.batch.sensor.cpd.internal.DefaultCpdTokens;
+import org.sonar.api.batch.sensor.customdata.CustomData;
+import org.sonar.api.batch.sensor.customdata.DefaultCustomData;
 import org.sonar.api.batch.sensor.error.AnalysisError;
 import org.sonar.api.batch.sensor.error.NewAnalysisError;
 import org.sonar.api.batch.sensor.error.internal.DefaultAnalysisError;
@@ -213,6 +215,11 @@ public class SensorContextTester implements SensorContext {
   @Override
   public NewIssue newIssue() {
     return new DefaultIssue(sensorStorage);
+  }
+
+  @Override
+  public CustomData newCustomData() {
+    return new DefaultCustomData(sensorStorage);
   }
 
   public Collection<Issue> allIssues() {

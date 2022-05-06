@@ -19,15 +19,13 @@
  */
 package org.sonar.scanner.protocol.output;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
+import java.io.*;
 import javax.annotation.concurrent.Immutable;
 
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
 import org.sonar.core.util.ContextException;
+import org.sonar.core.util.FileUtils;
 import org.sonar.core.util.Protobuf;
 
 @Immutable
@@ -80,6 +78,25 @@ public class ScannerReportWriter {
     File file = fileStructure.fileFor(FileStructure.Domain.ISSUES, componentRef);
     Protobuf.writeStream(issues, file, false);
     LOGGER.info("ScannerReportWriter.writeComponentIssues.写入issue.file路径:{}", file!=null?file.getAbsolutePath():"");
+    return file;
+  }
+
+  /***
+   * 向自定义custom_data.json文件中写入数据
+   * @param jsonData
+   * @return
+   */
+  public File writeCustomData(String jsonData){
+    File file = fileStructure.customData();
+    try {
+      BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
+      bufferedWriter.write(jsonData);
+      bufferedWriter.flush();
+      bufferedWriter.close();
+    }catch (Exception e){
+      e.printStackTrace();
+    }
+    LOGGER.info("ScannerReportWriter.writeCustomData.写入自定义json数据.file路径:{}", file!=null?file.getAbsolutePath():"");
     return file;
   }
 

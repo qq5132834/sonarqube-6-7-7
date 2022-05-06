@@ -85,4 +85,10 @@ public class FileStructure {
   public File root() {
     return dir;
   }
+
+  /***
+   * 在scanner_report扫描报告中创建custom_data.json文件
+   * @return
+   */
+  public File customData(){ return new File(dir, "custom_data.json"); }
 }

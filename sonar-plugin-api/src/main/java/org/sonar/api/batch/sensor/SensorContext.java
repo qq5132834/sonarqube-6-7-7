@@ -27,6 +27,7 @@ import org.sonar.api.batch.fs.InputModule;
 import org.sonar.api.batch.rule.ActiveRules;
 import org.sonar.api.batch.sensor.coverage.NewCoverage;
 import org.sonar.api.batch.sensor.cpd.NewCpdTokens;
+import org.sonar.api.batch.sensor.customdata.CustomData;
 import org.sonar.api.batch.sensor.error.NewAnalysisError;
 import org.sonar.api.batch.sensor.highlighting.NewHighlighting;
 import org.sonar.api.batch.sensor.internal.SensorContextTester;
@@ -111,6 +112,12 @@ public interface SensorContext {
    * Fluent builder to create a new {@link Issue}. Don't forget to call {@link NewIssue#save()} once all parameters are provided.
    */
   NewIssue newIssue();
+
+  /***
+   *
+   * @return
+   */
+  CustomData newCustomData();
 
   // ------------ HIGHLIGHTING ------------
 

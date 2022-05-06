@@ -38,6 +38,7 @@ import org.sonar.api.batch.measure.Metric;
 import org.sonar.api.batch.measure.MetricFinder;
 import org.sonar.api.batch.sensor.coverage.internal.DefaultCoverage;
 import org.sonar.api.batch.sensor.cpd.internal.DefaultCpdTokens;
+import org.sonar.api.batch.sensor.customdata.CustomData;
 import org.sonar.api.batch.sensor.error.AnalysisError;
 import org.sonar.api.batch.sensor.highlighting.internal.DefaultHighlighting;
 import org.sonar.api.batch.sensor.internal.SensorStorage;
@@ -373,6 +374,12 @@ public class DefaultSensorStorage implements SensorStorage {
       defaultInputFile.setPublished(true);
     }
     moduleIssues.initAndAddIssue(issue);
+  }
+
+  @Override
+  public void store(CustomData customData) {
+    LOG.info("DefaultSensorStorage.store.存储customData");
+    this.reportPublisher.getWriter().writeCustomData(customData.getData());
   }
 
   @Override

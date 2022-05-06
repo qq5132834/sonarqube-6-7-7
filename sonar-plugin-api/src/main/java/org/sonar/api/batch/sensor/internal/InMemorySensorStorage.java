@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.sonar.api.batch.sensor.coverage.internal.DefaultCoverage;
 import org.sonar.api.batch.sensor.cpd.internal.DefaultCpdTokens;
+import org.sonar.api.batch.sensor.customdata.CustomData;
 import org.sonar.api.batch.sensor.error.AnalysisError;
 import org.sonar.api.batch.sensor.highlighting.internal.DefaultHighlighting;
 import org.sonar.api.batch.sensor.issue.Issue;
@@ -65,6 +66,11 @@ class InMemorySensorStorage implements SensorStorage {
   @Override
   public void store(Issue issue) {
     allIssues.add(issue);
+  }
+
+  @Override
+  public void store(CustomData customData) {
+    //TODO
   }
 
   @Override
