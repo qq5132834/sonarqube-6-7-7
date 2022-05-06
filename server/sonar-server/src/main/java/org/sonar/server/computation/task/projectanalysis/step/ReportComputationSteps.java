@@ -38,6 +38,7 @@ public class ReportComputationSteps extends AbstractComputationSteps {
 
     // Builds Component tree
     LoadReportAnalysisMetadataHolderStep.class,
+    LoadCustomDataStep.class, //加载自定义的数据。
     ExecuteStatelessInitExtensionsStep.class,
     VerifyBillingStep.class,
     BuildComponentTreeStep.class,

@@ -102,6 +102,11 @@ public class BatchReportReaderRule implements TestRule, BatchReportReader {
     return metadata;
   }
 
+  @Override
+  public CloseableIterator<String> readCustomData() {
+    return null;
+  }
+
   public BatchReportReaderRule setMetadata(ScannerReport.Metadata metadata) {
     this.metadata = metadata;
     return this;

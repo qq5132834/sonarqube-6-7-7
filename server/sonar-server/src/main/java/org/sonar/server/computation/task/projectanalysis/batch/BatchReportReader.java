@@ -27,6 +27,12 @@ import org.sonar.scanner.protocol.output.ScannerReport;
 public interface BatchReportReader {
   ScannerReport.Metadata readMetadata();
 
+  /***
+   * 从scanner-report.zip中加载自定义的数据
+   * @return
+   */
+  CloseableIterator<String> readCustomData();
+
   CloseableIterator<String> readScannerLogs();
 
   CloseableIterator<ScannerReport.ActiveRule> readActiveRules();

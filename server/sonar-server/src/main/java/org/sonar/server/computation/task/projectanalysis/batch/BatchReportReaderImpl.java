@@ -64,6 +64,13 @@ public class BatchReportReaderImpl implements BatchReportReader {
   }
 
   @Override
+  public CloseableIterator<String> readCustomData() {
+    //TODO 获取自定义数据
+    CloseableIterator<String> closeableIterator = this.delegate.readCustomData();
+    return closeableIterator;
+  }
+
+  @Override
   public CloseableIterator<String> readScannerLogs() {
     ensureInitialized();
     File file = delegate.getFileStructure().analysisLog();

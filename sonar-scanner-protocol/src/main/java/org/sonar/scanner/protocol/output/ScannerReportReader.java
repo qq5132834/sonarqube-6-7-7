@@ -19,7 +19,9 @@
  */
 package org.sonar.scanner.protocol.output;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import javax.annotation.CheckForNull;
 
 import org.sonar.api.utils.log.Logger;
@@ -44,6 +46,39 @@ public class ScannerReportReader {
     }
     LOGGER.info("读取metadata.bp文件数据，路径：" + file.getAbsolutePath());
     return Protobuf.read(file, ScannerReport.Metadata.parser());
+  }
+
+  public CloseableIterator<String> readCustomData(){
+    File file = fileStructure.customData();
+    if(file.exists()){
+      LOGGER.info("读取custom_data.json文件数据，路径：" + file.getAbsolutePath());
+      try {
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+        StringBuilder sb = new StringBuilder();
+        String line = null;
+        while ((line = bufferedReader.readLine()) != null) {
+          sb.append(line);
+          sb.append("\n");
+        }
+        bufferedReader.close();
+        CloseableIterator closeableIterator = new CloseableIterator<String>() {
+          @CheckForNull
+          @Override
+          protected String doNext() {
+            return sb.toString();
+          }
+
+          @Override
+          protected void doClose() throws Exception {
+
+          }
+        };
+        return closeableIterator;
+      }catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+    return null;
   }
 
   public CloseableIterator<ScannerReport.ActiveRule> readActiveRules() {
