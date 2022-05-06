@@ -154,6 +154,8 @@ public class ReportPublisher implements Startable {
       startTime = System.currentTimeMillis();
       File reportZip = temp.newFile("scanner-report", ".zip");
       ZipUtils.zipDir(reportDir.toFile(), reportZip);
+      LOG.info("打包扫描报告文件夹，路径reportDir:{}", reportDir);
+      LOG.info("生成扫描报告文件zip文件，reportZip:{}", reportZip.getAbsolutePath());
       stopTime = System.currentTimeMillis();
       LOG.info("Analysis reports compressed in {}ms, zip size={}", stopTime - startTime, FileUtils.byteCountToDisplaySize(FileUtils.sizeOf(reportZip)));
       return reportZip;
