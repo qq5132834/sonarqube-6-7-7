@@ -56,34 +56,36 @@ public class ScannerReportWriter {
    * Metadata is mandatory
    */
   public File writeMetadata(ScannerReport.Metadata metadata) {
-    LOGGER.info("ScannerReportWriter.writeMetadata.写入元数据");
     Protobuf.write(metadata, fileStructure.metadataFile());
-    return fileStructure.metadataFile();
+    File file = fileStructure.metadataFile();
+    LOGGER.info("ScannerReportWriter.writeMetadata.写入元数据.file路径:{}", file!=null?file.getAbsolutePath():"");
+    return file;
   }
 
   public File writeActiveRules(Iterable<ScannerReport.ActiveRule> activeRules) {
-    LOGGER.info("ScannerReportWriter.writeActiveRules.写入有效规则");
     Protobuf.writeStream(activeRules, fileStructure.activeRules(), false);
-    return fileStructure.metadataFile();
+    File file = fileStructure.metadataFile();
+    LOGGER.info("ScannerReportWriter.writeActiveRules.写入有效规则.file路径:{}", file!=null?file.getAbsolutePath():"");
+    return file;
   }
 
   public File writeComponent(ScannerReport.Component component) {
-    LOGGER.info("ScannerReportWriter.writeComponent.写入组件");
     File file = fileStructure.fileFor(FileStructure.Domain.COMPONENT, component.getRef());
     Protobuf.write(component, file);
+    LOGGER.info("ScannerReportWriter.writeComponent.写入组件.file路径:{}", file!=null?file.getAbsolutePath():"");
     return file;
   }
 
   public File writeComponentIssues(int componentRef, Iterable<ScannerReport.Issue> issues) {
-    LOGGER.info("ScannerReportWriter.writeComponentIssues.写入issue");
     File file = fileStructure.fileFor(FileStructure.Domain.ISSUES, componentRef);
     Protobuf.writeStream(issues, file, false);
+    LOGGER.info("ScannerReportWriter.writeComponentIssues.写入issue.file路径:{}", file!=null?file.getAbsolutePath():"");
     return file;
   }
 
   public void appendComponentIssue(int componentRef, ScannerReport.Issue issue) {
-    LOGGER.info("ScannerReportWriter.appendComponentIssue.写入组件issue");
     File file = fileStructure.fileFor(FileStructure.Domain.ISSUES, componentRef);
+    LOGGER.info("ScannerReportWriter.appendComponentIssue.写入组件issue.file路径:{}", file!=null?file.getAbsolutePath():"");
     try (OutputStream out = new BufferedOutputStream(new FileOutputStream(file, true))) {
       issue.writeDelimitedTo(out);
     } catch (Exception e) {
@@ -92,78 +94,79 @@ public class ScannerReportWriter {
   }
 
   public File writeComponentMeasures(int componentRef, Iterable<ScannerReport.Measure> measures) {
-    LOGGER.info("ScannerReportWriter.writeComponentMeasures.写入组件measure");
     File file = fileStructure.fileFor(FileStructure.Domain.MEASURES, componentRef);
     Protobuf.writeStream(measures, file, false);
+    LOGGER.info("ScannerReportWriter.writeComponentMeasures.写入组件measure.file路径:{}", file!=null?file.getAbsolutePath():"");
     return file;
   }
 
   public File writeComponentChangesets(ScannerReport.Changesets changesets) {
-    LOGGER.info("ScannerReportWriter.writeComponentChangesets.写入组件Changeset");
     File file = fileStructure.fileFor(FileStructure.Domain.CHANGESETS, changesets.getComponentRef());
     Protobuf.write(changesets, file);
+    LOGGER.info("ScannerReportWriter.writeComponentChangesets.写入组件Changeset.file路径:{}", file!=null?file.getAbsolutePath():"");
     return file;
   }
 
   public File writeComponentDuplications(int componentRef, Iterable<ScannerReport.Duplication> duplications) {
-    LOGGER.info("ScannerReportWriter.ComponentDuplications.写入组件Duplications");
     File file = fileStructure.fileFor(FileStructure.Domain.DUPLICATIONS, componentRef);
     Protobuf.writeStream(duplications, file, false);
+    LOGGER.info("ScannerReportWriter.ComponentDuplications.写入组件Duplications.file路径:{}", file!=null?file.getAbsolutePath():"");
     return file;
   }
 
   public File writeCpdTextBlocks(int componentRef, Iterable<ScannerReport.CpdTextBlock> blocks) {
-    LOGGER.info("ScannerReportWriter.writeCpdTextBlocks.写入CpdTextBlocks");
     File file = fileStructure.fileFor(FileStructure.Domain.CPD_TEXT_BLOCKS, componentRef);
     Protobuf.writeStream(blocks, file, false);
+    LOGGER.info("ScannerReportWriter.writeCpdTextBlocks.写入CpdTextBlocks.file路径:{}", file!=null?file.getAbsolutePath():"");
     return file;
   }
 
   public File writeComponentSymbols(int componentRef, Iterable<ScannerReport.Symbol> symbols) {
-    LOGGER.info("ScannerReportWriter.writeComponentSymbols.写入ComponentSymbols");
     File file = fileStructure.fileFor(FileStructure.Domain.SYMBOLS, componentRef);
     Protobuf.writeStream(symbols, file, false);
+    LOGGER.info("ScannerReportWriter.writeComponentSymbols.写入ComponentSymbols.file路径:{}", file!=null?file.getAbsolutePath():"");
     return file;
   }
 
   public File writeComponentSyntaxHighlighting(int componentRef, Iterable<ScannerReport.SyntaxHighlightingRule> syntaxHighlightingRules) {
-    LOGGER.info("ScannerReportWriter.writeComponentSyntaxHighlighting.写入高亮");
     File file = fileStructure.fileFor(FileStructure.Domain.SYNTAX_HIGHLIGHTINGS, componentRef);
     Protobuf.writeStream(syntaxHighlightingRules, file, false);
+    LOGGER.info("ScannerReportWriter.writeComponentSyntaxHighlighting.写入高亮.file路径:{}", file!=null?file.getAbsolutePath():"");
     return file;
   }
 
   public File writeComponentCoverage(int componentRef, Iterable<ScannerReport.LineCoverage> coverageList) {
-    LOGGER.info("ScannerReportWriter.writeComponentCoverage.写入覆盖率");
     File file = fileStructure.fileFor(FileStructure.Domain.COVERAGES, componentRef);
     Protobuf.writeStream(coverageList, file, false);
+    LOGGER.info("ScannerReportWriter.writeComponentCoverage.写入覆盖率.file路径:{}", file!=null?file.getAbsolutePath():"");
     return file;
   }
 
   public File writeTests(int componentRef, Iterable<ScannerReport.Test> tests) {
-    LOGGER.info("ScannerReportWriter.writeTests");
     File file = fileStructure.fileFor(FileStructure.Domain.TESTS, componentRef);
     Protobuf.writeStream(tests, file, false);
+    LOGGER.info("ScannerReportWriter.writeTests.file路径:{}", file!=null?file.getAbsolutePath():"");
     return file;
   }
 
   public File writeCoverageDetails(int componentRef, Iterable<ScannerReport.CoverageDetail> tests) {
-    LOGGER.info("ScannerReportWriter.writeCoverageDetails.覆盖率详情");
     File file = fileStructure.fileFor(FileStructure.Domain.COVERAGE_DETAILS, componentRef);
     Protobuf.writeStream(tests, file, false);
+    LOGGER.info("ScannerReportWriter.writeCoverageDetails.覆盖率详情.file路径:{}", file!=null?file.getAbsolutePath():"");
     return file;
   }
 
   public File writeContextProperties(Iterable<ScannerReport.ContextProperty> properties) {
-    LOGGER.info("ScannerReportWriter.writeContextProperties.");
     File file = fileStructure.contextProperties();
     Protobuf.writeStream(properties, file, false);
+    LOGGER.info("ScannerReportWriter.writeContextProperties.file路径:{}", file!=null?file.getAbsolutePath():"");
     return file;
   }
 
   public File getSourceFile(int componentRef) {
-    LOGGER.info("ScannerReportWriter.getSourceFile.");
-    return fileStructure.fileFor(FileStructure.Domain.SOURCE, componentRef);
+    File file = fileStructure.fileFor(FileStructure.Domain.SOURCE, componentRef);
+    LOGGER.info("ScannerReportWriter.getSourceFile.file路径:{}", file!=null?file.getAbsolutePath():"");
+    return file;
   }
 
 }
