@@ -119,7 +119,8 @@ public class TxtSensor implements Sensor {
 
                     //
                     context.newCustomData()
-                            .setData("hell, this is my custom data.")
+                            .setFileName("custom_data.json")
+                            .setData("hallo, this is my custom data.")
                             .save();
 
                     //

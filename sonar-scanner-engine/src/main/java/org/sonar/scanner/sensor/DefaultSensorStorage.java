@@ -379,7 +379,7 @@ public class DefaultSensorStorage implements SensorStorage {
   @Override
   public void store(CustomData customData) {
     LOG.info("DefaultSensorStorage.store.存储customData");
-    this.reportPublisher.getWriter().writeCustomData(customData.getData());
+    this.reportPublisher.getWriter().writeCustomData(customData.getFileName(), customData.getData());
   }
 
   @Override

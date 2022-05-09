@@ -83,14 +83,18 @@ public class ScannerReportWriter {
 
   /***
    * 向自定义custom_data.json文件中写入数据
-   * @param jsonData
+   * @param fileName 文件名
+   * @param fileData 文件数据
    * @return
    */
-  public File writeCustomData(String jsonData){
-    File file = fileStructure.customData();
+  public File writeCustomData(String fileName, String fileData){
+    File file = fileStructure.customData(fileName);
     try {
+      if(!file.exists()){
+        file.createNewFile();
+      }
       BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
-      bufferedWriter.write(jsonData);
+      bufferedWriter.write(fileData);
       bufferedWriter.flush();
       bufferedWriter.close();
     }catch (Exception e){
