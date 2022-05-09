@@ -20,6 +20,8 @@
 package org.sonar.server.computation.task.projectanalysis.batch;
 
 import com.google.common.base.Preconditions;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -103,7 +105,7 @@ public class BatchReportReaderRule implements TestRule, BatchReportReader {
   }
 
   @Override
-  public CloseableIterator<String> readCustomData() {
+  public List<File> readCustomData(String[] customDataFiles) {
     return null;
   }
 

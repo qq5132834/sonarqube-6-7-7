@@ -19,6 +19,8 @@
  */
 package org.sonar.server.computation.task.projectanalysis.batch;
 
+import java.io.File;
+import java.util.List;
 import java.util.Optional;
 import javax.annotation.CheckForNull;
 import org.sonar.core.util.CloseableIterator;
@@ -31,7 +33,7 @@ public interface BatchReportReader {
    * 从scanner-report.zip中加载自定义的数据
    * @return
    */
-  CloseableIterator<String> readCustomData();
+  List<File> readCustomData(String[] customDataFiles);
 
   CloseableIterator<String> readScannerLogs();
 

@@ -27,6 +27,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import javax.annotation.CheckForNull;
@@ -64,10 +65,10 @@ public class BatchReportReaderImpl implements BatchReportReader {
   }
 
   @Override
-  public CloseableIterator<String> readCustomData() {
+  public List<File> readCustomData(String[] customDataFiles) {
     //TODO 获取自定义数据
-    CloseableIterator<String> closeableIterator = this.delegate.readCustomData();
-    return closeableIterator;
+    List<File> files = this.delegate.readCustomData(customDataFiles);
+    return files;
   }
 
   @Override
