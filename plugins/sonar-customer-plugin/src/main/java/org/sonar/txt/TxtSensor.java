@@ -3,6 +3,7 @@ package org.sonar.txt;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile;
 import org.sonar.api.batch.fs.internal.DefaultTextPointer;
+import org.sonar.api.batch.fs.internal.InputModuleHierarchy;
 import org.sonar.api.batch.rule.ActiveRule;
 import org.sonar.api.batch.rule.ActiveRules;
 import org.sonar.api.batch.sensor.Sensor;
@@ -10,15 +11,13 @@ import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.batch.sensor.SensorDescriptor;
 import org.sonar.api.batch.sensor.highlighting.TypeOfText;
 import org.sonar.api.batch.sensor.issue.NewIssue;
-import org.sonar.api.measures.CoreMetrics;
-import org.sonar.api.measures.Metric;
+import org.sonar.api.config.Configuration;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.nio.file.Path;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class TxtSensor implements Sensor {
@@ -26,9 +25,13 @@ public class TxtSensor implements Sensor {
     private final ActiveRules activeRules;
     private final static Logger LOGGER = Loggers.get(TxtSensor.class);
     public static final String RULE_KEY = "txt";
+    public final InputModuleHierarchy inputModuleHierarchy;
+    public final Configuration configuration;
 
-    public TxtSensor(ActiveRules activeRules) {
+    public TxtSensor(ActiveRules activeRules, InputModuleHierarchy inputModuleHierarchy, Configuration configuration) {
         this.activeRules = activeRules;
+        this.inputModuleHierarchy = inputModuleHierarchy;
+        this.configuration = configuration;
     }
 
    public ActiveRules getActiveRules(){
@@ -57,6 +60,20 @@ public class TxtSensor implements Sensor {
 //        if (activeRules.find(ruleKey) == null) {
 //            return;
 //        }
+
+        LOGGER.info("TxtSensor.sonar.password:{}", this.configuration.get("sonar.password").get());
+        LOGGER.info("TxtSensor.sonar.login:{}", this.configuration.get("sonar.login").get());
+        LOGGER.info("TxtSensor.sonar.host.url:{}", this.configuration.get("sonar.host.url").get());
+
+        //在scanner-report.zip文件中创建一个custom_data.json文件，并在其中写入数据data
+        context.newCustomData()
+                .setFileName("custom_data.json")
+                .setData("hallo, this is my custom data JSON.")
+                .save();
+
+        //
+        this.writeData("cutom_data.txt", "hello，this is my custom data txt.");
+
         for (InputFile inputFile : fs.inputFiles(fs.predicates().hasLanguage(languageKey))) {
             String fileName = inputFile.filename();
             boolean isFile = inputFile.isFile();
@@ -64,6 +81,21 @@ public class TxtSensor implements Sensor {
             LOGGER.info("fileName:{},isFile:{},path:{}", fileName, isFile, file.getAbsolutePath());
             processFile(inputFile, context, ruleKey, languageKey);
         }
+    }
+
+    private void writeData(String filename, String filedata){
+        Path reportDir = this.inputModuleHierarchy.root().getWorkDir().resolve("scanner-report");
+        File file = new File(reportDir.toFile(), filename);
+        try{
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
+            bufferedWriter.write(filedata);
+            bufferedWriter.flush();
+            bufferedWriter.close();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     protected void processFile(InputFile inputFile, SensorContext context, RuleKey ruleKey, String languageKey) {
@@ -115,12 +147,6 @@ public class TxtSensor implements Sensor {
                     context.newCpdTokens()
                             .onFile(inputFile)
                             .addToken(7, 1, 7, 5,"https://ns-strategy.cdn.bcebos.com/ns-strategy/upload/fc_big_pic/part-00305-1258.jpg")
-                            .save();
-
-                    //
-                    context.newCustomData()
-                            .setFileName("custom_data.json")
-                            .setData("hallo, this is my custom data.")
                             .save();
 
                     //
