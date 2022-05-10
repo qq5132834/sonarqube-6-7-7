@@ -47,7 +47,7 @@ import org.sonarqube.ws.client.webhook.WebhooksService;
  *
  * @since 5.3
  */
-class DefaultWsClient implements WsClient {
+public class DefaultWsClient implements WsClient {
 
   private final WsConnector wsConnector;
   private final OrganizationService organizations;
