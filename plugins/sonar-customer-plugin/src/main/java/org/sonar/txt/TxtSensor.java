@@ -65,6 +65,7 @@ public class TxtSensor implements Sensor {
 //            return;
 //        }
 
+        LOGGER.info("TxtSensor.sonar.sources:{}", this.configuration.get("sonar.sources").get()); //扫描路径
         LOGGER.info("TxtSensor.sonar.password:{}", this.configuration.get("sonar.password").get());
         LOGGER.info("TxtSensor.sonar.login:{}", this.configuration.get("sonar.login").get());
         LOGGER.info("TxtSensor.sonar.host.url:{}", this.configuration.get("sonar.host.url").get());
