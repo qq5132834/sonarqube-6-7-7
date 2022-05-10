@@ -15,6 +15,10 @@ import org.sonar.api.config.Configuration;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
+import org.sonarqube.ws.client.DefaultWsClient;
+import org.sonarqube.ws.client.HttpConnector;
+import org.sonarqube.ws.client.WsClient;
+import org.sonarqube.ws.client.WsClientFactories;
 
 import java.io.*;
 import java.nio.file.Path;
@@ -73,6 +77,16 @@ public class TxtSensor implements Sensor {
 
         //
         this.writeData("cutom_data.txt", "hello，this is my custom data txt.");
+
+        //在插件中通过http接口向服务器提交数据
+//        HttpConnector connector = HttpConnector.newBuilder()
+//                                                .url(this.configuration.get("sonar.host.url").get())
+//                                                .token("token")
+//                                                .credentials("login", "password")
+//                                                .build();
+//        WsClient wsClient = WsClientFactories.getDefault().newClient(connector);
+//        DefaultWsClient defaultWsClient = (DefaultWsClient) wsClient;
+//        defaultWsClient.projects().create();
 
         for (InputFile inputFile : fs.inputFiles(fs.predicates().hasLanguage(languageKey))) {
             String fileName = inputFile.filename();
