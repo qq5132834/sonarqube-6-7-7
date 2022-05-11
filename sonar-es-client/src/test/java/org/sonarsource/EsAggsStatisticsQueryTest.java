@@ -17,7 +17,7 @@ import java.net.UnknownHostException;
 import java.util.concurrent.ExecutionException;
 
 /***
- * 统计field的最大值、最小值、平均值、平方和等。
+ * 统计field的最大值、最小值、平均值、平方和等所有度量类型的统计
  */
 public class EsAggsStatisticsQueryTest {
 
