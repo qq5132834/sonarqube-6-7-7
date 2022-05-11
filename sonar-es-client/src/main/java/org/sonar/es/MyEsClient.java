@@ -19,7 +19,7 @@ public class MyEsClient {
 
     public static TransportClient getTransportClient() throws UnknownHostException {
         // 设置elasticsearch集群地址 ip和端口
-        InetSocketTransportAddress address = new InetSocketTransportAddress(InetAddress.getByName("192.168.32.147"), 9300);
+        InetSocketTransportAddress address = new InetSocketTransportAddress(InetAddress.getByName("192.168.32.151"), 9300);
 
         // 设置elasticsearch集群名称
         Settings settings = Settings.builder()
