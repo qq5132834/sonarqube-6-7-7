@@ -20,12 +20,11 @@
 package org.sonar.server.measure.ws;
 
 import com.google.common.collect.ImmutableSet;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+
+import java.util.*;
 import java.util.function.Function;
+
+import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.server.ws.Request;
 import org.sonar.api.server.ws.Response;
 import org.sonar.api.server.ws.WebService;
@@ -121,8 +120,12 @@ public class SearchAction implements MeasuresWsAction {
     }
 
     private SearchRequest createRequest() {
+      //添加sca漏洞数量、评级查询
+      List<String> metricList = new ArrayList<>(httpRequest.mandatoryParamAsStrings(PARAM_METRIC_KEYS));
+      metricList.add(CoreMetrics.SCA_RATING_KEY);
+      metricList.add(CoreMetrics.SCA_KEY);
       request = SearchRequest.builder()
-        .setMetricKeys(httpRequest.mandatoryParamAsStrings(PARAM_METRIC_KEYS))
+        .setMetricKeys(metricList)
         .setProjectKeys(httpRequest.paramAsStrings(PARAM_PROJECT_KEYS))
         .build();
 

@@ -2639,15 +2639,15 @@ public final class CoreMetrics {
 
   /**
    * SonarQube Quality Model
-   * SCA成分分析
-   * @since 5.5
+   * SCA成分分析评级
+   * @since 6.7.7
    */
   public static final String SCA_RATING_KEY = "sca_rating";
 
   /**
    * SonarQube Quality Model
-   * SCA成分分析
-   * @since 5.5
+   * SCA成分分析评级
+   * @since 6.7.7
    */
   public static final Metric<Integer> SCA_RATING = new Metric.Builder(SCA_RATING_KEY, "SCA rating", Metric.ValueType.INT)
           .setDescription("codeAnt SCA成分分析评级")
@@ -2657,6 +2657,28 @@ public final class CoreMetrics {
           .setBestValue(0.0)
           .setOptimizedBestValue(true)
           .create();
+
+
+    /**
+     * SonarQube Quality Model
+     * SCA成分分析漏洞数量
+     * @since 6.7.7
+     */
+    public static final String SCA_KEY = "sca";
+
+    /**
+     * SonarQube Quality Model
+     * SCA成分分析漏洞数量
+     * @since 6.7.7
+     */
+    public static final Metric<Integer> SCA = new Metric.Builder(SCA_KEY, "SCA", Metric.ValueType.INT)
+            .setDescription("codeAnt SCA成分分析漏洞数量")
+            .setDirection(Metric.DIRECTION_WORST)
+            .setQualitative(false)
+            .setDomain(DOMAIN_RELIABILITY)
+            .setBestValue(0.0)
+            .setOptimizedBestValue(true)
+            .create();
 
 
   // --------------------------------------------------------------------------------------------------------------------

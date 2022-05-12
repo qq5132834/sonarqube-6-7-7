@@ -1,5 +1,6 @@
 package org.sonar.server.computation.task.projectanalysis.step;
 
+import okhttp3.internal.Internal;
 import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
@@ -84,14 +85,43 @@ public class LoadCustomDataStep implements ComputationStep {
         try (DbSession dbSession = dbClient.openSession(false)) {
             Component component = this.treeRootHolder.getRoot();
             MeasureDao measureDao = dbClient.measureDao();
-            Measure measure = Measure.newMeasureBuilder().create(new Random().nextInt(4), String.valueOf(new Random().nextInt(4)));
-            Metric metric = this.metricRepository.getByKey(CoreMetrics.SCA_RATING_KEY);
-            MeasureDto measureDto = this.measureToMeasureDto.toMeasureDto(measure, metric, component);
-            measureDao.insert(dbSession, measureDto);
+
+            Integer scaNum = new Random().nextInt(50);
+            measureDao.insert(dbSession, this.getScaMeasureDto(component, scaNum));
+
+            Integer scaRating = null;
+            if(scaNum <= 1){
+                scaRating = 1;
+            }
+            else if(2 == scaNum){
+                scaRating = 2;
+            }
+            else if(3 == scaNum){
+                scaRating = 3;
+            }
+            else if(4 == scaNum){
+                scaRating = 4;
+            }
+            else {
+                scaRating = 5;
+            }
+            measureDao.insert(dbSession, this.getScaRatingMeasureDto(component, scaRating));
             dbSession.commit();
         }
+    }
 
+    private MeasureDto getScaMeasureDto(Component component, int sca){
+        Measure measure = Measure.newMeasureBuilder().create(sca, sca);
+        Metric metric = this.metricRepository.getByKey(CoreMetrics.SCA_KEY);
+        MeasureDto measureDto = this.measureToMeasureDto.toMeasureDto(measure, metric, component);
+        return measureDto;
+    }
 
+    private MeasureDto getScaRatingMeasureDto(Component component, int scaRating){
+        Measure measure = Measure.newMeasureBuilder().create(scaRating, scaRating);
+        Metric metric = this.metricRepository.getByKey(CoreMetrics.SCA_RATING_KEY);
+        MeasureDto measureDto = this.measureToMeasureDto.toMeasureDto(measure, metric, component);
+        return measureDto;
     }
 
     @Override
