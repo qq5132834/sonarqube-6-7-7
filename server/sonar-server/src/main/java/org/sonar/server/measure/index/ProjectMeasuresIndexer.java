@@ -110,7 +110,7 @@ public class ProjectMeasuresIndexer implements ProjectIndexer, NeedAuthorization
 
   @Override
   public IndexingResult index(DbSession dbSession, Collection<EsQueueDto> items) {
-    LOGGER.info("批量保存{}条数据到projectMeasures/projectMeasure索引中", items==null?"0":items.size());
+    LOGGER.info("CeServer执行完成后，批量保存{}条数据到projectMeasures/projectMeasure索引中", items==null?"0":items.size());
     if (items.isEmpty()) {
       return new IndexingResult();
     }
@@ -138,7 +138,7 @@ public class ProjectMeasuresIndexer implements ProjectIndexer, NeedAuthorization
   }
 
   private void doIndex(Size size, @Nullable String projectUuid) {
-    LOGGER.info("保存项目{},数据到projectMeasures/projectMeasure索引中", projectUuid);
+    LOGGER.info("ce-server执行完后，将保存项目{}的project_measure中的数据同步至projectMeasures/projectMeasure索引中", projectUuid);
     try (DbSession dbSession = dbClient.openSession(false);
       ProjectMeasuresIndexerIterator rowIt = ProjectMeasuresIndexerIterator.create(dbSession, projectUuid)) {
 
