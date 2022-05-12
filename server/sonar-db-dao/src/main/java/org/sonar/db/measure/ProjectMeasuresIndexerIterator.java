@@ -67,7 +67,9 @@ public class ProjectMeasuresIndexerIterator extends CloseableIterator<ProjectMea
     CoreMetrics.NEW_COVERAGE_KEY,
     CoreMetrics.NEW_DUPLICATED_LINES_DENSITY_KEY,
     CoreMetrics.NEW_LINES_KEY,
-    CoreMetrics.NEW_RELIABILITY_RATING_KEY);
+    CoreMetrics.NEW_RELIABILITY_RATING_KEY,
+    CoreMetrics.SCA_KEY   //在sql中添加sca检查
+    );
 
   private static final String SQL_PROJECTS = "SELECT p.organization_uuid, p.uuid, p.kee, p.name, s.uuid, s.created_at, p.tags " +
     "FROM projects p " +
