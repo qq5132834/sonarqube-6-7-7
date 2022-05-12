@@ -129,12 +129,6 @@ public class PersistMeasuresStep implements ComputationStep {
           measureDao.insert(session, measureDto);
           inserts++;
         }
-        //随机写入50以内的sca值
-        Measure measure = Measure.newMeasureBuilder().create(new Random().nextInt(50), String.valueOf(new Random().nextInt(50)));
-        metric = metricRepository.getByKey("sca");
-        MeasureDto measureDto = measureToMeasureDto.toMeasureDto(measure, metric, component);
-        measureDao.insert(session, measureDto);
-        inserts++;
       }
     }
 
