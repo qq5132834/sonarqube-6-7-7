@@ -50,6 +50,7 @@ import org.elasticsearch.search.aggregations.bucket.terms.support.IncludeExclude
 import org.elasticsearch.search.aggregations.metrics.sum.Sum;
 import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.sonar.api.ce.ComputeEngineSide;
+import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.server.ServerSide;
 import org.sonar.api.utils.System2;
 import org.sonar.api.utils.log.Logger;
@@ -75,20 +76,7 @@ import static org.elasticsearch.search.aggregations.AggregationBuilders.filters;
 import static org.elasticsearch.search.aggregations.AggregationBuilders.sum;
 import static org.elasticsearch.search.sort.SortOrder.ASC;
 import static org.elasticsearch.search.sort.SortOrder.DESC;
-import static org.sonar.api.measures.CoreMetrics.ALERT_STATUS_KEY;
-import static org.sonar.api.measures.CoreMetrics.COVERAGE_KEY;
-import static org.sonar.api.measures.CoreMetrics.DUPLICATED_LINES_DENSITY_KEY;
-import static org.sonar.api.measures.CoreMetrics.LINES_KEY;
-import static org.sonar.api.measures.CoreMetrics.NCLOC_KEY;
-import static org.sonar.api.measures.CoreMetrics.NEW_COVERAGE_KEY;
-import static org.sonar.api.measures.CoreMetrics.NEW_DUPLICATED_LINES_DENSITY_KEY;
-import static org.sonar.api.measures.CoreMetrics.NEW_LINES_KEY;
-import static org.sonar.api.measures.CoreMetrics.NEW_MAINTAINABILITY_RATING_KEY;
-import static org.sonar.api.measures.CoreMetrics.NEW_RELIABILITY_RATING_KEY;
-import static org.sonar.api.measures.CoreMetrics.NEW_SECURITY_RATING_KEY;
-import static org.sonar.api.measures.CoreMetrics.RELIABILITY_RATING_KEY;
-import static org.sonar.api.measures.CoreMetrics.SECURITY_RATING_KEY;
-import static org.sonar.api.measures.CoreMetrics.SQALE_RATING_KEY;
+import static org.sonar.api.measures.CoreMetrics.*;
 import static org.sonar.server.es.EsUtils.escapeSpecialRegexChars;
 import static org.sonar.server.es.EsUtils.termsToMap;
 import static org.sonar.server.measure.index.ProjectMeasuresDoc.QUALITY_GATE_STATUS;
@@ -150,6 +138,7 @@ public class ProjectMeasuresIndex {
     .put(SQALE_RATING_KEY, (esSearch, query, facetBuilder) -> addRatingFacet(esSearch, SQALE_RATING_KEY, facetBuilder))
     .put(NEW_MAINTAINABILITY_RATING_KEY, (esSearch, query, facetBuilder) -> addRatingFacet(esSearch, NEW_MAINTAINABILITY_RATING_KEY, facetBuilder))
     .put(RELIABILITY_RATING_KEY, (esSearch, query, facetBuilder) -> addRatingFacet(esSearch, RELIABILITY_RATING_KEY, facetBuilder))
+    .put(SCA_RATING_KEY, (esSearch, query, facetBuilder) -> addRatingFacet(esSearch, SCA_RATING_KEY, facetBuilder))   //添加sca评级统计
     .put(NEW_RELIABILITY_RATING_KEY, (esSearch, query, facetBuilder) -> addRatingFacet(esSearch, NEW_RELIABILITY_RATING_KEY, facetBuilder))
     .put(SECURITY_RATING_KEY, (esSearch, query, facetBuilder) -> addRatingFacet(esSearch, SECURITY_RATING_KEY, facetBuilder))
     .put(NEW_SECURITY_RATING_KEY, (esSearch, query, facetBuilder) -> addRatingFacet(esSearch, NEW_SECURITY_RATING_KEY, facetBuilder))

@@ -21,18 +21,16 @@ package org.sonar.server.component.ws;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Ordering;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Optional;
-import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.annotation.Nullable;
+
+import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.resources.Qualifiers;
 import org.sonar.api.server.ws.Change;
 import org.sonar.api.server.ws.Request;
@@ -295,7 +293,12 @@ public class SearchProjectsAction implements ComponentsWsAction {
       .setPage(httpRequest.mandatoryParamAsInt(Param.PAGE))
       .setPageSize(httpRequest.mandatoryParamAsInt(Param.PAGE_SIZE));
     if (httpRequest.hasParam(Param.FACETS)) {
-      request.setFacets(httpRequest.paramAsStrings(Param.FACETS));
+      List<String> facetsList = httpRequest.paramAsStrings(Param.FACETS);
+      //复制
+      List<String> list = new ArrayList<>(facetsList);
+      list.add(CoreMetrics.SCA_RATING_KEY);
+      //添加sca评级统计
+      request.setFacets(list);
     }
     if (httpRequest.hasParam(FIELDS)) {
       request.setAdditionalFields(httpRequest.paramAsStrings(FIELDS));
