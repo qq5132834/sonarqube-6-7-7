@@ -2642,15 +2642,15 @@ public final class CoreMetrics {
    * SCA成分分析
    * @since 5.5
    */
-  public static final String SCA_KEY = "sca";
+  public static final String SCA_RATING_KEY = "sca_rating";
 
   /**
    * SonarQube Quality Model
    * SCA成分分析
    * @since 5.5
    */
-  public static final Metric<Integer> SCA = new Metric.Builder(SCA_KEY, "SCA", Metric.ValueType.INT)
-          .setDescription("codeAnt SCA 成分分析")
+  public static final Metric<Integer> SCA_RATING = new Metric.Builder(SCA_RATING_KEY, "SCA rating", Metric.ValueType.INT)
+          .setDescription("codeAnt SCA成分分析评级")
           .setDirection(Metric.DIRECTION_WORST)
           .setQualitative(false)
           .setDomain(DOMAIN_RELIABILITY)
