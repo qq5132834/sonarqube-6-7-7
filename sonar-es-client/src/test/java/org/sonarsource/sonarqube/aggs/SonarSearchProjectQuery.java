@@ -166,10 +166,9 @@ public class SonarSearchProjectQuery {
         QueryBuilder queryBuilder = QueryBuilders.matchAllQuery();
         BoolQueryBuilder facetFilter = boolQuery().must(queryBuilder);
 
-        String facetKey = "reliability_rating";
         AbstractAggregationBuilder abstractAggregationBuilder =
-                AggregationBuilders.global(facetKey)
-                                    .subAggregation(AggregationBuilders.filter("facet_filter_" + facetKey, facetFilter)
+                AggregationBuilders.global(metricKey)
+                                    .subAggregation(AggregationBuilders.filter("facet_filter_" + metricKey, facetFilter)
                                             .subAggregation(aggregationBuilder));
 
         searchRequestBuilder.addAggregation(abstractAggregationBuilder);
