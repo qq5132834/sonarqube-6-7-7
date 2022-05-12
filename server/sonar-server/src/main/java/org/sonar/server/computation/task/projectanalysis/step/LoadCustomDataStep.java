@@ -84,7 +84,7 @@ public class LoadCustomDataStep implements ComputationStep {
         try (DbSession dbSession = dbClient.openSession(false)) {
             Component component = this.treeRootHolder.getRoot();
             MeasureDao measureDao = dbClient.measureDao();
-            Measure measure = Measure.newMeasureBuilder().create(new Random().nextInt(5), String.valueOf(new Random().nextInt(5)));
+            Measure measure = Measure.newMeasureBuilder().create(new Random().nextInt(4), String.valueOf(new Random().nextInt(4)));
             Metric metric = this.metricRepository.getByKey(CoreMetrics.SCA_RATING_KEY);
             MeasureDto measureDto = this.measureToMeasureDto.toMeasureDto(measure, metric, component);
             measureDao.insert(dbSession, measureDto);
