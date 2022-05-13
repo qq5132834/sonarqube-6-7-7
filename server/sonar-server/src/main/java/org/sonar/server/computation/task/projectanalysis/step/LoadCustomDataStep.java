@@ -87,7 +87,7 @@ public class LoadCustomDataStep implements ComputationStep {
             MeasureDao measureDao = dbClient.measureDao();
 
             Integer scaNum = new Random().nextInt(50);
-            measureDao.insert(dbSession, this.getScaMeasureDto(component, scaNum));
+            MeasureDto scaMeasureDto = this.getScaMeasureDto(component, scaNum);
 
             Integer scaRating = null;
             if(scaNum <= 1){
@@ -105,22 +105,34 @@ public class LoadCustomDataStep implements ComputationStep {
             else {
                 scaRating = 5;
             }
-            measureDao.insert(dbSession, this.getScaRatingMeasureDto(component, scaRating));
-            dbSession.commit();
+            MeasureDto scaRatingMeasureDto = this.getScaRatingMeasureDto(component, scaRating);
+
+            //直接写入数据，推荐采用：this.measureRepository.add()方式
+//            measureDao.insert(dbSession, scaMeasureDto);
+//            measureDao.insert(dbSession, scaRatingMeasureDto);
+//            dbSession.commit();
         }
     }
 
     private MeasureDto getScaMeasureDto(Component component, int sca){
-        Measure measure = Measure.newMeasureBuilder().create(sca, sca);
+        Measure measure = Measure.newMeasureBuilder().create(sca);
         Metric metric = this.metricRepository.getByKey(CoreMetrics.SCA_KEY);
         MeasureDto measureDto = this.measureToMeasureDto.toMeasureDto(measure, metric, component);
+
+        //统一到【PersistMeasuresStep.java】类中执行保存
+        this.measureRepository.add(component, metric, measure);
+
         return measureDto;
     }
 
     private MeasureDto getScaRatingMeasureDto(Component component, int scaRating){
-        Measure measure = Measure.newMeasureBuilder().create(scaRating, scaRating);
+        Measure measure = Measure.newMeasureBuilder().create(scaRating);
         Metric metric = this.metricRepository.getByKey(CoreMetrics.SCA_RATING_KEY);
         MeasureDto measureDto = this.measureToMeasureDto.toMeasureDto(measure, metric, component);
+
+        //统一到【PersistMeasuresStep.java】类中执行保存
+        this.measureRepository.add(component, metric, measure);
+
         return measureDto;
     }
 
