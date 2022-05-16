@@ -22,9 +22,10 @@
     <module>sonar-server</module>
     <module>sonar-ce</module>
     <module>sonar-plugin-bridge</module>
-	<!--
-    <module>sonar-web</module>
-	 -->
+      <module>sonar-ce-cli</module>
+      <!--
+      <module>sonar-web</module>
+       -->
   </modules>
 
   <profiles>
