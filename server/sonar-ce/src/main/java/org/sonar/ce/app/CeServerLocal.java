@@ -19,15 +19,6 @@
  */
 package org.sonar.ce.app;
 
-import org.sonar.ce.ComputeEngineImpl;
-
-/**
- * The Compute Engine server which starts a daemon thread to run the {@link ComputeEngineImpl} when it's {@link #start()}
- * method is called.
- * <p>
- * This is the class to call to run a standalone {@link ComputeEngineImpl} (see {@link #main(String[])}).
- * </p>
- */
 public class CeServerLocal {
 
   public static void main(String[] args) {
