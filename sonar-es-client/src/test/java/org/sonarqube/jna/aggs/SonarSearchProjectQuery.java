@@ -1,4 +1,4 @@
-package org.sonarsource.sonarqube.aggs;
+package org.sonarqube.jna.aggs;
 
 import org.elasticsearch.action.search.SearchAction;
 import org.elasticsearch.action.search.SearchRequestBuilder;
