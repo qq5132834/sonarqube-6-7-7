@@ -87,7 +87,8 @@ public class ComputeEngineContainerImplTest {
     insertInternalProperty(InternalProperties.SERVER_ID_CHECKSUM, DigestUtils.sha256Hex("a_server_id|" + cleanJdbcUrl()));
 
     underTest
-      .start(new Props(properties));
+            .setProps(new Props(properties))
+      .start();
 
     MutablePicoContainer picoContainer = underTest.getComponentContainer().getPicoContainer();
     assertThat(picoContainer.getComponentAdapters())
