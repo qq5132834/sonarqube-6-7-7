@@ -69,7 +69,12 @@ public class ComputeEngineImplTest {
     }
 
     @Override
-    public ComputeEngineContainer start(Props props) {
+    public ComputeEngineContainer setProps(Props props) {
+      return null;
+    }
+
+    @Override
+    public ComputeEngineContainer start() {
       return this;
     }
 
