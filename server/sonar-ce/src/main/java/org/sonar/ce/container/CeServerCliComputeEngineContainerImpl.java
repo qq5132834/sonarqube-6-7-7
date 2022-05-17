@@ -130,6 +130,7 @@ import org.sonarqube.ws.Rules;
 
 import javax.annotation.CheckForNull;
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.Objects.requireNonNull;
 
@@ -141,10 +142,10 @@ public class CeServerCliComputeEngineContainerImpl implements ComputeEngineConta
   @CheckForNull
   private ComponentContainer level4;
 
-  private final CeQueueDto ceQueueDto;
+  private final String ceQueueUuid;
 
-  public CeServerCliComputeEngineContainerImpl(CeQueueDto ceQueueDto){
-    this.ceQueueDto = ceQueueDto;
+  public CeServerCliComputeEngineContainerImpl(String ceQueueUuid){
+    this.ceQueueUuid = ceQueueUuid;
   }
 
   @Override
@@ -175,6 +176,7 @@ public class CeServerCliComputeEngineContainerImpl implements ComputeEngineConta
     configureFromModules(this.level4);
     ServerExtensionInstaller extensionInstaller = this.level4.getComponentByType(ServerExtensionInstaller.class);
     extensionInstaller.installExtensions(this.level4);
+
     this.level4.startComponents();
 
     return this;
@@ -185,7 +187,16 @@ public class CeServerCliComputeEngineContainerImpl implements ComputeEngineConta
     CeServerCliWorkerFactoryImpl ceServerCliWorkerFactory
             = this.level4.createChild().getComponentByType(CeServerCliWorkerFactoryImpl.class);
 
-    CeWorker ceWorker = ceServerCliWorkerFactory.create(0, this.ceQueueDto);
+    DbClient dbClient = this.level4.getComponentByType(DbClient.class);
+    CeQueueDto ceQueueDto = null;
+    try(DbSession dbSession = dbClient.openSession(false)) {
+        Optional<CeQueueDto> ceQueueDtoOptional = dbClient.ceQueueDao().selectByUuid(dbSession, this.ceQueueUuid);
+        if(ceQueueDtoOptional.isPresent()){
+            ceQueueDto = ceQueueDtoOptional.get();
+        }
+    }
+
+    CeWorker ceWorker = ceServerCliWorkerFactory.create(0, ceQueueDto);
     try {
       if(ceWorker instanceof CeServerCliWorkerImpl){
         CeServerCliWorkerImpl ceServerCliWorker = (CeServerCliWorkerImpl) ceWorker;
@@ -420,7 +431,11 @@ public class CeServerCliComputeEngineContainerImpl implements ComputeEngineConta
       ProjectConfigurationFactory.class,
 
       // cleaning
-      CeCleaningModule.class);
+      CeCleaningModule.class,
+
+      //
+      CeServerCliWorkerImpl.CeServerCliWorkerCeQueue.class
+    );
 
     if (props.valueAsBoolean(ProcessProperties.CLUSTER_ENABLED)) {
       container.add(
