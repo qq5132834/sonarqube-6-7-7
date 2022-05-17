@@ -42,7 +42,7 @@ public class ComputeEngineImpl implements ComputeEngine, ComputeEngineStatus {
     checkState(this.status == Status.INIT, "startup() can not be called multiple times");
     try {
       this.status = Status.STARTING;
-      this.computeEngineContainer.start(props);
+      this.computeEngineContainer.setProps(props).start();
     } finally {
       this.status = Status.STARTED;
     }
