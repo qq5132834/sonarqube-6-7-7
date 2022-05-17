@@ -1,8 +1,8 @@
 package org.sonar.ce.cli;
 
+import org.sonar.ce.CeServerCliComputeEngineImpl;
 import org.sonar.ce.ComputeEngine;
-import org.sonar.ce.ComputeEngineImpl;
-import org.sonar.ce.container.ComputeEngineContainerImpl;
+import org.sonar.ce.container.CeServerCliComputeEngineContainerImpl;
 import org.sonar.process.ProcessEntryPoint;
 import org.sonar.process.Props;
 
@@ -16,7 +16,7 @@ public class CeServerCli {
     public CeServerCli(String[] args) {
         ProcessEntryPoint entryPoint = ProcessEntryPoint.createForArguments(args);
         Props props = entryPoint.getProps();
-        this.computeEngine = new ComputeEngineImpl(props, new ComputeEngineContainerImpl());
+        this.computeEngine = new CeServerCliComputeEngineImpl(props, new CeServerCliComputeEngineContainerImpl());
     }
 
     public static void main(String[] args) {
