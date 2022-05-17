@@ -147,7 +147,9 @@ public class CeServerCliWorkerImpl implements CeWorker {
       if (i > 0) {
         LOG.debug("{} in progress tasks reset for worker uuid {}", i, workerUuid);
       }
-      Optional<CeQueueDto> dto = ceQueueDao.peek(dbSession, workerUuid, MAX_EXECUTION_COUNT);
+      //从数据库中查询需要处理的任务
+      //Optional<CeQueueDto> dto = ceQueueDao.peek(dbSession, workerUuid, MAX_EXECUTION_COUNT);
+      Optional<CeQueueDto> dto = Optional.of(this.ceQueueDto);
       CeTask task = null;
       if (dto.isPresent()) {
         task = loadTask(dbSession, dto.get());

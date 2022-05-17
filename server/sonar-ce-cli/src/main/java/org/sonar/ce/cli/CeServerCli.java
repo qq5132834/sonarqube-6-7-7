@@ -18,6 +18,10 @@ public class CeServerCli {
         ProcessEntryPoint entryPoint = ProcessEntryPoint.createForArguments(args);
         Props props = entryPoint.getProps();
         CeQueueDto ceQueueDto = new CeQueueDto();
+        ceQueueDto.setComponentUuid("AYDRm03B6pOU71bJfQ3f");
+        ceQueueDto.setUuid("AYDRm05Z6pOU71bJfQ3l");
+        ceQueueDto.setTaskType("REPORT");
+        ceQueueDto.setSubmitterLogin("admin");
         this.computeEngine = new CeServerCliComputeEngineImpl(props, new CeServerCliComputeEngineContainerImpl(ceQueueDto));
     }
 
