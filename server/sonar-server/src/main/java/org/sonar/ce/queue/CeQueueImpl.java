@@ -182,7 +182,7 @@ public class CeQueueImpl implements CeQueue {
     return submitPaused.get();
   }
 
-  private static class CeQueueDtoToCeTask implements Function<CeQueueDto, CeTask> {
+  public static class CeQueueDtoToCeTask implements Function<CeQueueDto, CeTask> {
     private final String defaultOrganizationUuid;
     private final Map<String, ComponentDto> componentDtoByUuid;
 
