@@ -20,8 +20,6 @@
 package org.sonar.ce.container;
 
 import com.google.common.annotations.VisibleForTesting;
-import java.util.List;
-import javax.annotation.CheckForNull;
 import org.sonar.api.SonarQubeSide;
 import org.sonar.api.SonarQubeVersion;
 import org.sonar.api.config.EmailSettings;
@@ -40,12 +38,7 @@ import org.sonar.api.utils.Durations;
 import org.sonar.api.utils.System2;
 import org.sonar.api.utils.UriReader;
 import org.sonar.api.utils.Version;
-import org.sonar.ce.CeConfigurationModule;
-import org.sonar.ce.CeDistributedInformationImpl;
-import org.sonar.ce.CeHttpModule;
-import org.sonar.ce.CeQueueModule;
-import org.sonar.ce.CeTaskCommonsModule;
-import org.sonar.ce.StandaloneCeDistributedInformation;
+import org.sonar.ce.*;
 import org.sonar.ce.cleaning.CeCleaningModule;
 import org.sonar.ce.db.ReadOnlyPropertiesDao;
 import org.sonar.ce.log.CeProcessLogging;
@@ -54,8 +47,7 @@ import org.sonar.ce.platform.ComputeEngineExtensionInstaller;
 import org.sonar.ce.queue.CeQueueCleaner;
 import org.sonar.ce.queue.PurgeCeActivities;
 import org.sonar.ce.settings.ProjectConfigurationFactory;
-import org.sonar.ce.taskprocessor.CeProcessingScheduler;
-import org.sonar.ce.taskprocessor.CeTaskProcessorModule;
+import org.sonar.ce.taskprocessor.*;
 import org.sonar.ce.user.CeUserSession;
 import org.sonar.core.component.DefaultResourceTypes;
 import org.sonar.core.config.ConfigurationProvider;
@@ -68,11 +60,7 @@ import org.sonar.core.platform.PluginClassloaderFactory;
 import org.sonar.core.platform.PluginLoader;
 import org.sonar.core.timemachine.Periods;
 import org.sonar.core.util.UuidFactoryImpl;
-import org.sonar.db.DBSessionsImpl;
-import org.sonar.db.DaoModule;
-import org.sonar.db.DatabaseChecker;
-import org.sonar.db.DbClient;
-import org.sonar.db.DefaultDatabase;
+import org.sonar.db.*;
 import org.sonar.db.purge.PurgeProfiler;
 import org.sonar.process.NetworkUtilsImpl;
 import org.sonar.process.ProcessProperties;
@@ -88,14 +76,7 @@ import org.sonar.server.issue.IssueFieldsSetter;
 import org.sonar.server.issue.index.IssueIndex;
 import org.sonar.server.issue.index.IssueIndexer;
 import org.sonar.server.issue.index.IssueIteratorFactory;
-import org.sonar.server.issue.notification.ChangesOnMyIssueNotificationDispatcher;
-import org.sonar.server.issue.notification.DoNotFixNotificationDispatcher;
-import org.sonar.server.issue.notification.IssueChangesEmailTemplate;
-import org.sonar.server.issue.notification.MyNewIssuesEmailTemplate;
-import org.sonar.server.issue.notification.MyNewIssuesNotificationDispatcher;
-import org.sonar.server.issue.notification.NewIssuesEmailTemplate;
-import org.sonar.server.issue.notification.NewIssuesNotificationDispatcher;
-import org.sonar.server.issue.notification.NewIssuesNotificationFactory;
+import org.sonar.server.issue.notification.*;
 import org.sonar.server.issue.workflow.FunctionExecutor;
 import org.sonar.server.issue.workflow.IssueWorkflow;
 import org.sonar.server.measure.index.ProjectMeasuresIndex;
@@ -114,16 +95,7 @@ import org.sonar.server.permission.PermissionUpdater;
 import org.sonar.server.permission.UserPermissionChanger;
 import org.sonar.server.permission.index.PermissionIndexer;
 import org.sonar.server.permission.ws.template.DefaultTemplatesResolverImpl;
-import org.sonar.server.platform.DatabaseServerCompatibility;
-import org.sonar.server.platform.DefaultServerUpgradeStatus;
-import org.sonar.server.platform.ServerFileSystemImpl;
-import org.sonar.server.platform.ServerImpl;
-import org.sonar.server.platform.ServerLifecycleNotifier;
-import org.sonar.server.platform.ServerLogging;
-import org.sonar.server.platform.StartupMetadataProvider;
-import org.sonar.server.platform.TempFolderProvider;
-import org.sonar.server.platform.UrlSettings;
-import org.sonar.server.platform.WebServerImpl;
+import org.sonar.server.platform.*;
 import org.sonar.server.platform.db.migration.MigrationConfigurationModule;
 import org.sonar.server.platform.db.migration.version.DatabaseVersion;
 import org.sonar.server.platform.monitoring.DbSection;
@@ -155,9 +127,12 @@ import org.sonar.server.view.index.ViewIndex;
 import org.sonar.server.view.index.ViewIndexer;
 import org.sonarqube.ws.Rules;
 
+import javax.annotation.CheckForNull;
+import java.util.List;
+
 import static java.util.Objects.requireNonNull;
 
-public class ComputeEngineContainerImpl implements ComputeEngineContainer {
+public class CeServerCliComputeEngineContainerImpl implements ComputeEngineContainer {
 
   private ComputeEngineStatus computeEngineStatus;
   @CheckForNull
@@ -200,7 +175,19 @@ public class ComputeEngineContainerImpl implements ComputeEngineContainer {
 
   @Override
   public ComputeEngineContainer start() {
-    this.startupTasks();
+//    this.startupTasks();
+//    this.level4.getComponentsByType()
+    CeServerCliWorkerFactoryImpl ceServerCliWorkerFactory
+            = this.level4.createChild().getComponentByType(CeServerCliWorkerFactoryImpl.class);
+    CeWorker ceWorker = ceServerCliWorkerFactory.create(0, "helloworld");
+    try {
+      if(ceWorker instanceof CeServerCliWorkerImpl){
+        CeServerCliWorkerImpl ceServerCliWorker = (CeServerCliWorkerImpl) ceWorker;
+        ceServerCliWorker.call();
+      }
+    }catch (Exception e) {
+      e.printStackTrace();
+    }
     return this;
   }
 

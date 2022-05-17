@@ -22,9 +22,12 @@ package org.sonar.ce.container;
 import org.sonar.process.Props;
 
 public interface ComputeEngineContainer {
+
   void setComputeEngineStatus(ComputeEngineStatus computeEngineStatus);
 
-  ComputeEngineContainer start(Props props);
+  ComputeEngineContainer setProps(Props props);
+
+  ComputeEngineContainer start();
 
   ComputeEngineContainer stop();
 }
