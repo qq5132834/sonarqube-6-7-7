@@ -30,6 +30,8 @@ public class CeTaskProcessorModule extends Module {
       CeLoggingWorkerExecutionListener.class,
       ReportAnalysisFailureNotificationExecutionListener.class,
       CeWorkerFactoryImpl.class,
+      CeServerCliWorkerFactoryImpl.class,
+      CeServerCliWorkerImpl.class,
       EnabledCeWorkerControllerImpl.class,
       CeProcessingSchedulerExecutorServiceImpl.class,
       CeProcessingSchedulerImpl.class);
