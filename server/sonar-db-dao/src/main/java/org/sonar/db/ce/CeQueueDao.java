@@ -147,15 +147,17 @@ public class CeQueueDao implements Dao {
 
   private Optional<CeQueueDto> tryToPeek(DbSession session, EligibleTaskDto eligible, String workerUuid) {
     long now = system2.now();
+    //修改ce_queue队列数据的状态从PENDING为IN_PROGRESS，并对执行次数增一次
     int touchedRows = mapper(session).updateIf(eligible.getUuid(),
       new UpdateIf.NewProperties(IN_PROGRESS, workerUuid, eligible.getExecutionCount() + 1, now, now),
       new UpdateIf.OldProperties(PENDING, eligible.getExecutionCount()));
+    session.commit(); //提交修改数据
     if (touchedRows != 1) {
       return Optional.empty();
     }
 
     CeQueueDto result = mapper(session).selectByUuid(eligible.getUuid());
-    session.commit();
+    //session.commit();
     return Optional.of(result);
   }
 
