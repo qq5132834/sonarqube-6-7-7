@@ -114,10 +114,29 @@
 
   <select id="selectEligibleForPeek" resultType="org.sonar.db.ce.EligibleTaskDto">
     select
-      <include refid="columnsSelectEligibleForPeek"/>
-    <include refid="sqlSelectEligibleForPeek"/>
-    <include refid="orderBySelectEligibleForPeek"/>
-    limit #{pagination.pageSize,jdbcType=INTEGER} offset #{pagination.offset,jdbcType=INTEGER}
+      cq.uuid as "uuid",
+      cq.execution_count as "executionCount",
+      cq.created_at as "created_at",
+      cq.id as "id"
+    from
+      ce_queue cq
+    where
+      cq.status='PENDING'
+      and cq.execution_count &lt; #{maxExecutionCount,jdbcType=INTEGER}
+      and not exists (
+      select
+        1
+      from
+        ce_queue cq2
+      where
+        cq.component_uuid=cq2.component_uuid
+        and cq2.status &lt;&gt; 'PENDING'
+      )
+    order by
+      created_at asc,
+      id asc
+    limit #{pagination.pageSize,jdbcType=INTEGER}
+    offset #{pagination.offset,jdbcType=INTEGER}
   </select>
 
   <select id="selectEligibleForPeek" parameterType="map" resultType="org.sonar.db.ce.EligibleTaskDto" databaseId="mssql">
