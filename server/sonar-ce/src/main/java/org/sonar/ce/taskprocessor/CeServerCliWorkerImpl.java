@@ -55,7 +55,7 @@ public class CeServerCliWorkerImpl implements CeWorker {
 
   private final int ordinal;
   private final String workUuid;
-  private final String componentUUID;
+  private final CeQueueDto ceQueueDto;
   private final InternalCeQueue queue;
   private final CeTaskProcessorRepository taskProcessorRepository;
   private final EnabledCeWorkerController enabledCeWorkerController;
@@ -67,7 +67,7 @@ public class CeServerCliWorkerImpl implements CeWorker {
   private static final int MAX_EXECUTION_COUNT = 1;
 
   public CeServerCliWorkerImpl(int ordinal, String workUuid,
-                               String componentUUID, InternalCeQueue queue, CeTaskProcessorRepository taskProcessorRepository,
+                               CeQueueDto ceQueueDto, InternalCeQueue queue, CeTaskProcessorRepository taskProcessorRepository,
                                EnabledCeWorkerController enabledCeWorkerController,
                                DefaultOrganizationProvider defaultOrganizationProvider,
                                CEQueueStatus queueStatus,
@@ -75,7 +75,7 @@ public class CeServerCliWorkerImpl implements CeWorker {
                                ExecutionListener... listeners) {
     this.ordinal = checkOrdinal(ordinal);
     this.workUuid = workUuid;
-    this.componentUUID = componentUUID;
+    this.ceQueueDto = ceQueueDto;
     this.queue = queue;
     this.taskProcessorRepository = taskProcessorRepository;
     this.enabledCeWorkerController = enabledCeWorkerController;

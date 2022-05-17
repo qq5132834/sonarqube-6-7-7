@@ -3,6 +3,7 @@ package org.sonar.ce.cli;
 import org.sonar.ce.CeServerCliComputeEngineImpl;
 import org.sonar.ce.ComputeEngine;
 import org.sonar.ce.container.CeServerCliComputeEngineContainerImpl;
+import org.sonar.db.ce.CeQueueDto;
 import org.sonar.process.ProcessEntryPoint;
 import org.sonar.process.Props;
 
@@ -16,7 +17,8 @@ public class CeServerCli {
     public CeServerCli(String[] args) {
         ProcessEntryPoint entryPoint = ProcessEntryPoint.createForArguments(args);
         Props props = entryPoint.getProps();
-        this.computeEngine = new CeServerCliComputeEngineImpl(props, new CeServerCliComputeEngineContainerImpl());
+        CeQueueDto ceQueueDto = new CeQueueDto();
+        this.computeEngine = new CeServerCliComputeEngineImpl(props, new CeServerCliComputeEngineContainerImpl(ceQueueDto));
     }
 
     public static void main(String[] args) {

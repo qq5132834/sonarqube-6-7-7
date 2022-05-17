@@ -61,6 +61,7 @@ import org.sonar.core.platform.PluginLoader;
 import org.sonar.core.timemachine.Periods;
 import org.sonar.core.util.UuidFactoryImpl;
 import org.sonar.db.*;
+import org.sonar.db.ce.CeQueueDto;
 import org.sonar.db.purge.PurgeProfiler;
 import org.sonar.process.NetworkUtilsImpl;
 import org.sonar.process.ProcessProperties;
@@ -140,6 +141,12 @@ public class CeServerCliComputeEngineContainerImpl implements ComputeEngineConta
   @CheckForNull
   private ComponentContainer level4;
 
+  private final CeQueueDto ceQueueDto;
+
+  public CeServerCliComputeEngineContainerImpl(CeQueueDto ceQueueDto){
+    this.ceQueueDto = ceQueueDto;
+  }
+
   @Override
   public void setComputeEngineStatus(ComputeEngineStatus computeEngineStatus) {
     this.computeEngineStatus = computeEngineStatus;
@@ -175,11 +182,10 @@ public class CeServerCliComputeEngineContainerImpl implements ComputeEngineConta
 
   @Override
   public ComputeEngineContainer start() {
-//    this.startupTasks();
-//    this.level4.getComponentsByType()
     CeServerCliWorkerFactoryImpl ceServerCliWorkerFactory
             = this.level4.createChild().getComponentByType(CeServerCliWorkerFactoryImpl.class);
-    CeWorker ceWorker = ceServerCliWorkerFactory.create(0, "helloworld");
+
+    CeWorker ceWorker = ceServerCliWorkerFactory.create(0, this.ceQueueDto);
     try {
       if(ceWorker instanceof CeServerCliWorkerImpl){
         CeServerCliWorkerImpl ceServerCliWorker = (CeServerCliWorkerImpl) ceWorker;
@@ -191,17 +197,17 @@ public class CeServerCliComputeEngineContainerImpl implements ComputeEngineConta
     return this;
   }
 
-  private void startupTasks() {
-    ComponentContainer startupLevel = this.level4.createChild();
-    startupLevel.add(startupComponents());
-    startupLevel.startComponents();
-    // done in PlatformLevelStartup
-    ServerLifecycleNotifier serverLifecycleNotifier = startupLevel.getComponentByType(ServerLifecycleNotifier.class);
-    if (serverLifecycleNotifier != null) {
-      serverLifecycleNotifier.notifyStart();
-    }
-    startupLevel.stopComponents();
-  }
+//  private void startupTasks() {
+//    ComponentContainer startupLevel = this.level4.createChild();
+//    startupLevel.add(startupComponents());
+//    startupLevel.startComponents();
+//    // done in PlatformLevelStartup
+//    ServerLifecycleNotifier serverLifecycleNotifier = startupLevel.getComponentByType(ServerLifecycleNotifier.class);
+//    if (serverLifecycleNotifier != null) {
+//      serverLifecycleNotifier.notifyStart();
+//    }
+//    startupLevel.stopComponents();
+//  }
 
   @Override
   public ComputeEngineContainer stop() {

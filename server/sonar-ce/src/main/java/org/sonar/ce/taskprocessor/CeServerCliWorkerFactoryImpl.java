@@ -1,9 +1,11 @@
 package org.sonar.ce.taskprocessor;
 
 import org.sonar.ce.monitoring.CEQueueStatus;
+import org.sonar.ce.queue.CeQueue;
 import org.sonar.ce.queue.InternalCeQueue;
 import org.sonar.core.util.UuidFactory;
 import org.sonar.db.DbClient;
+import org.sonar.db.ce.CeQueueDto;
 import org.sonar.server.organization.DefaultOrganizationProvider;
 
 import java.util.HashSet;
@@ -22,6 +24,7 @@ public class CeServerCliWorkerFactoryImpl {
     private final DefaultOrganizationProvider defaultOrganizationProvider;
     private final CEQueueStatus queueStatus;
     private final DbClient dbClient;
+
 
     /**
      * Used by Pico when there is no {@link CeWorker.ExecutionListener} in the container.
@@ -50,12 +53,12 @@ public class CeServerCliWorkerFactoryImpl {
         this.defaultOrganizationProvider = defaultOrganizationProvider;
     }
 
-    public CeWorker create(int ordinal, String componentUUID) {
+    public CeWorker create(int ordinal, CeQueueDto ceQueueDto) {
         String uuid = uuidFactory.create();
         ceWorkerUUIDs.add(uuid);
         return new CeServerCliWorkerImpl(ordinal,
                                         uuid,
-                                        componentUUID,
+                                        ceQueueDto,
                                         queue,
                                         taskProcessorRepository,
                                         enabledCeWorkerController,
