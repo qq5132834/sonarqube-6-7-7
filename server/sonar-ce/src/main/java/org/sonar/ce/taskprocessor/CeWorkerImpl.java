@@ -72,10 +72,7 @@ public class CeWorkerImpl implements CeWorker {
   public Result call() throws Exception {
     long startTime = System.currentTimeMillis();
     LOG.info("CeWorkerImpl中轮询开始:" + startTime);
-//    Result result = withCustomizedThreadName(this::findAndProcessTask);
-    Result result = withCustomizedThreadName(()->this.findAndProcessTask());
-//    Supplier<Result> supplier = ()->findAndProcessTask();
-//    Result result = withCustomizedThreadName(supplier);
+    Result result = withCustomizedThreadName(this::findAndProcessTask);
     long endTime = System.currentTimeMillis();
     LOG.info("CeWorkerImpl中轮询结束:" + endTime + "，耗时：" + (endTime-startTime));
     return result;
