@@ -69,7 +69,7 @@ public class NewIndex {
   private void applySettingsConfiguration(SettingsConfiguration settingsConfiguration) {
     settings.put("index.mapper.dynamic", valueOf(false));
     settings.put("index.refresh_interval", refreshInterval(settingsConfiguration));
-
+    settings.put("index.max_result_window",200000);
     Configuration config = settingsConfiguration.getConfiguration();
     boolean clusterMode = config.getBoolean(CLUSTER_ENABLED).orElse(false);
     int shards = config.getInt(format("sonar.search.%s.shards", indexName))
