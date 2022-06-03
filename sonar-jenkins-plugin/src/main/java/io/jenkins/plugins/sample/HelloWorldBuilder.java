@@ -20,6 +20,11 @@ import org.kohsuke.stapler.DataBoundSetter;
 
 public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
 
+    public static String ErrorsMissingName = "请填写名字";
+    public static String WarningsTooShort = "名字是不是太短了？";
+    public static String WarningsReallyFrench = "你真的是法国人吗？";
+    public static String DisplayName= "说：你好，世界";
+
     private final String name;
     private boolean useFrench;
 
@@ -57,11 +62,11 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
         public FormValidation doCheckName(@QueryParameter String value, @QueryParameter boolean useFrench)
                 throws IOException, ServletException {
             if (value.length() == 0)
-                return FormValidation.error(Messages.HelloWorldBuilder_DescriptorImpl_errors_missingName());
+                return FormValidation.error(ErrorsMissingName);
             if (value.length() < 4)
-                return FormValidation.warning(Messages.HelloWorldBuilder_DescriptorImpl_warnings_tooShort());
+                return FormValidation.warning(WarningsTooShort);
             if (!useFrench && value.matches(".*[éáàç].*")) {
-                return FormValidation.warning(Messages.HelloWorldBuilder_DescriptorImpl_warnings_reallyFrench());
+                return FormValidation.warning(WarningsReallyFrench);
             }
             return FormValidation.ok();
         }
@@ -73,7 +78,7 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
 
         @Override
         public String getDisplayName() {
-            return Messages.HelloWorldBuilder_DescriptorImpl_DisplayName();
+            return DisplayName;
         }
 
     }
