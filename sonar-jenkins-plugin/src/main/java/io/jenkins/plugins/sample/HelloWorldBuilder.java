@@ -27,10 +27,12 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
 
     private final String name;
     private boolean useFrench;
+    private final Integer age;
 
     @DataBoundConstructor
-    public HelloWorldBuilder(String name) {
+    public HelloWorldBuilder(String name, Integer age) {
         this.name = name;
+        this.age = age;
     }
 
     public String getName() {
@@ -43,16 +45,26 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
 
     @DataBoundSetter
     public void setUseFrench(boolean useFrench) {
+        System.out.println("HelloWorldBuilder.setUseFrench:" + useFrench);
         this.useFrench = useFrench;
     }
 
     @Override
     public void perform(Run<?, ?> run, FilePath workspace, Launcher launcher, TaskListener listener) throws InterruptedException, IOException {
+//        if (useFrench) {
+//            listener.getLogger().println("Bonjour, " + name + "!");
+//        } else {
+//            listener.getLogger().println("Hello, " + name + "!");
+//        }
+        System.out.println("HelloWorldBuilder.perform");
+        System.out.println("HelloWorldBuilder.perform.workspace:" + workspace.getName() + "," + workspace.getRemote());
+        run.addAction(new HelloWorldAction(name));
         if (useFrench) {
-            listener.getLogger().println("Bonjour, " + name + "!");
+            listener.getLogger().println("Bonjour, " + this.name + ",年龄：" + this.age);
         } else {
-            listener.getLogger().println("Hello, " + name + "!");
+            listener.getLogger().println("Hello, " + this.name + ",年龄：" + this.age);
         }
+
     }
 
     @Symbol("greet")

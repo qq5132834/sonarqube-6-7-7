@@ -2,10 +2,6 @@ package io.jenkins.plugins.sample;
 
 import hudson.model.FreeStyleBuild;
 import hudson.model.FreeStyleProject;
-import hudson.model.Label;
-import org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition;
-import org.jenkinsci.plugins.workflow.job.WorkflowJob;
-import org.jenkinsci.plugins.workflow.job.WorkflowRun;
 import org.junit.Rule;
 import org.junit.Test;
 import org.jvnet.hudson.test.JenkinsRule;
@@ -20,20 +16,20 @@ public class HelloWorldBuilderTest {
     @Test
     public void testConfigRoundtrip() throws Exception {
         FreeStyleProject project = jenkins.createFreeStyleProject();
-        project.getBuildersList().add(new HelloWorldBuilder(name));
+        project.getBuildersList().add(new HelloWorldBuilder(name, age));
         project = jenkins.configRoundtrip(project);
-        jenkins.assertEqualDataBoundBeans(new HelloWorldBuilder(name), project.getBuildersList().get(0));
+        jenkins.assertEqualDataBoundBeans(new HelloWorldBuilder(name, age), project.getBuildersList().get(0));
     }
 
     @Test
     public void testConfigRoundtripFrench() throws Exception {
         FreeStyleProject project = jenkins.createFreeStyleProject();
-        HelloWorldBuilder builder = new HelloWorldBuilder(name);
+        HelloWorldBuilder builder = new HelloWorldBuilder(name, age);
         builder.setUseFrench(true);
         project.getBuildersList().add(builder);
         project = jenkins.configRoundtrip(project);
 
-        HelloWorldBuilder lhs = new HelloWorldBuilder(name);
+        HelloWorldBuilder lhs = new HelloWorldBuilder(name, age);
         lhs.setUseFrench(true);
         jenkins.assertEqualDataBoundBeans(lhs, project.getBuildersList().get(0));
     }
@@ -41,7 +37,7 @@ public class HelloWorldBuilderTest {
     @Test
     public void testBuild() throws Exception {
         FreeStyleProject project = jenkins.createFreeStyleProject();
-        HelloWorldBuilder builder = new HelloWorldBuilder(name);
+        HelloWorldBuilder builder = new HelloWorldBuilder(name, age);
         project.getBuildersList().add(builder);
 
         FreeStyleBuild build = jenkins.buildAndAssertSuccess(project);
@@ -52,7 +48,7 @@ public class HelloWorldBuilderTest {
     public void testBuildFrench() throws Exception {
 
         FreeStyleProject project = jenkins.createFreeStyleProject();
-        HelloWorldBuilder builder = new HelloWorldBuilder(name);
+        HelloWorldBuilder builder = new HelloWorldBuilder(name, age);
         builder.setUseFrench(true);
         project.getBuildersList().add(builder);
 

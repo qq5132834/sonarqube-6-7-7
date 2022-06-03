@@ -3,6 +3,9 @@
     <f:entry title="名字" field="name">
         <f:textbox />
     </f:entry>
+    <f:entry title="年龄" field="age">
+        <f:textbox />
+    </f:entry>
     <f:advanced>
         <f:entry title="使用法语" field="useFrench"
                  description="检查我们是否应该用法语打个招呼？">
