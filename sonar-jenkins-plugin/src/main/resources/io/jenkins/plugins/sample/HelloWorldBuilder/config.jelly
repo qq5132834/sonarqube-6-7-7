@@ -4,8 +4,8 @@
         <f:textbox />
     </f:entry>
     <f:advanced>
-        <f:entry title="使用发育" field="useFrench"
-                 description="确定使用法语吗？">
+        <f:entry title="使用法语" field="useFrench"
+                 description="检查我们是否应该用法语打个招呼？">
             <f:checkbox />
         </f:entry>
     </f:advanced>
