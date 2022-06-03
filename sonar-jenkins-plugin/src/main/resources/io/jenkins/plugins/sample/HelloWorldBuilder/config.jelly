@@ -1,11 +1,11 @@
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
-    <f:entry title="${%Name}" field="name">
+    <f:entry title="名字" field="name">
         <f:textbox />
     </f:entry>
     <f:advanced>
-        <f:entry title="${%French}" field="useFrench"
-                 description="${%FrenchDescr}">
+        <f:entry title="使用发育" field="useFrench"
+                 description="确定使用法语吗？">
             <f:checkbox />
         </f:entry>
     </f:advanced>
