@@ -18,9 +18,19 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.gitlab</groupId>
-      <artifactId>java-gitlab-api</artifactId>
-      <version>4.1.1</version>
+      <groupId>org.gitlab4j</groupId>
+      <artifactId>gitlab4j-api</artifactId>
+      <version>4.15.7</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.jgit</groupId>
+      <artifactId>org.eclipse.jgit</artifactId>
+      <version>5.7.0.202003110725-r</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
     </dependency>
   </dependencies>
 
