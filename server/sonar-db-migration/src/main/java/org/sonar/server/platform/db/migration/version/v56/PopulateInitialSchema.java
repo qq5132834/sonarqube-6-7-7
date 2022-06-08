@@ -25,6 +25,7 @@ import org.sonar.api.utils.System2;
 import org.sonar.db.Database;
 import org.sonar.server.platform.db.migration.step.DataChange;
 
+// 关系型数据库初始化数据库内容。
 public class PopulateInitialSchema extends DataChange {
 
   private static final String ADMINS_GROUP = "sonar-administrators";
