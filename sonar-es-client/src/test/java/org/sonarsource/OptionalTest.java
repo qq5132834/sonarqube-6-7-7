@@ -84,17 +84,30 @@ public class OptionalTest {
 //        Optional<String> str = Optional.empty();
         User user = null;
         Optional<User> optionalUser = Optional.ofNullable(user);
-        System.out.println(optionalUser.isPresent());
+        //System.out.println(optionalUser.isPresent());
         optionalUser = Optional.empty();
-        System.out.println(optionalUser.isPresent());
+        //System.out.println(optionalUser.isPresent());
         optionalUser = Optional.ofNullable(new User("huangliao", 100));
 
         User user0 = Optional.ofNullable(user).orElse(new User("joke", 10));
-        System.out.println(user0.getName() + "," + user0.getAge());
+        //System.out.println(user0.getName() + "," + user0.getAge());
 
         Optional<String> name = optionalUser.map(m->m.getName());
-        System.out.println(name.get());
+        //System.out.println(name.get());
 
+        user = null;
+//        Optional<User> xixi = Optional.of(Optional.ofNullable(new User("joke", 10)).ifPresent(e->{
+//
+//        }); //.orElse(new User("o", 0)));
+//        System.out.println(xixi.get().toString());
+
+        user = Optional.ofNullable(new User("joke", 10)).orElseGet(this::generate);
+        System.out.println(user.toString());
+
+    }
+
+    private User generate(){
+        return new User("o", 1);
     }
 
     private class User{
@@ -103,6 +116,7 @@ public class OptionalTest {
         private final Integer age;
 
         private User(String name, Integer age) {
+//            System.out.println(name);
             this.name = name;
             this.age = age;
         }
