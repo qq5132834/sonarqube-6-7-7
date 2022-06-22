@@ -27,7 +27,7 @@ sonar.path.logs=C\:\\Users\\51328\\Desktop\\sonarqube-6-7-7-application\\sonarqu
 sonar.jdbc.timeBetweenEvictionRunsMillis=30000
 sonar.jdbc.maxIdle=5
 sonar.search.javaAdditionalOpts=
-sonar.jdbc.url=jdbc\:mysql\://192.168.32.155\:3306/sonar?useUnicode\=true&characterEncoding\=utf8&rewriteBatchedStatements\=true&useConfigs\=maxPerformance&useSSL\=false
+sonar.jdbc.url=jdbc\:mysql\://172.18.3.155\:3306/sonar?useUnicode\=true&characterEncoding\=utf8&rewriteBatchedStatements\=true&useConfigs\=maxPerformance&useSSL\=false
 sonar.jdbc.password=root
 sonar.cluster.enabled=false
 process.index=2
