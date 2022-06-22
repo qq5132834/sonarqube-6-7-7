@@ -33,15 +33,21 @@ import static org.sonar.core.util.FileUtils.deleteQuietly;
  */
 public class LoadPluginJarFileDemoTest {
 
+    private Map<String, PluginInfo> pluginInfosByKeys = new HashMap<>();
+    private  Map<String, Plugin> pluginInstancesByKeys = new HashMap<>();
+
 
     public static void main(String[] args) {
 
-        Map<String, PluginInfo> pluginInfosByKeys = new HashMap<>();
-
         String dir = "C:\\Users\\51328\\Desktop\\sonarqube-6-7-7-application\\sonarqube-6.7.7\\sonarqube-6.7.7\\extensions\\plugins";
-        File pluginDir = new File(dir);
+
         LoadPluginJarFileDemoTest loadPluginJarFile = new LoadPluginJarFileDemoTest();
-        loadPluginJarFile.listJarFiles(pluginDir).stream().forEach(f->{
+        loadPluginJarFile.loadPreInstalledPlugins(new File(dir));
+
+    }
+
+    private void loadPreInstalledPlugins(File pluginDir){
+        this.listJarFiles(pluginDir).stream().forEach(f->{
             System.out.println(f.getName());
             PluginInfo info = PluginInfo.create(f);
             pluginInfosByKeys.put(info.getKey(), info);
@@ -51,23 +57,22 @@ public class LoadPluginJarFileDemoTest {
             System.out.println(e.getKey());
         });
 
-        loadPluginJarFile.loadInstances(pluginInfosByKeys);
+        this.loadInstances(pluginInfosByKeys);
 
     }
 
-
     private void loadInstances(Map<String, PluginInfo> pluginInfosByKeys) {
 
-        Map<String, Plugin> pluginInstancesByKeys = new HashMap<>();
-
         PluginJarExploder jarExploder = new LoadPluginJarExploderDemoTest();
-        TempFolder temp = new DefaultTempFolder(new File("D:\\temp"));
-        PluginClassloaderFactory classloaderFactory = new PluginClassloaderFactory(temp);
+        PluginClassloaderFactory classloaderFactory = new PluginClassloaderFactory(new DefaultTempFolder(new File("D:\\temp")));
         PluginLoader loader = new PluginLoader(jarExploder, classloaderFactory);
 
         pluginInstancesByKeys.putAll(loader.load(pluginInfosByKeys));
+
+        Map<ClassLoader, String> keysByClassLoader = new HashMap<>();
+
         for (Map.Entry<String, Plugin> e : pluginInstancesByKeys.entrySet()) {
-            //keysByClassLoader.put(e.getValue().getClass().getClassLoader(), e.getKey());
+            keysByClassLoader.put(e.getValue().getClass().getClassLoader(), e.getKey());
         }
     }
 
