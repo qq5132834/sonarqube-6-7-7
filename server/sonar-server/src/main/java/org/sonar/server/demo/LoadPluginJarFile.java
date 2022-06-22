@@ -6,10 +6,13 @@ import org.sonar.core.platform.PluginInfo;
 import java.io.File;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Set;
 
 /***
- * 加载jar插件文件
+ * 加载plugin-jar文件
+ *
+ * 参考：
+ * 1. ServerPluginRepository.loadPreInstalledPlugins()
+ * 2.
  */
 public class LoadPluginJarFile {
 
