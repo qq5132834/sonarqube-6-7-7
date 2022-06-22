@@ -29,7 +29,12 @@ import static org.sonar.core.util.FileUtils.deleteQuietly;
  * 1. ServerPluginRepository.java
  *      loadPreInstalledPlugins()
  *      loadInstances()
- * 2.
+ * 2、RegisterRules.java
+ *      start()
+ * 3. RuleDefinitionsLoader.java
+ *      load()
+ * 4. ServerExtensionInstaller.java
+ *      installExtensions()
  */
 public class LoadPluginJarFileDemoTest {
 
