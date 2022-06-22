@@ -2,14 +2,17 @@ package org.sonar.server.demo;
 
 import org.apache.commons.io.FileUtils;
 import org.sonar.api.Plugin;
-import org.sonar.api.utils.MessageException;
+import org.sonar.api.config.Configuration;
+import org.sonar.api.utils.TempFolder;
+import org.sonar.api.utils.internal.DefaultTempFolder;
 import org.sonar.core.platform.PluginClassloaderFactory;
 import org.sonar.core.platform.PluginInfo;
 import org.sonar.core.platform.PluginJarExploder;
 import org.sonar.core.platform.PluginLoader;
+import org.sonar.server.platform.ServerFileSystem;
+import org.sonar.server.platform.ServerFileSystemImpl;
 import org.sonar.server.plugins.ServerPluginJarExploder;
 
-import javax.script.Bindings;
 import java.io.File;
 import java.util.Collection;
 import java.util.Collections;
@@ -28,7 +31,7 @@ import static org.sonar.core.util.FileUtils.deleteQuietly;
  *      loadInstances()
  * 2.
  */
-public class LoadPluginJarFile {
+public class LoadPluginJarFileDemoTest {
 
 
     public static void main(String[] args) {
@@ -37,7 +40,7 @@ public class LoadPluginJarFile {
 
         String dir = "C:\\Users\\51328\\Desktop\\sonarqube-6-7-7-application\\sonarqube-6.7.7\\sonarqube-6.7.7\\extensions\\plugins";
         File pluginDir = new File(dir);
-        LoadPluginJarFile loadPluginJarFile = new LoadPluginJarFile();
+        LoadPluginJarFileDemoTest loadPluginJarFile = new LoadPluginJarFileDemoTest();
         loadPluginJarFile.listJarFiles(pluginDir).stream().forEach(f->{
             System.out.println(f.getName());
             PluginInfo info = PluginInfo.create(f);
@@ -57,8 +60,9 @@ public class LoadPluginJarFile {
 
         Map<String, Plugin> pluginInstancesByKeys = new HashMap<>();
 
-        PluginJarExploder jarExploder = new ServerPluginJarExploder(null);
-        PluginClassloaderFactory classloaderFactory = new PluginClassloaderFactory(null);
+        PluginJarExploder jarExploder = new LoadPluginJarExploderDemoTest();
+        TempFolder temp = new DefaultTempFolder(new File("D:\\temp"));
+        PluginClassloaderFactory classloaderFactory = new PluginClassloaderFactory(temp);
         PluginLoader loader = new PluginLoader(jarExploder, classloaderFactory);
 
         pluginInstancesByKeys.putAll(loader.load(pluginInfosByKeys));
