@@ -34,8 +34,8 @@ import static org.sonar.core.util.FileUtils.deleteQuietly;
 public class LoadPluginJarFileDemoTest {
 
     private Map<String, PluginInfo> pluginInfosByKeys = new HashMap<>();
-    private  Map<String, Plugin> pluginInstancesByKeys = new HashMap<>();
-
+    private Map<String, Plugin> pluginInstancesByKeys = new HashMap<>();
+    private Map<ClassLoader, String> keysByClassLoader = new HashMap<>();
 
     public static void main(String[] args) {
 
@@ -44,6 +44,7 @@ public class LoadPluginJarFileDemoTest {
         LoadPluginJarFileDemoTest loadPluginJarFile = new LoadPluginJarFileDemoTest();
         loadPluginJarFile.loadPreInstalledPlugins(new File(dir));
 
+        System.out.println();
     }
 
     private void loadPreInstalledPlugins(File pluginDir){
@@ -68,8 +69,6 @@ public class LoadPluginJarFileDemoTest {
         PluginLoader loader = new PluginLoader(jarExploder, classloaderFactory);
 
         pluginInstancesByKeys.putAll(loader.load(pluginInfosByKeys));
-
-        Map<ClassLoader, String> keysByClassLoader = new HashMap<>();
 
         for (Map.Entry<String, Plugin> e : pluginInstancesByKeys.entrySet()) {
             keysByClassLoader.put(e.getValue().getClass().getClassLoader(), e.getKey());
