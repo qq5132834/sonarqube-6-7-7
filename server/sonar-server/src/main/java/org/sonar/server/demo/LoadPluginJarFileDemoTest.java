@@ -161,6 +161,7 @@ public class LoadPluginJarFileDemoTest {
         RulesDefinition.Context context = this.load(rulesDefinitionList);
         for (RulesDefinition.ExtendedRepository repoDef : getRepositories(context)){
             for (RulesDefinition.Rule ruleDef : repoDef.rules()) {
+                //将插件中的规则信息写入到ruleDef中
                 RuleKey ruleKey = RuleKey.of(ruleDef.repository().key(), ruleDef.key());
             }
         }
