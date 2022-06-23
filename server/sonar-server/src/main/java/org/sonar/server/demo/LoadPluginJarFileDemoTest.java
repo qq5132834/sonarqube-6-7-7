@@ -48,8 +48,11 @@ import static org.sonar.core.util.FileUtils.deleteQuietly;
  *      start()
  * 3. RuleDefinitionsLoader.java
  *      load()
- * 4. ServerExtensionInstaller.java  将插件中plugin接口实现类中addExtension的对象注入容器
+ * 4. ServerExtensionInstaller.java  将插件中plugin接口实现类中addExtension的对象注入容器，比如：RulesDefinition[]
  *      installExtensions()
+ * 5. RuleDefinitionsLoader.java 将注入的RulesDefinition[] 加载到数据库中
+ *      load()
+ *
  */
 public class LoadPluginJarFileDemoTest {
 
