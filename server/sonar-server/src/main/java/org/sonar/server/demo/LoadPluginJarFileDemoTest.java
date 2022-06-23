@@ -2,8 +2,15 @@ package org.sonar.server.demo;
 
 import org.apache.commons.io.FileUtils;
 import org.sonar.api.Plugin;
+import org.sonar.api.SonarProduct;
+import org.sonar.api.SonarQubeSide;
+import org.sonar.api.SonarRuntime;
 import org.sonar.api.config.Configuration;
+import org.sonar.api.internal.ApiVersion;
+import org.sonar.api.internal.SonarRuntimeImpl;
+import org.sonar.api.utils.System2;
 import org.sonar.api.utils.TempFolder;
+import org.sonar.api.utils.Version;
 import org.sonar.api.utils.internal.DefaultTempFolder;
 import org.sonar.core.platform.PluginClassloaderFactory;
 import org.sonar.core.platform.PluginInfo;
@@ -13,6 +20,7 @@ import org.sonar.server.platform.ServerFileSystem;
 import org.sonar.server.platform.ServerFileSystemImpl;
 import org.sonar.server.plugins.ServerPluginJarExploder;
 
+import javax.annotation.Nullable;
 import java.io.File;
 import java.util.Collection;
 import java.util.Collections;
@@ -50,6 +58,13 @@ public class LoadPluginJarFileDemoTest {
         loadPluginJarFile.loadPreInstalledPlugins(new File(dir));
 
         System.out.println();
+    }
+
+    private SonarRuntime createSonarRuntime(){
+        Version apiVersion = ApiVersion.load(System2.INSTANCE);;
+        SonarQubeSide sonarQubeSide = SonarQubeSide.SERVER;
+        SonarRuntime sonarRuntime = SonarRuntimeImpl.forSonarQube(apiVersion, sonarQubeSide);
+        return sonarRuntime;
     }
 
     private void loadPreInstalledPlugins(File pluginDir){
