@@ -3,12 +3,17 @@ package org.sonar.server.demo;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ListMultimap;
+import com.google.gson.internal.$Gson$Preconditions;
 import org.apache.commons.io.FileUtils;
+import org.picocontainer.MutablePicoContainer;
 import org.sonar.api.*;
 import org.sonar.api.config.Configuration;
 import org.sonar.api.internal.ApiVersion;
 import org.sonar.api.internal.SonarRuntimeImpl;
+import org.sonar.api.profiles.ProfileDefinition;
+import org.sonar.api.rules.RuleRepository;
 import org.sonar.api.server.ServerSide;
+import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.utils.AnnotationUtils;
 import org.sonar.api.utils.System2;
 import org.sonar.api.utils.TempFolder;
@@ -79,8 +84,32 @@ public class LoadPluginJarFileDemoTest {
                     System.out.println("------declareExtension.class:" + extension.getClass().getName() + ", toString:" + extension.toString());
                     this.container.declareExtension(pluginInfo, extension);
                 }
+
+                //输出实现了RulesDefinition接口的类
+                Arrays.stream(extension.getClass().getInterfaces()).filter(e->{
+                    if(e.getName().equals(RulesDefinition.class.getName())){
+                        return true;
+                    }
+                    return false;
+                }).forEach(e->{
+                    System.out.println(e.getName());
+                });
             }
         }
+
+        //
+        MutablePicoContainer mutablePicoContainer = container.getPicoContainer();
+        List ls = mutablePicoContainer.getComponents(RulesDefinition.class);
+
+        List<RulesDefinition> rulesDefinitionList = container.getComponentsByType(RulesDefinition.class);//这个在
+        rulesDefinitionList.stream().forEach(e->{System.out.println(e.getClass().getSimpleName());});
+        List<ProfileDefinition> profileDefinitionList = container.getComponentsByType(ProfileDefinition.class);
+        profileDefinitionList.stream().forEach(e->{System.out.println(e.getClass().getSimpleName());});
+        List<RuleRepository> ruleRepositoryList = container.getComponentsByType(RuleRepository.class);
+        ruleRepositoryList.stream().forEach(e->{System.out.println(e.getClass().getSimpleName());});
+
+        System.out.println("\n\n\n");
+
     }
 
     private Object installExtension(ComponentContainer container, PluginInfo pluginInfo, Object extension, boolean acceptProvider) {
