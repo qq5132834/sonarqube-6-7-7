@@ -53,6 +53,11 @@ public abstract class Settings {
   private final PropertyDefinitions definitions;
   private final Encryption encryption;
 
+  protected Settings(){
+    definitions = null;
+    encryption = null;
+  }
+
   protected Settings(PropertyDefinitions definitions, Encryption encryption) {
     this.definitions = requireNonNull(definitions);
     this.encryption = requireNonNull(encryption);

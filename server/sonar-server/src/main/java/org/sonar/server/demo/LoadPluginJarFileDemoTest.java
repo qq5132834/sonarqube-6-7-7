@@ -8,10 +8,12 @@ import org.apache.commons.io.FileUtils;
 import org.picocontainer.MutablePicoContainer;
 import org.sonar.api.*;
 import org.sonar.api.config.Configuration;
+import org.sonar.api.config.Settings;
 import org.sonar.api.internal.ApiVersion;
 import org.sonar.api.internal.SonarRuntimeImpl;
 import org.sonar.api.profiles.ProfileDefinition;
 import org.sonar.api.profiles.XMLProfileParser;
+import org.sonar.api.resources.Language;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.rule.RuleStatus;
 import org.sonar.api.rules.RuleFinder;
@@ -31,6 +33,7 @@ import org.sonar.server.platform.ServerFileSystem;
 import org.sonar.server.platform.ServerFileSystemImpl;
 import org.sonar.server.plugins.ServerPluginJarExploder;
 import org.sonar.server.rule.WebServerRuleFinderImpl;
+import org.sonar.server.settings.ChildSettings;
 
 import javax.annotation.Nullable;
 import java.io.File;
@@ -74,6 +77,28 @@ public class LoadPluginJarFileDemoTest {
         myComponentContainer.add(new RulesDefinitionXmlLoader());
         myComponentContainer.add(new XMLProfileParser(finder));
         myComponentContainer.add(finder);
+        myComponentContainer.add(new Settings(){
+
+            @Override
+            protected Optional<String> get(String key) {
+                return Optional.empty();
+            }
+
+            @Override
+            protected void set(String key, String value) {
+
+            }
+
+            @Override
+            protected void remove(String key) {
+
+            }
+
+            @Override
+            public Map<String, String> getProperties() {
+                return null;
+            }
+        });
 //        myComponentContainer.add(new RulesDefinitionXmlLoader());
 
         String dir = "C:\\Users\\51328\\Desktop\\sonarqube-6-7-7-application\\sonarqube-6.7.7\\sonarqube-6.7.7\\extensions\\plugins";
@@ -154,6 +179,8 @@ public class LoadPluginJarFileDemoTest {
         profileDefinitionList.stream().forEach(e->{System.out.println(e.getClass().getSimpleName());});
         List<RuleRepository> ruleRepositoryList = container.getComponentsByType(RuleRepository.class);
         ruleRepositoryList.stream().forEach(e->{System.out.println(e.getClass().getSimpleName());});
+        List<Language> languageList = container.getComponentsByType(Language.class);
+        languageList.stream().forEach(e->System.out.println(e.getClass().getSimpleName()));
 
         System.out.println("\n\n\n");
 
