@@ -30,6 +30,7 @@ import org.sonar.core.platform.*;
 import org.sonar.core.util.stream.MoreCollectors;
 import org.sonar.db.DbClient;
 import org.sonar.db.rule.RuleDefinitionDto;
+import org.sonar.db.rule.RuleParamDto;
 import org.sonar.db.rule.RuleRepositoryDto;
 import org.sonar.server.platform.ServerFileSystem;
 import org.sonar.server.platform.ServerFileSystemImpl;
@@ -63,6 +64,7 @@ import static org.sonar.core.util.FileUtils.deleteQuietly;
  * 6. RegisterRules.java
  *      start()
  *      persistRepositories()
+ *      mergeParams()  写入rules_parameters表
  *
  */
 public class LoadPluginJarFileDemoTest {
@@ -193,12 +195,31 @@ public class LoadPluginJarFileDemoTest {
             for (RulesDefinition.Rule ruleDef : repoDef.rules()) {
                 //将插件中的规则信息写入到ruleDef中
                 RuleKey ruleKey = RuleKey.of(ruleDef.repository().key(), ruleDef.key());
+
+                //
+                this.mergeParams(ruleDef);
             }
         }
 
         this.persistRepositories(context.repositories());
     }
 
+    /***
+     * 参考
+     * RegisterRules.java中的mergeParams方法，写入数据到rules_parameters表中
+     */
+    private void mergeParams(RulesDefinition.Rule ruleDef){
+        for (RulesDefinition.Param param : ruleDef.params()) {
+            RuleDefinitionDto ruleDefinitionDto = new RuleDefinitionDto();
+            ruleDefinitionDto.setId(1); //规则id
+            RuleParamDto paramDto = RuleParamDto.createFor(ruleDefinitionDto)
+                    .setName(param.key())
+                    .setDescription(param.description())
+                    .setDefaultValue(param.defaultValue())
+                    .setType(param.type().toString());
+            //这里将paramDto 写入数据库中
+        }
+    }
 
     /***
      * 参考
