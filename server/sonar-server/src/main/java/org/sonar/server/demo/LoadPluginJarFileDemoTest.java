@@ -61,7 +61,7 @@ public class LoadPluginJarFileDemoTest {
     }
 
     /***
-     * 参考：ServerExtensionInstaller.installExtensions()
+     * 参考：ServerExtensionInstaller.installExtensions()， 这个类的主要作用是将插件中plugin接口的实现类中 addExtension
      */
     private void installExtensions(){
         ListMultimap<PluginInfo, Object> installedExtensionsByPlugin = ArrayListMultimap.create();
@@ -76,6 +76,7 @@ public class LoadPluginJarFileDemoTest {
                     System.out.println("------extension.class:" + extension.getClass().getName() + ", toString:" + extension.toString());
                     installedExtensionsByPlugin.put(pluginInfo, extension);  //extension实例保存在以pluginInfo为key的map列表中
                 } else {
+                    System.out.println("------declareExtension.class:" + extension.getClass().getName() + ", toString:" + extension.toString());
                     this.container.declareExtension(pluginInfo, extension);
                 }
             }
@@ -84,9 +85,9 @@ public class LoadPluginJarFileDemoTest {
 
     private Object installExtension(ComponentContainer container, PluginInfo pluginInfo, Object extension, boolean acceptProvider) {
         List<Class<? extends Annotation>> supportedAnnotationTypes = new ArrayList<>();
-        supportedAnnotationTypes.add(ServerSide.class);
         for (Class<? extends Annotation> supportedAnnotationType : supportedAnnotationTypes) {
             if (AnnotationUtils.getAnnotation(extension, supportedAnnotationType) != null) {
+                supportedAnnotationTypes.add(ServerSide.class); //将含有 ServerSide.class 注解的类注入
                 if (!acceptProvider && isExtensionProvider(extension)) {
                     throw new IllegalStateException("ExtensionProvider can not include providers itself: " + extension);
                 }
