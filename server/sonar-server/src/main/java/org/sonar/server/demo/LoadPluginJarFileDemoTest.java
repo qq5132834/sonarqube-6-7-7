@@ -27,8 +27,10 @@ import org.sonar.api.utils.TempFolder;
 import org.sonar.api.utils.Version;
 import org.sonar.api.utils.internal.DefaultTempFolder;
 import org.sonar.core.platform.*;
+import org.sonar.core.util.stream.MoreCollectors;
 import org.sonar.db.DbClient;
 import org.sonar.db.rule.RuleDefinitionDto;
+import org.sonar.db.rule.RuleRepositoryDto;
 import org.sonar.server.platform.ServerFileSystem;
 import org.sonar.server.platform.ServerFileSystemImpl;
 import org.sonar.server.plugins.ServerPluginJarExploder;
@@ -184,7 +186,7 @@ public class LoadPluginJarFileDemoTest {
 
         System.out.println("\n\n\n");
 
-        //
+        //这里将规则写入到rules表中
         RulesDefinition.Context context = this.load(rulesDefinitionList);
         for (RulesDefinition.ExtendedRepository repoDef : getRepositories(context)){
             for (RulesDefinition.Rule ruleDef : repoDef.rules()) {
@@ -192,6 +194,22 @@ public class LoadPluginJarFileDemoTest {
                 RuleKey ruleKey = RuleKey.of(ruleDef.repository().key(), ruleDef.key());
             }
         }
+
+        this.persistRepositories(context.repositories());
+    }
+
+
+    /***
+     * 参考
+     * RegisterRules.java中的persistRepositories方法，写入数据到rule_repositories表中
+     */
+    private void persistRepositories(List<RulesDefinition.Repository> repositories){
+        System.out.println("保存数据到rule_repositories表中");
+        List<RuleRepositoryDto> dtos = repositories
+                .stream()
+                .map(r -> new RuleRepositoryDto(r.key(), r.language(), r.name()))
+                .collect(MoreCollectors.toList(repositories.size()));
+        dtos.stream().forEach(e->System.out.println(e.getKey() + "," + e.getName() + "," + e.getLanguage()));
     }
 
     private Object installExtension(ComponentContainer container, PluginInfo pluginInfo, Object extension, boolean acceptProvider) {
