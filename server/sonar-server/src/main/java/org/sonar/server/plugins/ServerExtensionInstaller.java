@@ -22,6 +22,8 @@ package org.sonar.server.plugins;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ListMultimap;
+
+import java.io.File;
 import java.lang.annotation.Annotation;
 import java.util.Collection;
 import java.util.List;
@@ -40,6 +42,7 @@ import org.sonar.api.utils.log.Loggers;
 import org.sonar.core.platform.ComponentContainer;
 import org.sonar.core.platform.PluginInfo;
 import org.sonar.core.platform.PluginRepository;
+import org.sonar.server.demo.LoadPluginJarFileDemoTest;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.util.Objects.requireNonNull;
@@ -72,6 +75,14 @@ public abstract class ServerExtensionInstaller {
   }
 
   public void installExtensions(ComponentContainer container) {
+
+/********************************/
+//    String dir = "C:\\Users\\51328\\Desktop\\sonarqube-6-7-7-application\\sonarqube-6.7.7\\sonarqube-6.7.7\\extensions\\plugins";
+//    LoadPluginJarFileDemoTest loadPluginJarFile = new LoadPluginJarFileDemoTest();
+//    loadPluginJarFile.loadPreInstalledPlugins(new File(dir));
+//    loadPluginJarFile.installExtensions(container);
+/********************************/
+
     ListMultimap<PluginInfo, Object> installedExtensionsByPlugin = ArrayListMultimap.create();
     LOGGER.info("安装插件中Context中添加的extension，并将extension注入到pico容器中，ServerExtensionInstaller.installExtensions()");
     for (PluginInfo pluginInfo : pluginRepository.getPluginInfos()) {
