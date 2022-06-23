@@ -62,6 +62,7 @@ import static org.sonar.core.util.FileUtils.deleteQuietly;
  *      load()
  * 6. RegisterRules.java
  *      start()
+ *      persistRepositories()
  *
  */
 public class LoadPluginJarFileDemoTest {
