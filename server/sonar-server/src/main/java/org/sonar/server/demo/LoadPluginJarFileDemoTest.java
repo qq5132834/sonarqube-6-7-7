@@ -55,22 +55,19 @@ public class LoadPluginJarFileDemoTest {
     public static void main(String[] args) {
 
         String dir = "C:\\Users\\51328\\Desktop\\sonarqube-6-7-7-application\\sonarqube-6.7.7\\sonarqube-6.7.7\\extensions\\plugins";
-
         LoadPluginJarFileDemoTest loadPluginJarFile = new LoadPluginJarFileDemoTest();
         loadPluginJarFile.loadPreInstalledPlugins(new File(dir));
-        loadPluginJarFile.installExtensions();
+        loadPluginJarFile.installExtensions(new ComponentContainer());
         System.out.println();
-
-
 
     }
 
     /***
      * 参考：ServerExtensionInstaller.installExtensions()， 这个类的主要作用是将插件中plugin接口的实现类中 addExtension
      */
-    private void installExtensions(){
-        ComponentContainer container = this.componentContainer.createChild();
-        List<Object> extensionList = new ArrayList<>();
+    public void installExtensions(ComponentContainer container){
+//        ComponentContainer container = this.componentContainer.createChild();
+//        ComponentContainer container = new ComponentContainer();
 
         ListMultimap<PluginInfo, Object> installedExtensionsByPlugin = ArrayListMultimap.create();
         for (PluginInfo pluginInfo : this.pluginInfosByKeys.values()) {
@@ -81,35 +78,15 @@ public class LoadPluginJarFileDemoTest {
             Plugin.Context context = new Plugin.Context(this.createSonarRuntime());
             plugin.define(context);
             for (Object extension : context.getExtensions()) {
-
                 if (installExtension(container, pluginInfo, extension, true) != null) {  //这里注入容器
                     System.out.println("------extension.class:" + extension.getClass().getName() + ", toString:" + extension.toString());
                     installedExtensionsByPlugin.put(pluginInfo, extension);  //extension实例保存在以pluginInfo为key的map列表中
                 } else {
                     System.out.println("------declareExtension.class:" + extension.getClass().getName() + ", toString:" + extension.toString());
                     container.declareExtension(pluginInfo, extension);
-                    installedExtensionsByPlugin.put(pluginInfo, extension);
                 }
-
-//                extensionList.add(extension);
-
-                //输出实现了RulesDefinition接口的类
-//                if(extension instanceof RulesDefinition){
-//                    System.out.println("RulesDefinition:" + extension.getClass().getName());
-//                }
-                List<RulesDefinition> rulesDefinitionList = new ArrayList<>();
-                Arrays.stream(extension.getClass().getInterfaces()).filter(e->{
-//                    if(e.getName().equals(RulesDefinition.class.getName())){
-//                        return true;
-//                    }
-                    return true;
-                }).forEach(e->{
-//                    System.out.println("interface:" + e.getName());
-                });
             }
         }
-
-
 
         List<RulesDefinition> rulesDefinitionList = container.getComponentsByType(RulesDefinition.class);//这个在
         rulesDefinitionList.stream().forEach(e->{System.out.println(e.getClass().getSimpleName());});
@@ -124,9 +101,9 @@ public class LoadPluginJarFileDemoTest {
 
     private Object installExtension(ComponentContainer container, PluginInfo pluginInfo, Object extension, boolean acceptProvider) {
         List<Class<? extends Annotation>> supportedAnnotationTypes = new ArrayList<>();
+        supportedAnnotationTypes.add(ServerSide.class); //将含有 ServerSide.class 注解的类注入
         for (Class<? extends Annotation> supportedAnnotationType : supportedAnnotationTypes) {
             if (AnnotationUtils.getAnnotation(extension, supportedAnnotationType) != null) {
-                supportedAnnotationTypes.add(ServerSide.class); //将含有 ServerSide.class 注解的类注入
                 if (!acceptProvider && isExtensionProvider(extension)) {
                     throw new IllegalStateException("ExtensionProvider can not include providers itself: " + extension);
                 }
@@ -153,7 +130,7 @@ public class LoadPluginJarFileDemoTest {
         return sonarRuntime;
     }
 
-    private void loadPreInstalledPlugins(File pluginDir){
+    public void loadPreInstalledPlugins(File pluginDir){
         this.listJarFiles(pluginDir).stream().forEach(f->{
             System.out.println(f.getName());
             PluginInfo info = PluginInfo.create(f);

@@ -36,6 +36,7 @@ import org.sonar.api.SonarRuntime;
 import org.sonar.api.profiles.ProfileDefinition;
 import org.sonar.api.rules.RuleRepository;
 import org.sonar.api.server.rule.RulesDefinition;
+import org.sonar.api.server.rule.RulesDefinitionXmlLoader;
 import org.sonar.api.utils.AnnotationUtils;
 import org.sonar.api.utils.log.Logger;
 import org.sonar.api.utils.log.Loggers;
@@ -77,10 +78,19 @@ public abstract class ServerExtensionInstaller {
   public void installExtensions(ComponentContainer container) {
 
 /********************************/
-//    String dir = "C:\\Users\\51328\\Desktop\\sonarqube-6-7-7-application\\sonarqube-6.7.7\\sonarqube-6.7.7\\extensions\\plugins";
-//    LoadPluginJarFileDemoTest loadPluginJarFile = new LoadPluginJarFileDemoTest();
-//    loadPluginJarFile.loadPreInstalledPlugins(new File(dir));
-//    loadPluginJarFile.installExtensions(container);
+    InstalledPluginReferentialFactory installedPluginReferentialFactory
+            = container.getComponentByType(InstalledPluginReferentialFactory.class);
+    RulesDefinitionXmlLoader rulesDefinitionXmlLoader
+            = container.getComponentByType(RulesDefinitionXmlLoader.class);
+
+    ComponentContainer myComponentContainer = new ComponentContainer();
+    myComponentContainer.add(installedPluginReferentialFactory);
+    myComponentContainer.add(rulesDefinitionXmlLoader);
+
+    String dir = "C:\\Users\\51328\\Desktop\\sonarqube-6-7-7-application\\sonarqube-6.7.7\\sonarqube-6.7.7\\extensions\\plugins";
+    LoadPluginJarFileDemoTest loadPluginJarFile = new LoadPluginJarFileDemoTest();
+    loadPluginJarFile.loadPreInstalledPlugins(new File(dir));
+    loadPluginJarFile.installExtensions(myComponentContainer);
 /********************************/
 
     ListMultimap<PluginInfo, Object> installedExtensionsByPlugin = ArrayListMultimap.create();
