@@ -34,6 +34,8 @@ import org.sonar.api.ExtensionProvider;
 import org.sonar.api.Plugin;
 import org.sonar.api.SonarRuntime;
 import org.sonar.api.profiles.ProfileDefinition;
+import org.sonar.api.profiles.XMLProfileParser;
+import org.sonar.api.rules.RuleFinder;
 import org.sonar.api.rules.RuleRepository;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.server.rule.RulesDefinitionXmlLoader;
@@ -43,7 +45,9 @@ import org.sonar.api.utils.log.Loggers;
 import org.sonar.core.platform.ComponentContainer;
 import org.sonar.core.platform.PluginInfo;
 import org.sonar.core.platform.PluginRepository;
+import org.sonar.db.DbClient;
 import org.sonar.server.demo.LoadPluginJarFileDemoTest;
+import org.sonar.server.rule.WebServerRuleFinderImpl;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.util.Objects.requireNonNull;
@@ -78,19 +82,17 @@ public abstract class ServerExtensionInstaller {
   public void installExtensions(ComponentContainer container) {
 
 /********************************/
-    InstalledPluginReferentialFactory installedPluginReferentialFactory
-            = container.getComponentByType(InstalledPluginReferentialFactory.class);
-    RulesDefinitionXmlLoader rulesDefinitionXmlLoader
-            = container.getComponentByType(RulesDefinitionXmlLoader.class);
-
-    ComponentContainer myComponentContainer = new ComponentContainer();
-    myComponentContainer.add(installedPluginReferentialFactory);
-    myComponentContainer.add(rulesDefinitionXmlLoader);
-
-    String dir = "C:\\Users\\51328\\Desktop\\sonarqube-6-7-7-application\\sonarqube-6.7.7\\sonarqube-6.7.7\\extensions\\plugins";
-    LoadPluginJarFileDemoTest loadPluginJarFile = new LoadPluginJarFileDemoTest();
-    loadPluginJarFile.loadPreInstalledPlugins(new File(dir));
-    loadPluginJarFile.installExtensions(myComponentContainer);
+//    RuleFinder finder = new WebServerRuleFinderImpl(new DbClient(null, null, null), null);
+//    ComponentContainer myComponentContainer = new ComponentContainer();
+//    myComponentContainer.add(new RulesDefinitionXmlLoader());
+//    myComponentContainer.add(new XMLProfileParser(finder));
+//    myComponentContainer.add(finder);
+//    myComponentContainer.add(new RulesDefinitionXmlLoader());
+//
+//    String dir = "C:\\Users\\51328\\Desktop\\sonarqube-6-7-7-application\\sonarqube-6.7.7\\sonarqube-6.7.7\\extensions\\plugins";
+//    LoadPluginJarFileDemoTest loadPluginJarFile = new LoadPluginJarFileDemoTest();
+//    loadPluginJarFile.loadPreInstalledPlugins(new File(dir));
+//    loadPluginJarFile.installExtensions(myComponentContainer);
 /********************************/
 
     ListMultimap<PluginInfo, Object> installedExtensionsByPlugin = ArrayListMultimap.create();

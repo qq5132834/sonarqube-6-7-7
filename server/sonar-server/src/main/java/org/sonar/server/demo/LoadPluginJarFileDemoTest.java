@@ -11,18 +11,23 @@ import org.sonar.api.config.Configuration;
 import org.sonar.api.internal.ApiVersion;
 import org.sonar.api.internal.SonarRuntimeImpl;
 import org.sonar.api.profiles.ProfileDefinition;
+import org.sonar.api.profiles.XMLProfileParser;
+import org.sonar.api.rules.RuleFinder;
 import org.sonar.api.rules.RuleRepository;
 import org.sonar.api.server.ServerSide;
 import org.sonar.api.server.rule.RulesDefinition;
+import org.sonar.api.server.rule.RulesDefinitionXmlLoader;
 import org.sonar.api.utils.AnnotationUtils;
 import org.sonar.api.utils.System2;
 import org.sonar.api.utils.TempFolder;
 import org.sonar.api.utils.Version;
 import org.sonar.api.utils.internal.DefaultTempFolder;
 import org.sonar.core.platform.*;
+import org.sonar.db.DbClient;
 import org.sonar.server.platform.ServerFileSystem;
 import org.sonar.server.platform.ServerFileSystemImpl;
 import org.sonar.server.plugins.ServerPluginJarExploder;
+import org.sonar.server.rule.WebServerRuleFinderImpl;
 
 import javax.annotation.Nullable;
 import java.io.File;
@@ -51,13 +56,22 @@ public class LoadPluginJarFileDemoTest {
     private Map<String, PluginInfo> pluginInfosByKeys = new HashMap<>();
     private Map<String, Plugin> pluginInstancesByKeys = new HashMap<>();
     private Map<ClassLoader, String> keysByClassLoader = new HashMap<>();
-    private ComponentContainer componentContainer = new ComponentContainer();
     public static void main(String[] args) {
+
+//    RulesDefinitionXmlLoader rulesDefinitionXmlLoader
+//            = container.getComponentByType(RulesDefinitionXmlLoader.class);
+
+        RuleFinder finder = new WebServerRuleFinderImpl(new DbClient(null, null, null), null);
+        ComponentContainer myComponentContainer = new ComponentContainer();
+        myComponentContainer.add(new RulesDefinitionXmlLoader());
+        myComponentContainer.add(new XMLProfileParser(finder));
+        myComponentContainer.add(finder);
+//        myComponentContainer.add(new RulesDefinitionXmlLoader());
 
         String dir = "C:\\Users\\51328\\Desktop\\sonarqube-6-7-7-application\\sonarqube-6.7.7\\sonarqube-6.7.7\\extensions\\plugins";
         LoadPluginJarFileDemoTest loadPluginJarFile = new LoadPluginJarFileDemoTest();
         loadPluginJarFile.loadPreInstalledPlugins(new File(dir));
-        loadPluginJarFile.installExtensions(new ComponentContainer());
+        loadPluginJarFile.installExtensions(myComponentContainer);
         System.out.println();
 
     }
