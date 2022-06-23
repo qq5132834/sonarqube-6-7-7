@@ -38,7 +38,7 @@ import static org.sonar.core.util.FileUtils.deleteQuietly;
  *      start()
  * 3. RuleDefinitionsLoader.java
  *      load()
- * 4. ServerExtensionInstaller.java
+ * 4. ServerExtensionInstaller.java  将插件中plugin接口实现类中addExtension的对象注入容器
  *      installExtensions()
  */
 public class LoadPluginJarFileDemoTest {
