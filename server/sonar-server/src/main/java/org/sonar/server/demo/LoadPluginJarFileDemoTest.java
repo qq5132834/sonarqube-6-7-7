@@ -107,7 +107,10 @@ public class LoadPluginJarFileDemoTest {
         List<RuleRepository> ruleRepositoryList = container.getComponentsByType(RuleRepository.class);
         ruleRepositoryList.stream().forEach(e->{System.out.println(e.getClass().getSimpleName());});
 
+
+
         System.out.println("\n\n\n");
+
 
     }
 
