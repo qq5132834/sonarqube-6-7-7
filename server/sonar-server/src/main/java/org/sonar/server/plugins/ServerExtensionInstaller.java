@@ -83,7 +83,7 @@ public abstract class ServerExtensionInstaller {
         Plugin.Context context = new Plugin.Context(sonarRuntime);
         plugin.define(context);
         for (Object extension : context.getExtensions()) {
-          if (installExtension(container, pluginInfo, extension, true) != null) {  //这里注入容易
+          if (installExtension(container, pluginInfo, extension, true) != null) {  //这里注入容器
             LOGGER.info("------extension.class:{}, toString:{}", extension.getClass().getName(), extension.toString());
             installedExtensionsByPlugin.put(pluginInfo, extension);  //extension实例保存在以pluginInfo为key的map列表中
           } else {
