@@ -87,6 +87,7 @@ public abstract class ServerExtensionInstaller {
             LOGGER.info("------extension.class:{}, toString:{}", extension.getClass().getName(), extension.toString());
             installedExtensionsByPlugin.put(pluginInfo, extension);  //extension实例保存在以pluginInfo为key的map列表中
           } else {
+            System.out.println("------declareExtension.class:" + extension.getClass().getName() + ", toString:" + extension.toString());
             container.declareExtension(pluginInfo, extension);
           }
         }
