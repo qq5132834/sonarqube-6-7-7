@@ -1,31 +1,28 @@
 package org.sonar.server.demo;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ListMultimap;
 import org.apache.commons.io.FileUtils;
-import org.sonar.api.Plugin;
-import org.sonar.api.SonarProduct;
-import org.sonar.api.SonarQubeSide;
-import org.sonar.api.SonarRuntime;
+import org.sonar.api.*;
 import org.sonar.api.config.Configuration;
 import org.sonar.api.internal.ApiVersion;
 import org.sonar.api.internal.SonarRuntimeImpl;
+import org.sonar.api.server.ServerSide;
+import org.sonar.api.utils.AnnotationUtils;
 import org.sonar.api.utils.System2;
 import org.sonar.api.utils.TempFolder;
 import org.sonar.api.utils.Version;
 import org.sonar.api.utils.internal.DefaultTempFolder;
-import org.sonar.core.platform.PluginClassloaderFactory;
-import org.sonar.core.platform.PluginInfo;
-import org.sonar.core.platform.PluginJarExploder;
-import org.sonar.core.platform.PluginLoader;
+import org.sonar.core.platform.*;
 import org.sonar.server.platform.ServerFileSystem;
 import org.sonar.server.platform.ServerFileSystemImpl;
 import org.sonar.server.plugins.ServerPluginJarExploder;
 
 import javax.annotation.Nullable;
 import java.io.File;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.lang.annotation.Annotation;
+import java.util.*;
 
 import static java.lang.String.format;
 import static org.sonar.core.util.FileUtils.deleteQuietly;
@@ -49,15 +46,64 @@ public class LoadPluginJarFileDemoTest {
     private Map<String, PluginInfo> pluginInfosByKeys = new HashMap<>();
     private Map<String, Plugin> pluginInstancesByKeys = new HashMap<>();
     private Map<ClassLoader, String> keysByClassLoader = new HashMap<>();
-
+    private ComponentContainer container = new ComponentContainer();
     public static void main(String[] args) {
 
         String dir = "C:\\Users\\51328\\Desktop\\sonarqube-6-7-7-application\\sonarqube-6.7.7\\sonarqube-6.7.7\\extensions\\plugins";
 
         LoadPluginJarFileDemoTest loadPluginJarFile = new LoadPluginJarFileDemoTest();
         loadPluginJarFile.loadPreInstalledPlugins(new File(dir));
-
+        loadPluginJarFile.installExtensions();
         System.out.println();
+
+
+
+    }
+
+    /***
+     * 参考：ServerExtensionInstaller.installExtensions()
+     */
+    private void installExtensions(){
+        ListMultimap<PluginInfo, Object> installedExtensionsByPlugin = ArrayListMultimap.create();
+        for (PluginInfo pluginInfo : this.pluginInfosByKeys.values()) {
+            String pluginKey = pluginInfo.getKey();
+            Plugin plugin = this.pluginInstancesByKeys.get(pluginKey);
+            Plugin.Context context = new Plugin.Context(this.createSonarRuntime());
+            plugin.define(context);
+            for (Object extension : context.getExtensions()) {
+
+                if (installExtension(this.container, pluginInfo, extension, true) != null) {  //这里注入容器
+                    System.out.println("------extension.class:" + extension.getClass().getName() + ", toString:" + extension.toString());
+                    installedExtensionsByPlugin.put(pluginInfo, extension);  //extension实例保存在以pluginInfo为key的map列表中
+                } else {
+                    this.container.declareExtension(pluginInfo, extension);
+                }
+            }
+        }
+    }
+
+    private Object installExtension(ComponentContainer container, PluginInfo pluginInfo, Object extension, boolean acceptProvider) {
+        List<Class<? extends Annotation>> supportedAnnotationTypes = new ArrayList<>();
+        supportedAnnotationTypes.add(ServerSide.class);
+        for (Class<? extends Annotation> supportedAnnotationType : supportedAnnotationTypes) {
+            if (AnnotationUtils.getAnnotation(extension, supportedAnnotationType) != null) {
+                if (!acceptProvider && isExtensionProvider(extension)) {
+                    throw new IllegalStateException("ExtensionProvider can not include providers itself: " + extension);
+                }
+                container.addExtension(pluginInfo, extension); //注入容器
+                return extension;
+            }
+        }
+        return null;
+    }
+
+    static boolean isExtensionProvider(Object extension) {
+        return isType(extension, ExtensionProvider.class) || extension instanceof ExtensionProvider;
+    }
+
+    static boolean isType(Object extension, Class extensionClass) {
+        Class clazz = extension instanceof Class ? (Class) extension : extension.getClass();
+        return extensionClass.isAssignableFrom(clazz);
     }
 
     private SonarRuntime createSonarRuntime(){
