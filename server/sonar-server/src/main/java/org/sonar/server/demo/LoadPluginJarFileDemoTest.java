@@ -80,8 +80,6 @@ public class LoadPluginJarFileDemoTest {
      * 参考：ServerExtensionInstaller.installExtensions()， 这个类的主要作用是将插件中plugin接口的实现类中 addExtension
      */
     public void installExtensions(ComponentContainer container){
-//        ComponentContainer container = this.componentContainer.createChild();
-//        ComponentContainer container = new ComponentContainer();
 
         ListMultimap<PluginInfo, Object> installedExtensionsByPlugin = ArrayListMultimap.create();
         for (PluginInfo pluginInfo : this.pluginInfosByKeys.values()) {
