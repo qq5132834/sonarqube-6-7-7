@@ -180,7 +180,7 @@ public class LoadPluginJarFileDemoTest {
         List<RuleRepository> ruleRepositoryList = container.getComponentsByType(RuleRepository.class);
         ruleRepositoryList.stream().forEach(e->{System.out.println(e.getClass().getSimpleName());});
         List<Language> languageList = container.getComponentsByType(Language.class);
-        languageList.stream().forEach(e->System.out.println(e.getClass().getSimpleName()));
+        languageList.stream().forEach(e->System.out.println(e.getKey() + "/" + e.getName() + "/" + e.getClass().getSimpleName()));
 
         System.out.println("\n\n\n");
 
