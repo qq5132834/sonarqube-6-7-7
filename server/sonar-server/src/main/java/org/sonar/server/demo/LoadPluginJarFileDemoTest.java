@@ -65,6 +65,11 @@ import static org.sonar.core.util.FileUtils.deleteQuietly;
  *      start()
  *      persistRepositories()
  *      mergeParams()  写入rules_parameters表
+ * 7. BuiltInQProfileLoader.java
+ *      start()
+ * 8. BuiltInQProfileRepositoryImpl.java
+ *      initialize()
+ *
  *
  */
 public class LoadPluginJarFileDemoTest {
