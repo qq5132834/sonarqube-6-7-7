@@ -33,8 +33,8 @@ public class MainLocal{
       "-Dsonar.host.url=http://127.0.0.1:9000",
 //      "-Dsonar.host.url=http://192.168.52.1:9000",
       //"-Dsonar.sources=C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\sonar-scanner-cli\\src\\test\\resources\\org\\sonarsource\\scanner\\cli\\pluginTest",
-      "-Dsonar.sources=D:\\pluginTest" ,
-      "-Dsonar.projectBaseDir=D:\\pluginTest",
+      "-Dsonar.sources=C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\sonar-scanner-cli\\src\\test\\resources\\org\\sonarsource\\scanner\\cli\\pluginTest" ,
+      "-Dsonar.projectBaseDir=C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\sonar-scanner-cli\\src\\test\\resources\\org\\sonarsource\\scanner\\cli\\pluginTest",
       "-Dsonar.java.binaries=C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\sonar-scanner-cli\\target\\classes"
     };
     Main.main(args);
