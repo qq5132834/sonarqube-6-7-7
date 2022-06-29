@@ -31,8 +31,9 @@ import java.util.List;
  */
 public final class TxtLanguage extends AbstractLanguage {
 
-  public static final String NAME = "txt";
-  public static final String KEY = "txt";
+  public static final String NAME = "txt_name";
+  public static final String KEY = "txt_key";
+  public static final String LANGUAGE = "txt";
 
   private final Settings settings;
 

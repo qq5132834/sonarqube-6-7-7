@@ -104,8 +104,8 @@
         <version>1.17</version>
         <extensions>true</extensions>
         <configuration>
-          <pluginKey>txt</pluginKey>
-          <pluginName>txt</pluginName>
+          <pluginKey>txt_plugin_key</pluginKey>
+          <pluginName>txt_plugin_name</pluginName>
           <pluginClass>org.sonar.txt.TxtPlugin</pluginClass>
           <sonarLintSupported>true</sonarLintSupported>
           <sonarQubeMinVersion>6.7</sonarQubeMinVersion>
