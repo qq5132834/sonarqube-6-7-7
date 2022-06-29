@@ -104,8 +104,8 @@
         <version>1.17</version>
         <extensions>true</extensions>
         <configuration>
-          <pluginKey>txt_plugin_key</pluginKey>
-          <pluginName>txt_plugin_name</pluginName>
+          <pluginKey>txt_plugin_key</pluginKey><!-- 对呀plugins表中的kee字段, 以及rules表中plugin_key字段 -->
+          <pluginName>txt_plugin_name</pluginName><!-- 未发现在数据库有存储 -->
           <pluginClass>org.sonar.txt.TxtPlugin</pluginClass>
           <sonarLintSupported>true</sonarLintSupported>
           <sonarQubeMinVersion>6.7</sonarQubeMinVersion>

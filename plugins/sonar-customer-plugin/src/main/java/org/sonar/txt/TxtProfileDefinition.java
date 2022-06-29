@@ -24,8 +24,8 @@ public class TxtProfileDefinition extends ProfileDefinition {
 
     //添加激活规则
     private RulesProfile getActiveRulesProfile(){
-        RulesProfile profile = RulesProfile.create(PROFILE, TxtLanguage.KEY);
-        profile.activateRule(Rule.create(TxtContainRuleDefinition.TXT_REPOSITORY, TxtSensor.RULE_KEY), BLOCKER);
+        RulesProfile profile = RulesProfile.create(PROFILE, TxtLanguage.LANGUAGE);
+        profile.activateRule(Rule.create(TxtContainRuleDefinition.TXT_REPOSITORY, TxtContainRuleDefinition.TXT_RULE_KEY), BLOCKER);
         return profile;
     }
 
@@ -33,7 +33,7 @@ public class TxtProfileDefinition extends ProfileDefinition {
     private RulesProfile getRulesProfile(){
         RulesProfile rulesProfile = RulesProfile.create();
         rulesProfile.setName(PROFILE);
-        rulesProfile.setLanguage(TxtLanguage.KEY);
+        rulesProfile.setLanguage(TxtLanguage.LANGUAGE);
         rulesProfile.setActiveRules(this.getActiveRuleList());
         rulesProfile.setDefaultProfile(false);
         return rulesProfile;
@@ -41,7 +41,7 @@ public class TxtProfileDefinition extends ProfileDefinition {
 
     private List<ActiveRule> getActiveRuleList(){
 
-        Rule rule = Rule.create(TxtContainRuleDefinition.TXT_REPOSITORY, TxtSensor.RULE_KEY);
+        Rule rule = Rule.create(TxtContainRuleDefinition.TXT_REPOSITORY, TxtContainRuleDefinition.TXT_RULE_KEY);
         //rule.setStatus("");
         List<ActiveRule> activeRuleList = new ArrayList<>();
         ActiveRule activeRule = new ActiveRule();

@@ -26,14 +26,11 @@ import org.sonar.api.resources.AbstractLanguage;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * This class defines the fictive Foo language.
- */
 public final class TxtLanguage extends AbstractLanguage {
 
-  public static final String NAME = "txt_name";
-  public static final String KEY = "txt_key";
   public static final String LANGUAGE = "txt";
+  public static final String KEY = LANGUAGE;
+  public static final String NAME = "txt_name";
 
   private final Settings settings;
 

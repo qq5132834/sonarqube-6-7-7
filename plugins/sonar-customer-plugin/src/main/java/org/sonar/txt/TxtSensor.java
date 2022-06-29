@@ -28,7 +28,6 @@ public class TxtSensor implements Sensor {
 
     private final ActiveRules activeRules;
     private final static Logger LOGGER = Loggers.get(TxtSensor.class);
-    public static final String RULE_KEY = "txt_rule_key";
     public final InputModuleHierarchy inputModuleHierarchy;
     public final Configuration configuration;
 
@@ -43,7 +42,7 @@ public class TxtSensor implements Sensor {
     }
 
     protected String getRuleKey() {
-        return RULE_KEY;
+        return TxtContainRuleDefinition.TXT_RULE_KEY;
     }
 
     @Override
@@ -55,7 +54,7 @@ public class TxtSensor implements Sensor {
 
     @Override
     public void execute(SensorContext context) {
-        doAnalyse(context, TxtLanguage.KEY);
+        doAnalyse(context, TxtContainRuleDefinition.TXT_RULE_KEY);
     }
 
     private void doAnalyse(SensorContext context, String languageKey) {
