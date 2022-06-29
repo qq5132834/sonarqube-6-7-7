@@ -4,7 +4,7 @@ import org.sonar.api.server.rule.RulesDefinition;
 
 public class TxtContainRuleDefinition implements RulesDefinition {
 
-    public static final String TXT_REPOSITORY = "txt";
+    public static final String TXT_REPOSITORY = "txt_repository";
 
     @Override
     public void define(RulesDefinition.Context context) {

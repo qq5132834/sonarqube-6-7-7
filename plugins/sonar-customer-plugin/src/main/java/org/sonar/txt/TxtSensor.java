@@ -28,7 +28,7 @@ public class TxtSensor implements Sensor {
 
     private final ActiveRules activeRules;
     private final static Logger LOGGER = Loggers.get(TxtSensor.class);
-    public static final String RULE_KEY = "txt";
+    public static final String RULE_KEY = "txt_rule_key";
     public final InputModuleHierarchy inputModuleHierarchy;
     public final Configuration configuration;
 
