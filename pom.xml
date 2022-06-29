@@ -41,7 +41,7 @@
 
     <module>sonar-java-native-access</module>
     <module>sonar-gitlib</module>
-    <module>sonar-jenkins-plugin-demo</module>
+<!--    <module>sonar-jenkins-plugin-demo</module>-->
     <module>sonar-scanner-jenkins-sonar-2.14</module>
   </modules>
 
