@@ -62,7 +62,7 @@ public class ServerPluginRepositoryTest {
   ServerUpgradeStatus upgradeStatus = mock(ServerUpgradeStatus.class);
   ServerFileSystem fs = mock(ServerFileSystem.class, Mockito.RETURNS_DEEP_STUBS);
   PluginLoader pluginLoader = mock(PluginLoader.class);
-  ServerPluginRepository underTest = new ServerPluginRepository(runtime, upgradeStatus, fs, pluginLoader);
+  ServerPluginRepository underTest = new ServerPluginRepository(runtime, upgradeStatus, fs, pluginLoader, null);
 
   @Before
   public void setUp() throws IOException {

@@ -41,6 +41,8 @@ import org.apache.commons.io.FileUtils;
 import org.picocontainer.Startable;
 import org.sonar.api.Plugin;
 import org.sonar.api.SonarRuntime;
+import org.sonar.api.config.PropertyDefinitions;
+import org.sonar.api.config.Settings;
 import org.sonar.api.platform.ServerUpgradeStatus;
 import org.sonar.api.utils.MessageException;
 import org.sonar.api.utils.log.Logger;
@@ -49,6 +51,7 @@ import org.sonar.core.platform.PluginInfo;
 import org.sonar.core.platform.PluginLoader;
 import org.sonar.core.platform.PluginRepository;
 import org.sonar.server.platform.ServerFileSystem;
+import org.sonar.server.setting.ThreadLocalSettings;
 import org.sonar.updatecenter.common.Version;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -92,11 +95,14 @@ public class ServerPluginRepository implements PluginRepository, Startable {
   private final Map<String, Plugin> pluginInstancesByKeys = new HashMap<>();
   private final Map<ClassLoader, String> keysByClassLoader = new HashMap<>();
 
-  public ServerPluginRepository(SonarRuntime runtime, ServerUpgradeStatus upgradeStatus, ServerFileSystem fs, PluginLoader loader) {
+  private final Settings settings;
+
+  public ServerPluginRepository(SonarRuntime runtime, ServerUpgradeStatus upgradeStatus, ServerFileSystem fs, PluginLoader loader, Settings settings) {
     this.runtime = runtime;
     this.upgradeStatus = upgradeStatus;
     this.fs = fs;
     this.loader = loader;
+    this.settings = settings;
   }
 
   @VisibleForTesting
@@ -114,7 +120,21 @@ public class ServerPluginRepository implements PluginRepository, Startable {
     unloadIncompatiblePlugins();
     logInstalledPlugins();
     loadInstances();
+    this.print();
     started.set(true);
+  }
+
+  private void print(){
+    org.sonar.api.utils.Version version = this.runtime.getApiVersion(); //获取当前sonarqube-6.7.7版本的信息 major=6，minor=7，patch=7，buildNumber=0，qualifier=""
+    System.out.println(version.major() + "," + version.minor() + "," + version.patch() + "," + version.buildNumber() + "," + version.qualifier());
+    String settingsClassName = this.settings.getClass().getName();
+    if(this.settings instanceof ThreadLocalSettings){
+      ThreadLocalSettings threadLocalSettings = (ThreadLocalSettings) this.settings;
+      Map<String, String> map = threadLocalSettings.getProperties();
+      PropertyDefinitions propertyDefinitions = threadLocalSettings.getDefinitions();
+      Map<String, String> map1 = threadLocalSettings.getProperties();
+    }
+    System.out.println(settingsClassName);
   }
 
   @Override
