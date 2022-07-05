@@ -9,6 +9,7 @@ import org.picocontainer.MutablePicoContainer;
 import org.sonar.api.*;
 import org.sonar.api.config.Configuration;
 import org.sonar.api.config.Settings;
+import org.sonar.api.config.internal.ConfigurationBridge;
 import org.sonar.api.internal.ApiVersion;
 import org.sonar.api.internal.SonarRuntimeImpl;
 import org.sonar.api.profiles.ProfileDefinition;
@@ -88,27 +89,29 @@ public class LoadPluginJarFileDemoTest {
         myComponentContainer.add(new XMLProfileParser(finder));
         myComponentContainer.add(finder);
         myComponentContainer.add(new Settings(){
-
+            private Map<String, String> map = new HashMap<>();
             @Override
             protected Optional<String> get(String key) {
                 return Optional.empty();
             }
-
             @Override
-            protected void set(String key, String value) {
-
-            }
-
+            protected void set(String key, String value) {  map.put(key,value); }
             @Override
-            protected void remove(String key) {
-
-            }
-
+            protected void remove(String key) { map.remove(key); }
             @Override
             public Map<String, String> getProperties() {
-                return null;
+                return map;
             }
         });
+        myComponentContainer.add(new SonarRuntime() {
+            @Override
+            public Version getApiVersion() { return new Version(1,1,1,1,"1"); }
+            @Override
+            public SonarProduct getProduct() {  return SonarProduct.SONARQUBE; }
+            @Override
+            public SonarQubeSide getSonarQubeSide() { return SonarQubeSide.SERVER; }
+        });
+        myComponentContainer.add(new ConfigurationBridge(myComponentContainer.getComponentByType(Settings.class)));
 //        myComponentContainer.add(new RulesDefinitionXmlLoader());
 
         String dir = "C:\\Users\\51328\\Desktop\\sonarqube-6-7-7-application\\sonarqube-6.7.7\\sonarqube-6.7.7\\extensions\\plugins";
