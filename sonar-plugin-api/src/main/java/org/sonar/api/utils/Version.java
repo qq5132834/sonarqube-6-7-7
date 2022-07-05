@@ -62,7 +62,7 @@ public class Version implements Comparable<Version> {
   private final long buildNumber;
   private final String qualifier;
 
-  private Version(int major, int minor, int patch, long buildNumber, String qualifier) {
+  public Version(int major, int minor, int patch, long buildNumber, String qualifier) {
     this.major = major;
     this.minor = minor;
     this.patch = patch;
