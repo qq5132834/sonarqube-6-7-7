@@ -132,7 +132,6 @@ public class ServerPluginRepository implements PluginRepository, Startable {
       ThreadLocalSettings threadLocalSettings = (ThreadLocalSettings) this.settings;
       Map<String, String> map = threadLocalSettings.getProperties();
       PropertyDefinitions propertyDefinitions = threadLocalSettings.getDefinitions();
-      Map<String, String> map1 = threadLocalSettings.getProperties();
     }
     System.out.println(settingsClassName);
   }
