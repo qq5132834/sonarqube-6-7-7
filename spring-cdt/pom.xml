@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.sonarsource.sonarqube</groupId>
+    <artifactId>spring-cdt</artifactId>
+    <version>6.7.7</version>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.jdom</groupId>
+            <artifactId>jdom2</artifactId>
+            <version>2.0.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>30.1-jre</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.xtext</groupId>
+            <artifactId>org.eclipse.xtext</artifactId>
+            <version>2.24.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.9.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.9.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>2.9.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>c</groupId>
+            <artifactId>ct1</artifactId>
+            <version>2.8</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.cdt.codan.core.cxx_1.0.0.201202111925.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>c</groupId>
+            <artifactId>ct2</artifactId>
+            <version>2.8</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.cdt.codan.core_2.0.0.201202111925.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>c</groupId>
+            <artifactId>ct3</artifactId>
+            <version>2.8</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.cdt.core_5.3.2.201202111925.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>c</groupId>
+            <artifactId>ct4</artifactId>
+            <version>2.8</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.cdt_8.0.2.201202111925.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>c</groupId>
+            <artifactId>ct5</artifactId>
+            <version>2.8</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.core.jobs_3.6.1.v20141014-1248.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>c</groupId>
+            <artifactId>ct6</artifactId>
+            <version>2.8</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.core.runtime_3.10.0.v20140318-2214.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>c</groupId>
+            <artifactId>ct7</artifactId>
+            <version>2.8</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.equinox.preferences_3.5.200.v20140224-1527.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ibm.icu</groupId>
+            <artifactId>icu4j</artifactId>
+            <version>58.2</version>
+        </dependency>
+
+    </dependencies>
+
+</project>
