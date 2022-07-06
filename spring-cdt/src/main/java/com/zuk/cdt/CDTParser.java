@@ -56,14 +56,14 @@ public class CDTParser {
                 ImmutableMap.Builder<String, String> macrosBuilder = new ImmutableMap.Builder();
                 macrosBuilder.put("_Static_assert(c, m)", "");
                 macrosBuilder.put("__builtin_constant_p", "__builtin_constant_p");
-                macrosBuilder.put("__builtin_types_compatible_p(t1, t2)", "__builtin_types_compatible_p(({t1 arg1; arg1;}),({t2 arg2; arg2;}))");
+                macrosBuilder.put("__builtin_types_compatible_p(t1,t2)", "__builtin_types_compatible_p(({t1 arg1; arg1;}), ({t2 arg2; arg2;}))");
                 macrosBuilder.put("__offsetof__", "__offsetof__");
                 macrosBuilder.put("__func__", "\"__func__\"");
                 macrosBuilder.put("__FUNCTION__", "\"__FUNCTION__\"");
                 macrosBuilder.put("__PRETTY_FUNCTION__", "\"__PRETTY_FUNCTION__\"");
                 macrosBuilder.put("__attribute__(a)", "");
-                macrosBuilder.put("_INTSIZEOF(n)", "((sizeof(n) + sizeof(int) - 1) & ~(sizeof(int) - 1))");
-                macrosBuilder.put("__builtin_va_arg(ap, t)", "*(t *)((ap += _INTSIZEOF(t)) - _INTSIZEOF(t))");
+                macrosBuilder.put("_INTSIZEOF(n)", "((sizeof(n) + sizeof(int) - 1) & ~(sizeof(int) - 1))"); // at
+                macrosBuilder.put("__builtin_va_arg(ap,t)", "*(t *)((ap += _INTSIZEOF(t)) - _INTSIZEOF(t))");
                 MACROS = macrosBuilder.build();
             }
 
