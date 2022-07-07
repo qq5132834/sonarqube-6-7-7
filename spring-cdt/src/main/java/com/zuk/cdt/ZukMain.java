@@ -1,25 +1,12 @@
 package com.zuk.cdt;
 
-import org.eclipse.cdt.core.CCorePlugin;
 import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition;
 import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit;
-import org.eclipse.cdt.core.dom.ast.IField;
-import org.eclipse.cdt.core.index.IIndex;
-import org.eclipse.cdt.core.model.CoreModel;
-import org.eclipse.cdt.core.model.ICProject;
-import org.eclipse.cdt.core.model.ITranslationUnit;
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.osgi.framework.internal.core.BundleContextImpl;
-import org.eclipse.osgi.framework.internal.core.BundleHost;
-import org.osgi.framework.BundleContext;
+import org.eclipse.core.runtime.adaptor.EclipseStarter;
 
 import java.util.List;
 
-public class Main {
+public class ZukMain {
     public static void main(String[] args) throws Exception {
         String file = "D:\\development\\java\\eclipse-cpp-indigo-SR2-incubation-win32-x86_64\\workspace\\helloworld\\DnsCache.cc";
         IASTTranslationUnit iastTranslationUnit = CDTParser.parse(file, CDTParser.Language.CPP);
@@ -44,6 +31,8 @@ public class Main {
 //        ITranslationUnit tu = (ITranslationUnit) CDTUITools.getEditorInputCElement(editor.getEditorInput());
 //        ITranslationUnit tu= (ITranslationUnit) CoreModel.getDefault().create(file);
 
+        EclipseStarter eclipseStarter = new EclipseStarter();
+        EclipseStarter.startup();
         /**
          * 从workspace开始
          * */
