@@ -32,7 +32,7 @@ public class ZukMain {
 //        ITranslationUnit tu= (ITranslationUnit) CoreModel.getDefault().create(file);
 
         EclipseStarter eclipseStarter = new EclipseStarter();
-        EclipseStarter.startup();
+        //EclipseStarter.startup();
         /**
          * 从workspace开始
          * */
