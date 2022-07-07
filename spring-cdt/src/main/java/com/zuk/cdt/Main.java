@@ -3,10 +3,14 @@ package com.zuk.cdt;
 import org.eclipse.cdt.core.CCorePlugin;
 import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition;
 import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit;
+import org.eclipse.cdt.core.dom.ast.IField;
 import org.eclipse.cdt.core.index.IIndex;
 import org.eclipse.cdt.core.model.CoreModel;
 import org.eclipse.cdt.core.model.ICProject;
+import org.eclipse.cdt.core.model.ITranslationUnit;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -15,7 +19,7 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        String file = "C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\spring-cdt\\src\\main\\resources\\DnsCache.cc";
+        String file = "D:\\development\\java\\eclipse-cpp-indigo-SR2-incubation-win32-x86_64\\workspace\\helloworld\\DnsCache.cc";
         IASTTranslationUnit iastTranslationUnit = CDTParser.parse(file, CDTParser.Language.CPP);
 
         //文件函数输出
@@ -29,20 +33,18 @@ public class Main {
         });
 
         /**
-         * 1. org.eclipse.core.resources.xxxxx.jar
-         *
+         * 从workspace开始
          * */
-//        IPath path = new Path(file);
-//        IWorkspace iWorkspace = ResourcesPlugin.getWorkspace();
-//        IFile iFile = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
-//        ITranslationUnit tu = (ITranslationUnit) CoreModel.getDefault().create(iFile);
-//        IASTTranslationUnit ast = tu.getAST();
+        IPath path = new Path(file);
+        IWorkspace iWorkspace = ResourcesPlugin.getWorkspace();
+        IWorkspaceRoot iWorkspaceRoot = iWorkspace.getRoot();
+        IFile iFile = iWorkspaceRoot.getFile(path);
+        ITranslationUnit tu = (ITranslationUnit) CoreModel.getDefault().create(iFile);
+        IASTTranslationUnit ast = tu.getAST();
+
         //
-        ICProject project = CoreModel.getDefault().getCModel().getCProject("C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\spring-cdt\\src\\main\\resources");
-        IIndex index =CCorePlugin.getIndexManager().getIndex(project);
-//
-//
-//        org.eclipse.core.runtime.Plugin a;
+//        ICProject project = CoreModel.getDefault().getCModel().getCProject("D:\\development\\java\\eclipse-cpp-indigo-SR2-incubation-win32-x86_64\\workspace\\helloworld");
+//        IIndex index =CCorePlugin.getIndexManager().getIndex(project);
 
         System.out.println("");
     }
