@@ -8,12 +8,14 @@ import org.eclipse.cdt.core.index.IIndex;
 import org.eclipse.cdt.core.model.CoreModel;
 import org.eclipse.cdt.core.model.ICProject;
 import org.eclipse.cdt.core.model.ITranslationUnit;
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.osgi.framework.internal.core.BundleContextImpl;
+import org.eclipse.osgi.framework.internal.core.BundleHost;
+import org.osgi.framework.BundleContext;
 
 import java.util.List;
 
@@ -32,15 +34,26 @@ public class Main {
             System.out.println(funName + "," + startLine + "," + endLine);
         });
 
+
+//        IProgressMonitor progressMonitor = new NullProgressMonitor();
+//        IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+//        IProject project = root.getProject("DesiredProjectName");
+//        project.create(progressMonitor);
+//        project.open(progressMonitor);
+
+//        ITranslationUnit tu = (ITranslationUnit) CDTUITools.getEditorInputCElement(editor.getEditorInput());
+//        ITranslationUnit tu= (ITranslationUnit) CoreModel.getDefault().create(file);
+
         /**
          * 从workspace开始
          * */
-        IPath path = new Path(file);
-        IWorkspace iWorkspace = ResourcesPlugin.getWorkspace();
-        IWorkspaceRoot iWorkspaceRoot = iWorkspace.getRoot();
-        IFile iFile = iWorkspaceRoot.getFile(path);
-        ITranslationUnit tu = (ITranslationUnit) CoreModel.getDefault().create(iFile);
-        IASTTranslationUnit ast = tu.getAST();
+//        IProgressMonitor progressMonitor = new NullProgressMonitor();
+//        IPath path = new Path(file);
+//        IWorkspace iWorkspace = ResourcesPlugin.getWorkspace();
+//        IWorkspaceRoot iWorkspaceRoot = iWorkspace.getRoot();
+//        IFile iFile = iWorkspaceRoot.getFile(path);
+//        ITranslationUnit tu = (ITranslationUnit) CoreModel.getDefault().create(iFile);
+//        IASTTranslationUnit ast = tu.getAST();
 
         //
 //        ICProject project = CoreModel.getDefault().getCModel().getCProject("D:\\development\\java\\eclipse-cpp-indigo-SR2-incubation-win32-x86_64\\workspace\\helloworld");
