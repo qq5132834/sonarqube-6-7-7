@@ -2,6 +2,12 @@ package com.zuk.cdt;
 
 import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition;
 import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit;
+import org.eclipse.cdt.core.model.CoreModel;
+import org.eclipse.cdt.core.model.ITranslationUnit;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 
 import java.util.List;
 
@@ -9,6 +15,8 @@ public class Main {
     public static void main(String[] args) throws Exception {
         String file = "C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\spring-cdt\\src\\main\\resources\\DnsCache.cc";
         IASTTranslationUnit iastTranslationUnit = CDTParser.parse(file, CDTParser.Language.CPP);
+
+        //文件函数输出
         List<IASTFunctionDefinition> functionDefinitions = FuntionDefinitionUtil.getFuncationDefinistion(iastTranslationUnit, file);
         functionDefinitions.stream().forEach(e->{
             int startLine = e.getFileLocation().getStartingLineNumber();
@@ -17,6 +25,17 @@ public class Main {
 
             System.out.println(funName + "," + startLine + "," + endLine);
         });
+
+        //
+        IPath path = new Path(file);
+        IFile iFile = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
+        ITranslationUnit tu = (ITranslationUnit) CoreModel.getDefault().create(iFile);
+        IASTTranslationUnit ast = tu.getAST();
+        //
+
+
+
+
         System.out.println("");
     }
 }
