@@ -1,10 +1,17 @@
 package com.zuk.cdt;
 
-import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition;
-import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit;
+import org.eclipse.cdt.core.dom.ast.*;
+import org.eclipse.cdt.core.dom.ast.cpp.ICPPMethod;
+import org.eclipse.cdt.internal.core.dom.parser.ASTAmbiguousNode;
+import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPNamespaceScope;
+import org.eclipse.cdt.internal.core.dom.parser.cpp.ClassTypeHelper;
 import org.eclipse.core.runtime.adaptor.EclipseStarter;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Stream;
 
 public class ZukMain {
     public static void main(String[] args) throws Exception {
@@ -18,9 +25,29 @@ public class ZukMain {
             int endLine = e.getFileLocation().getEndingLineNumber();
             String funName = e.getDeclarator().getName().toString();
 
-            System.out.println(funName + "," + startLine + "," + endLine);
+            System.out.println("函数：" + funName + "," + startLine + "," + endLine);
+
+
+
+            IScope scope = e.getScope();
+            System.out.println(scope.getScopeName());
+            IBinding [] bindings = scope.find("uls_l1_ue_context_config_req_t");
+            Arrays.stream(bindings).forEach(bindingEle->{
+                System.out.println(bindingEle.getName());
+            });
+            IASTName[] name = iastTranslationUnit.getDeclarationsInAST(bindings[0]);
+            System.out.println();
         });
 
+
+//        IScope scope = iastTranslationUnit.getScope();
+//        if(scope instanceof CPPNamespaceScope){
+//            CPPNamespaceScope cppNamespaceScope = (CPPNamespaceScope) scope;
+//            IBinding [] bindings = cppNamespaceScope.find("uls_l1_ue_context_config_req_t");
+//        }
+//        IBinding [] bindings = scope.find("uls_l1_ue_context_config_req_t");
+//        IASTName[] name = iastTranslationUnit.getDeclarationsInAST(bindings[0]);
+//        IASTNode ast = name[0].getParent().getParent();
 
 //        IProgressMonitor progressMonitor = new NullProgressMonitor();
 //        IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
@@ -50,4 +77,24 @@ public class ZukMain {
 
         System.out.println("");
     }
+
+
+
+//    public static ISet getMethodOverrides(IASTTranslationUnit tu) {
+//        ASTAmbiguousNode.NameCollector anc = new ASTAmbiguousNode.NameCollector();
+//        tu.accept(anc);
+//        Set<IBinding> bindings = new HashSet<>();
+//        Stream.of(anc.getNames()).forEach(it -> bindings.add(it.resolveBinding()));
+//        ISetWriter methodOverrides = vf.setWriter();
+//        bindings.stream().filter(ICPPMethod.class::isInstance).forEach(override -> {
+//            Stream.of(ClassTypeHelper.findOverridden((ICPPMethod) override, tu)).forEach(base -> {
+//                try {
+//                    methodOverrides.insert(vf.tuple(br.resolveBinding(base), br.resolveBinding(override)));
+//                } catch (FactTypeUseException | URISyntaxException e) {
+//                    err("Got FactTypeUseException\n" + e.getMessage());
+//                }
+//            });
+//        });
+//        return methodOverrides.done();
+//    }
 }
