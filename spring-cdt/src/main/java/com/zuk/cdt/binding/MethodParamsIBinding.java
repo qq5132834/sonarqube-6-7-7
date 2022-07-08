@@ -15,7 +15,8 @@ import java.util.Set;
  */
 public class MethodParamsIBinding {
 
-    public static Set<Class> CLASS_SET = new HashSet<>();
+    private static Set<Class> CLASS_SET = new HashSet<>();
+    private static Set<IBinding> PARAM_VAL_SET = new HashSet<>();
 
     public static void methodParams(IASTNode iastNode){
         if(iastNode instanceof IASTName){
@@ -36,7 +37,9 @@ public class MethodParamsIBinding {
             ProblemBinding problemBinding = (ProblemBinding) iBinding;
             System.out.println(problemBinding.getMessage());
         }
+        //定义局部变量
         if(iBinding instanceof CPPVariable){
+            PARAM_VAL_SET.add(iBinding);
             CPPVariable cppVariable = (CPPVariable) iBinding;
             cppVariable.getDefinition();
             IValue iValue = cppVariable.getInitialValue();
@@ -47,8 +50,9 @@ public class MethodParamsIBinding {
             IType iType = cppVariable.getType();
             System.out.println();
         }
+        //方法入参
         if(iBinding instanceof CPPParameter){
-            //入参
+            PARAM_VAL_SET.add(iBinding);
             CPPParameter cppParameter = (CPPParameter) iBinding;
             int paramPosition = cppParameter.getParameterPosition();
             IASTNode iastNode = cppParameter.getPhysicalNode();
@@ -62,5 +66,15 @@ public class MethodParamsIBinding {
         }
     }
 
+    public static void printResultAndClearSet(){
+        //输出IBinding的主要类
+        MethodParamsIBinding.CLASS_SET.stream().map(e->e.getName()).forEach(System.out::println);
+        //清空集合
+        MethodParamsIBinding.CLASS_SET.clear();
+        //输出函数中的参数：函数入参，函数中定义的局部变量
+        MethodParamsIBinding.PARAM_VAL_SET.stream().forEach(pv->{System.out.println(pv.getName());});
+        //清空参数集合
+        MethodParamsIBinding.PARAM_VAL_SET.clear();
+    }
 
 }

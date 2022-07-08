@@ -1,5 +1,6 @@
 package com.zuk.cdt;
 
+import com.zuk.cdt.binding.MethodParamsIBinding;
 import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition;
 import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit;
 
@@ -15,11 +16,16 @@ public class ZukMainForFile {
         //文件函数输出
         List<IASTFunctionDefinition> functionDefinitions = FuntionDefinitionUtil.getFuncationDefinistion(iastTranslationUnit, file);
         functionDefinitions.stream().forEach(e->{
-            String funcationMethodName = e.getDeclarator().getName().toString(); //函数方法名
-            int startLine = e.getFileLocation().getStartingLineNumber(); //起始位置
-            int endLine = e.getFileLocation().getEndingLineNumber(); //截止位置
-
+            //函数方法名
+            String funcationMethodName = e.getDeclarator().getName().toString();
+            //起始位置
+            int startLine = e.getFileLocation().getStartingLineNumber();
+            //截止位置
+            int endLine = e.getFileLocation().getEndingLineNumber();
+            //变量函数AST
             IASTNodeRecursive.recur(e);
+            //输出函数中的IBinding和变量
+            MethodParamsIBinding.printResultAndClearSet();
         });
 
         System.out.println("");
