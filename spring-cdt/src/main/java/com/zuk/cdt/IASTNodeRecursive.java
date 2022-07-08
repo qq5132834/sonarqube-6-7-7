@@ -17,7 +17,7 @@ public class IASTNodeRecursive {
      */
     public static void recur(IASTNode iastNode){
         //输出节点信息
-        //doIASTNode(iastNode, IASTNodeRecursive::printIASTNode);
+        doIASTNode(iastNode, IASTNodeRecursive::printIASTNode);
         //获取节点IBinding信息
         doIASTNode(iastNode, MethodParamsIBinding::methodParams);
         IASTNode[] iastNodes = iastNode.getChildren();
