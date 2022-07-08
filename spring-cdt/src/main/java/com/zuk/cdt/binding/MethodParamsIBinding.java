@@ -28,16 +28,13 @@ public class MethodParamsIBinding {
     }
 
     private static void checkBinding(IBinding iBinding){
-        if(iBinding instanceof ProblemBinding){
+        if(iBinding instanceof ProblemBinding
+                || iBinding instanceof CPPScope.CPPScopeProblem){
             //可以通过解析在AST中找到的名称（调用IASTName.resolveBinding()）并查看结果绑定是否为IProblemBinding来检查许多类别的错误
             //了解CDT的ProblemBindingChecker如何在编辑器中显示许多错误。
             //请注意，这不会捕获所有错误;您可以查看CDT的other checkers，了解如何捕获其他类别的错误（某些检查程序还会生成警告）。
             ProblemBinding problemBinding = (ProblemBinding) iBinding;
             System.out.println(problemBinding.getMessage());
-        }
-        if(iBinding instanceof CPPScope.CPPScopeProblem){
-            CPPScope.CPPScopeProblem cppScopeProblem = (CPPScope.CPPScopeProblem) iBinding;
-            System.out.println(cppScopeProblem.getMessage());
         }
         if(iBinding instanceof CPPVariable){
             CPPVariable cppVariable = (CPPVariable) iBinding;
