@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /***
- * 遍历函数的入参、变量、和作用域
+ * 遍历函数的入参、变量、和作用域(用起止行的位置进行描述)
  */
 public class MethodParamsIBinding {
 
