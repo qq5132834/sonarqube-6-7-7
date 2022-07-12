@@ -169,6 +169,32 @@
             <systemPath>${pom.basedir}/lib/com.ibm.icu_4.4.2.v20110823.jar</systemPath>
         </dependency>
 
+        <dependency>
+            <groupId>c</groupId>
+            <artifactId>ct15</artifactId>
+            <version>2.8</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.equinox.registry_3.5.101.R37x_v20110810-1611.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>c</groupId>
+            <artifactId>ct16</artifactId>
+            <version>2.8</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.cdt.core.win32_5.2.0.201202111925.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>c</groupId>
+            <artifactId>ct17</artifactId>
+            <version>2.8</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.equinox.launcher_1.2.0.v20110502.jar</systemPath>
+        </dependency>
+
+
+
     </dependencies>
 
 </project>

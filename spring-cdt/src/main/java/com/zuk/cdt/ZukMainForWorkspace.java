@@ -1,6 +1,11 @@
 package com.zuk.cdt;
 
+import org.eclipse.core.internal.resources.Workspace;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.adaptor.EclipseStarter;
+
 
 public class ZukMainForWorkspace {
     public static void main(String[] args) {
@@ -28,14 +33,18 @@ public class ZukMainForWorkspace {
         /**
          * 从workspace开始
          * */
+
+        String workspacePath = "D:\\development\\java\\eclipse-cpp-indigo-SR2-incubation-win32-x86_64\\workspace";
+        IWorkspace iWorkspace1 = new Workspace();
+
 //        IProgressMonitor progressMonitor = new NullProgressMonitor();
-//        IPath path = new Path(file);
-//        IWorkspace iWorkspace = ResourcesPlugin.getWorkspace();
+        IPath path = new org.eclipse.core.runtime.Path("project/folder/file.cpp");
+        IWorkspace iWorkspace = ResourcesPlugin.getWorkspace();
 //        IWorkspaceRoot iWorkspaceRoot = iWorkspace.getRoot();
 //        IFile iFile = iWorkspaceRoot.getFile(path);
 //        ITranslationUnit tu = (ITranslationUnit) CoreModel.getDefault().create(iFile);
 //        IASTTranslationUnit ast = tu.getAST();
-
+//        IConfigurationElement a;
         //
 //        ICProject project = CoreModel.getDefault().getCModel().getCProject("D:\\development\\java\\eclipse-cpp-indigo-SR2-incubation-win32-x86_64\\workspace\\helloworld");
 //        IIndex index =CCorePlugin.getIndexManager().getIndex(project);

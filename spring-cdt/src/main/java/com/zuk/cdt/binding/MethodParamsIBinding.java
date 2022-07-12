@@ -17,18 +17,37 @@ public class MethodParamsIBinding {
 
     private static Set<Class> CLASS_SET = new HashSet<>();
     private static Set<IBinding> PARAM_VAL_SET = new HashSet<>();
+    private static Set<IScope> SCOPE_SET = new HashSet<>();
 
     public static void methodParams(IASTNode iastNode){
         if(iastNode instanceof IASTName){
             IASTName iastName = (IASTName) iastNode;
             IBinding iBinding = iastName.resolveBinding();
+
             Class cls = iBinding.getClass();
+
             CLASS_SET.add(cls);
-            checkBinding(iBinding);
+            boolean isProblemBinding = checkProblemBinding(iBinding);
+            if(!isProblemBinding){
+                try{
+                    IScope iScope = iBinding.getScope();
+                    SCOPE_SET.add(iScope);
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            else {
+                System.out.println("iBinding问题:" + iBinding.toString());
+            }
         }
     }
 
-    private static void checkBinding(IBinding iBinding){
+    /***
+     * 判断是否是problemBinding
+     * @param iBinding
+     * @return true有问题的ibinding
+     */
+    private static boolean checkProblemBinding(IBinding iBinding){
         if(iBinding instanceof ProblemBinding
                 || iBinding instanceof CPPScope.CPPScopeProblem){
             //可以通过解析在AST中找到的名称（调用IASTName.resolveBinding()）并查看结果绑定是否为IProblemBinding来检查许多类别的错误
@@ -36,6 +55,7 @@ public class MethodParamsIBinding {
             //请注意，这不会捕获所有错误;您可以查看CDT的other checkers，了解如何捕获其他类别的错误（某些检查程序还会生成警告）。
             ProblemBinding problemBinding = (ProblemBinding) iBinding;
             System.out.println(problemBinding.getMessage());
+            return true;
         }
         //定义局部变量
         if(iBinding instanceof CPPVariable){
@@ -64,6 +84,7 @@ public class MethodParamsIBinding {
             IScope iScope = cppParameter.getScope();
             System.out.println();
         }
+        return false;
     }
 
     public static void printResultAndClearSet(){
@@ -75,6 +96,10 @@ public class MethodParamsIBinding {
         MethodParamsIBinding.PARAM_VAL_SET.stream().forEach(pv->{System.out.println(pv.getName());});
         //清空参数集合
         MethodParamsIBinding.PARAM_VAL_SET.clear();
+        //输出作用域
+        MethodParamsIBinding.SCOPE_SET.stream().forEach(ss->{System.out.println(ss.getKind().toString() + "," + ss.getScopeName());});
+        //清空作用域
+        MethodParamsIBinding.SCOPE_SET.clear();
     }
 
 }
