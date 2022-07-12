@@ -1,6 +1,7 @@
 package com.zuk.cdt.binding;
 
 import org.eclipse.cdt.core.dom.ILinkage;
+import org.eclipse.cdt.core.dom.IName;
 import org.eclipse.cdt.core.dom.ast.*;
 import org.eclipse.cdt.internal.core.dom.parser.ProblemBinding;
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPParameter;
@@ -18,9 +19,13 @@ public class MethodParamsIBinding {
     private static Set<Class> CLASS_SET = new HashSet<>();
     private static Set<IBinding> PARAM_VAL_SET = new HashSet<>();
     private static Set<IScope> SCOPE_SET = new HashSet<>();
+    private static Set<IASTNode> IAST_NODE_SET = new HashSet<>();
 
     public static void methodParams(IASTNode iastNode){
         if(iastNode instanceof IASTName){
+
+            IAST_NODE_SET.add(iastNode);
+
             IASTName iastName = (IASTName) iastNode;
             IBinding iBinding = iastName.resolveBinding();
 
@@ -100,6 +105,26 @@ public class MethodParamsIBinding {
         MethodParamsIBinding.SCOPE_SET.stream().forEach(ss->{System.out.println(ss.getKind().toString() + "," + ss.getScopeName());});
         //清空作用域
         MethodParamsIBinding.SCOPE_SET.clear();
+        //输出ibinding的节点
+        IAST_NODE_SET.stream().forEach(ins->{
+            //System.out.println("IASTNodeClass:" + ins.getClass().getName());
+            IASTName iastName = (IASTName) ins;
+            //System.out.println("IASTNameClass:" + iastName.getClass().getName());
+            IBinding iBinding = iastName.resolveBinding();
+            //System.out.println("IBindingClass:" + iBinding.getClass().getName());
+            if (!(iBinding instanceof ProblemBinding)) {
+                try {
+                    IScope iScope = iBinding.getScope();
+                    EScopeKind kind = iScope.getKind();
+                    IName iName = iScope.getScopeName();
+                    IASTFileLocation location = iName.getFileLocation();
+                    String simpleName = new String(iName.getSimpleID());
+                    System.out.println("kind:" + kind.toString() + ",simpleName:" + simpleName);
+                }catch (Exception e) {}
+
+            }
+        });
+        System.out.println();
     }
 
 }

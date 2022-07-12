@@ -3,13 +3,12 @@ package com.zuk.cdt.binding;
 import org.eclipse.cdt.core.dom.IName;
 import org.eclipse.cdt.core.dom.ast.*;
 import org.eclipse.cdt.internal.core.dom.parser.ProblemBinding;
+import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFieldReference;
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionCallExpression;
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionDeclarator;
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionDefinition;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /***
  * 变量函数和函数的调用关系
@@ -17,7 +16,7 @@ import java.util.Set;
 public class MethodCallIBinding {
 
     private static Set<Class> CLASS_SET = new HashSet<>();
-    private static Set<IASTNode> FUNCTION_IASTNODE = new HashSet<>();
+    private static List<IASTNode> FUNCTION_IASTNODE = new ArrayList<>();
 
     public static void funcationCall(IASTNode iastNode){
         CLASS_SET.add(iastNode.getClass());
@@ -38,27 +37,40 @@ public class MethodCallIBinding {
             String content = e.getRawSignature();
             int startLineNumber = iastFileLocation.getStartingLineNumber();
             int endLineNumber = iastFileLocation.getEndingLineNumber();
+            System.out.println(startLineNumber + "->" + content);
 
-            checkIBinding(e);
+            //checkIBinding(e);
 
-            checkIBinding(e.getParent());
+            //checkIBinding(e.getParent());
 
-            IASTNode[] iastNodeChildren = e.getParent().getChildren();
+//            Arrays.stream(e.getParent().getChildren()).forEach(child->{
+//                checkIBinding(e);
+//            });
+
+            IASTNode[] iastNodeChildren = e.getChildren();
             Arrays.stream(iastNodeChildren).forEach(child->{
-                checkIBinding(e);
+                if (child instanceof CPPASTFieldReference) {
+                    checkIBinding(child);
+
+                    CPPASTFieldReference cppastFieldReference = (CPPASTFieldReference) child;
+                    IASTName iastName = cppastFieldReference.getFieldName();
+
+                    checkIBinding(iastName);
+                    IASTNode[] fieldChildren = cppastFieldReference.getChildren();
+                    Arrays.stream(fieldChildren).forEach(f->{
+                        checkIBinding(f);
+                    });
+                }
             });
 
-            Arrays.stream(e.getChildren()).forEach(child->{
-                checkIBinding(e);
-            });
-
-            System.out.println();
+//            System.out.println();
 
         });
     }
 
     private static void checkIBinding(IASTNode iastNode){
         System.out.println(iastNode.getClass().getName());
+        System.out.println(iastNode.getRawSignature());
         if(iastNode instanceof IASTName){
             IASTName iastName = (IASTName) iastNode;
             IBinding iBinding = iastName.getBinding();
