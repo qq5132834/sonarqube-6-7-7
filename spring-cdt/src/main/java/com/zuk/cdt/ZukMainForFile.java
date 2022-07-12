@@ -27,9 +27,9 @@ public class ZukMainForFile {
             IASTNodeRecursive.recur(e);
             //输出函数中的IBinding和变量
             MethodParamsIBinding.printResultAndClearSet();
+            //
+            MethodCallIBinding.printResultAndClearSet();
         });
-
-        MethodCallIBinding.printResultAndClearSet();
 
         System.out.println("");
     }

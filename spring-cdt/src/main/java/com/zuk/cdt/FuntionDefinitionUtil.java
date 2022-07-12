@@ -34,10 +34,10 @@ public class FuntionDefinitionUtil {
     }
 
     //存储文件的ibinding
-    public static Set<IASTNode> IAST_NODE_SET = new HashSet<>();
+    public static Map<IASTNode, IASTNode> IAST_NODE_SET = new HashMap<>();
     private static void getIBinding(IASTNode iastNode){
         if(iastNode instanceof IASTName){
-            IAST_NODE_SET.add(iastNode);
+            IAST_NODE_SET.put(iastNode, iastNode);
         }
         if(iastNode != null && iastNode.getChildren() != null){
             Arrays.stream(iastNode.getChildren()).forEach(FuntionDefinitionUtil::getIBinding);
@@ -46,7 +46,7 @@ public class FuntionDefinitionUtil {
 
     public static void printlnResult(){
         System.out.println("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv");
-        IAST_NODE_SET.stream().forEach(ins->{
+        IAST_NODE_SET.keySet().stream().forEach(ins->{
             //System.out.println("IASTNodeClass:" + ins.getClass().getName());
             IASTName iastName = (IASTName) ins;
             //System.out.println("IASTNameClass:" + iastName.getClass().getName());
