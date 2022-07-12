@@ -1,5 +1,6 @@
 package com.zuk.cdt;
 
+import com.zuk.cdt.binding.MethodCallIBinding;
 import com.zuk.cdt.binding.MethodParamsIBinding;
 import org.eclipse.cdt.core.dom.ast.IASTNode;
 
@@ -20,14 +21,18 @@ public class IASTNodeRecursive {
         doIASTNode(iastNode, IASTNodeRecursive::printIASTNode);
         //获取节点IBinding信息
         doIASTNode(iastNode, MethodParamsIBinding::methodParams);
+        //获取函数与函数调用信息
+        doIASTNode(iastNode, MethodCallIBinding::funcationCall);
+
         IASTNode[] iastNodes = iastNode.getChildren();
         if(iastNodes != null && iastNodes.length > 0){
+            //递归
             Arrays.stream(iastNodes).forEach(IASTNodeRecursive::recur);
         }
     }
 
     private static void printIASTNode(IASTNode iastNode){
-        System.out.println(iastNode.getFileLocation().getStartingLineNumber() + "\n" + iastNode.getRawSignature());
+        //System.out.println(iastNode.getFileLocation().getStartingLineNumber() + "\n" + iastNode.getRawSignature());
     }
 
     private static void doIASTNode(IASTNode iastNode, Consumer<IASTNode> consumer){

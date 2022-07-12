@@ -1,5 +1,6 @@
 package com.zuk.cdt;
 
+import com.zuk.cdt.binding.MethodCallIBinding;
 import com.zuk.cdt.binding.MethodParamsIBinding;
 import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition;
 import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit;
@@ -10,7 +11,7 @@ public class ZukMainForFile {
 
 
     public static void main(String[] args) throws Exception {
-        String file = "C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\spring-cdt\\src\\main\\resources\\DnsCache.cc";
+        String file = "C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\spring-cdt\\src\\main\\resources\\c\\src\\DnsCache.cc";
         IASTTranslationUnit iastTranslationUnit = CDTParser.parse(file, CDTParser.Language.CPP);
 
         //文件函数输出
@@ -27,6 +28,8 @@ public class ZukMainForFile {
             //输出函数中的IBinding和变量
             MethodParamsIBinding.printResultAndClearSet();
         });
+
+        MethodCallIBinding.printResultAndClearSet();
 
         System.out.println("");
     }

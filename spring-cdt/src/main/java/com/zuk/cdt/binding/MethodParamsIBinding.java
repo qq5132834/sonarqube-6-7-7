@@ -37,7 +37,7 @@ public class MethodParamsIBinding {
                 }
             }
             else {
-                System.out.println("iBinding问题:" + iBinding.toString());
+                System.out.println("MethodParamsIBinding.iBinding问题:" + iBinding.toString());
             }
         }
     }
