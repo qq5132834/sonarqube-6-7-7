@@ -1,7 +1,6 @@
 package com.zuk.cdt;
 
 import com.zuk.cdt.binding.dto.DeclareVariableDto;
-import org.eclipse.cdt.core.dom.IName;
 import org.eclipse.cdt.core.dom.ast.*;
 import org.eclipse.cdt.internal.core.dom.parser.ProblemBinding;
 
@@ -17,19 +16,9 @@ public class FuntionDefinitionUtil {
                     if(e instanceof IASTFunctionDefinition){
                         fds.add((IASTFunctionDefinition) e);
                     }
-
                     getIBinding(e);
                 }
         );
-//        unit.accept(new ASTVisitor() {
-//            @Override
-//            public int visit(IASTDeclarator declarator) {
-//                if(declarator instanceof IASTFunctionDefinition){
-//                    fds.add((IASTFunctionDefinition) declarator);
-//                }
-//                return 1;
-//            }
-//        });
         printlnResult();
         return fds;
     }
@@ -49,7 +38,6 @@ public class FuntionDefinitionUtil {
                 if (declareVariableDto != null) {
                     DECLARE_VARIABLE.put(declareVariableDto, declareVariableDto);
                 }
-
             }
         }
         if(iastNode != null && iastNode.getChildren() != null){
@@ -61,30 +49,6 @@ public class FuntionDefinitionUtil {
         System.out.println("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv");
         DECLARE_VARIABLE.keySet().stream().forEach(System.out::println);
         System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-//        IAST_NODE_SET.keySet().stream().forEach(ins->{
-//            //System.out.println("IASTNodeClass:" + ins.getClass().getName());
-//            IASTName iastName = (IASTName) ins;
-//            //System.out.println("IASTNameClass:" + iastName.getClass().getName());
-//            IBinding iBinding = iastName.resolveBinding();
-//            //System.out.println("IBindingClass:" + iBinding.getClass().getName());
-//            if (!(iBinding instanceof ProblemBinding)) {
-//                try {
-//                    IScope iScope = iBinding.getScope();
-//                    EScopeKind kind = iScope.getKind();
-//                    IName iName = iScope.getScopeName();
-//                    IASTFileLocation location = iName.getFileLocation();
-//                    String simpleName = new String(iName.getSimpleID());
-//                    System.out.println("kind:" + kind.toString()
-//                                    + ",simpleName:" + simpleName
-//                                    + ",rawSignature:" + ins.getRawSignature().replaceAll("\n" , "")
-//                                    + ",lineNumber:" + ins.getFileLocation().getStartingLineNumber()
-//                                    + ",file:" + ins.getFileLocation().getFileName()
-//                                    )
-//                    ;
-//                }catch (Exception e) {}
-//
-//            }
-//        });
     }
 
 }
