@@ -1,14 +1,53 @@
 package com.zuk.cdt.binding.dto;
 
-import org.eclipse.cdt.core.dom.ast.EScopeKind;
-import org.eclipse.cdt.core.dom.ast.IASTFileLocation;
+import com.sun.istack.internal.NotNull;
+import org.eclipse.cdt.core.dom.IName;
+import org.eclipse.cdt.core.dom.ast.*;
+import org.eclipse.cdt.internal.core.dom.parser.ProblemBinding;
 
 public class DeclareVariableDto {
+
     private Builder builder;
-    DeclareVariableDto(Builder builder){
+
+    private DeclareVariableDto(Builder builder){
         this.builder = builder;
     }
     public static Builder builder(){return new Builder();}
+
+    public static DeclareVariableDto createInstanceByIASTName(@NotNull IASTName iastName){
+        IBinding iBinding = iastName.resolveBinding();
+        if(!(iBinding instanceof ProblemBinding)){
+            try {
+                IScope iScope = iBinding.getScope();
+                IName iName = iScope.getScopeName();
+                if(iName.getFileLocation() == null){
+                    System.out.println("");
+                }
+                return DeclareVariableDto.builder()
+                        .seteScopeKind(iScope.getKind())
+                        .setIastFileLocation(iName.getFileLocation())
+                        .setSimpleName(new String(iName.getSimpleID()))
+                        .setRawSignature(iastName.getRawSignature())
+                        .build();
+            }catch (Exception e) {}
+        }
+        return null;
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("kind:" + this.builder.geteScopeKind().toString());
+        stringBuilder.append(",");
+        stringBuilder.append("simpleName:" + this.builder.getSimpleName());
+        stringBuilder.append(",");
+        stringBuilder.append("rawSignature:" + this.builder.getRawSignature());
+        stringBuilder.append(",");
+        stringBuilder.append("lineNumber:" + (this.builder.getIastFileLocation()==null?"??":this.builder.getIastFileLocation().getStartingLineNumber()));
+        stringBuilder.append(",");
+        stringBuilder.append("file:" + (this.builder.getIastFileLocation()==null?"??":this.builder.getIastFileLocation().getFileName()));
+        return stringBuilder.toString();
+    }
 
     //
     public static class Builder {
