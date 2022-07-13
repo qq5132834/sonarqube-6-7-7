@@ -1,13 +1,9 @@
 package com.zuk.cdt.binding;
 
-import com.zuk.cdt.FuntionDefinitionUtil;
 import org.eclipse.cdt.core.dom.IName;
 import org.eclipse.cdt.core.dom.ast.*;
 import org.eclipse.cdt.internal.core.dom.parser.ProblemBinding;
-import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFieldReference;
-import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionCallExpression;
-import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionDeclarator;
-import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionDefinition;
+import org.eclipse.cdt.internal.core.dom.parser.cpp.*;
 
 import java.util.*;
 
@@ -17,66 +13,74 @@ import java.util.*;
 public class MethodCallIBinding {
 
     private static Set<Class> CLASS_SET = new HashSet<>();
-    private static List<IASTNode> FUNCTION_IASTNODE = new ArrayList<>();
+
+    private static List<IASTNode> FUNCTION_DEFINITION = new ArrayList<>();
+    private static List<IASTNode> FUNCTION_CALL = new ArrayList<>();
+    private static List<IASTNode> FUNCTION_DECLARATOR = new ArrayList<>();
 
     public static void funcationCall(IASTNode iastNode){
-        CLASS_SET.add(iastNode.getClass());
-        if (checkIASTNode(iastNode)) {
-            FUNCTION_IASTNODE.add(iastNode);
-        }
+        //CLASS_SET.add(iastNode.getClass());
+        checkIASTNode(iastNode);
     }
 
     public static void printResultAndClearSet(){
-        //
+        //输出节点类型
         CLASS_SET.stream().forEach(e->{
             System.out.println(e.getName());
         });
+        //
+        /***
+         * 输出函数调用行号和内容
+         * 1、函数调用org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFunctionCallExpression节点类型，
+         * 通过getChildren递归至 org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTName节点，无法继续递归。
+         * 推断CPPASTName为叶子节点。
+         */
+        FUNCTION_CALL.stream().forEach(e->{
+            System.out.println(e.getFileLocation().getStartingLineNumber() + "," + e.getRawSignature());
+            Arrays.stream(e.getChildren()).forEach(e1->{
+                System.out.println("--" + e1.getRawSignature() + ",class:" + e1.getClass().getName());
+                Arrays.stream(e1.getChildren()).forEach(e2->{
+                    System.out.println("----" + e2.getRawSignature() + ",class:" + e2.getClass().getName());
+                    Arrays.stream(e2.getChildren()).forEach(e3->{
+                        System.out.println("------" + e3.getRawSignature() + ",class:" + e3.getClass().getName());
+                        Arrays.stream(e3.getChildren()).forEach(e4->{
+                            System.out.println("--------" + e4.getRawSignature() + ",class:" + e4.getClass().getName());
+                        });
+                    });
+                });
+            });
+        });
         //函数相关节点
-        FUNCTION_IASTNODE.stream().forEach(e->{
+        FUNCTION_CALL.stream().forEach(e->{
+            System.out.println(e.getFileLocation().getStartingLineNumber() + "," + e.getRawSignature());
 
-            IASTFileLocation iastFileLocation = e.getFileLocation();
-            String content = e.getRawSignature();
-            int startLineNumber = iastFileLocation.getStartingLineNumber();
-            int endLineNumber = iastFileLocation.getEndingLineNumber();
-            System.out.println(startLineNumber + "->" + content);
-
-            //checkIBinding(e);
-
-            //checkIBinding(e.getParent());
-
-//            Arrays.stream(e.getParent().getChildren()).forEach(child->{
-//                checkIBinding(e);
-//            });
+            if(!(e.getRawSignature().contains("(") && e.getRawSignature().contains(")"))){
+                System.out.println("宏不处理");
+                return;
+            }
 
             IASTNode[] iastNodeChildren = e.getChildren();
-            Arrays.stream(iastNodeChildren).forEach(child->{
-                if (child instanceof CPPASTFieldReference) {
-                    CPPASTFieldReference cppastFieldReference = (CPPASTFieldReference) child;
+            if(iastNodeChildren != null && iastNodeChildren.length > 0){
+                IASTNode iastNodeFirst = iastNodeChildren[0];
 
-//                    checkIBinding(child);
-//
-//
-//                    IASTName iastName = cppastFieldReference.getFieldName();
-//
-//                    checkIBinding(iastName);
-                    IASTNode[] fieldChildren = cppastFieldReference.getChildren();
-                    Arrays.stream(fieldChildren).forEach(f->{
-                        checkIBinding(f);
-//                        IASTNode iastNode = FuntionDefinitionUtil.IAST_NODE_SET.get(f);
-//                        if(iastNode != null){
-//                            IASTName iastName1 = (IASTName) iastNode;
-//                            IBinding iBinding = iastName1.resolveBinding();
-//                            try {
-//                                IScope iScope = iBinding.getScope();
-//                                System.out.println();
-//                            } catch (Exception e11 ) {}
-//                        }
-
-                    });
+                if (iastNodeFirst instanceof CPPASTIdExpression) {
+                    //内部调用，例如：lock(mutex_)
+                    CPPASTIdExpression cppastIdExpression = (CPPASTIdExpression) iastNodeFirst;
+                    IASTNode iastNode = cppastIdExpression.getChildren()[0];
+                    String functionCallName = iastNode.getRawSignature(); //方法调用名称；
+                    int functionCallLineNumber = iastNode.getFileLocation().getStartingLineNumber(); //方法调用行号
+                    System.out.println();
                 }
-            });
 
-//            System.out.println();
+                if (iastNodeFirst instanceof CPPASTFieldReference) {
+                    //类调用，例如：cache_pool_.get(host_port)
+                    CPPASTFieldReference cppastFieldReference = (CPPASTFieldReference) iastNodeFirst;
+                    int functionCallLineNumber = cppastFieldReference.getChildren()[0].getFileLocation().getStartingLineNumber(); //方法调用行号
+                    String reference = cppastFieldReference.getChildren()[0].getRawSignature(); //引用类变量名称
+                    String functionCallName = cppastFieldReference.getChildren()[1].getRawSignature(); //类变量方法调用名称
+                    System.out.println();
+                }
+            }
 
         });
     }
@@ -104,7 +108,11 @@ public class MethodCallIBinding {
 
     private static boolean checkIASTNode(IASTNode iastNode){
         if(iastNode instanceof CPPASTFunctionCallExpression){
-            //函数调用
+            /***
+             * 函数调用
+             *
+             */
+            FUNCTION_CALL.add(iastNode);
             return true;
         }
         else if (iastNode instanceof CPPASTFunctionDefinition) {
@@ -112,14 +120,16 @@ public class MethodCallIBinding {
              * 函数定义:
              * 1. 文件的函数定义，没有iBinding、和iscope
              */
-            return false;
+            FUNCTION_DEFINITION.add(iastNode);
+            return true;
         }
         else if (iastNode instanceof CPPASTFunctionDeclarator){
             /***
              * 函数申明:
              * 1. 文件的函数定义，没有iBinding、和iscope
              */
-            return false;
+            FUNCTION_DECLARATOR.add(iastNode);
+            return true;
         }
         return false;
     }

@@ -44,18 +44,11 @@ public class FuntionDefinitionUtil {
             if(!(iBinding instanceof ProblemBinding)){
                 IAST_NODE_SET.put(iastNode, iastNode);
 
-                try {
-                    IScope iScope = iBinding.getScope();
-                    IName iName = iScope.getScopeName();
-                    DeclareVariableDto declareVariableDto = DeclareVariableDto.builder()
-                            .seteScopeKind(iScope.getKind())
-                            .setIastFileLocation(iName.getFileLocation())
-                            .setSimpleName(new String(iName.getSimpleID()))
-                            .setRawSignature(iastNode.getRawSignature())
-                            .build();
-                            ;
+                //将IASTName转变dto
+                DeclareVariableDto declareVariableDto = DeclareVariableDto.createInstanceByIASTName(iastNode, iastName);
+                if (declareVariableDto != null) {
                     DECLARE_VARIABLE.put(declareVariableDto, declareVariableDto);
-                }catch (Exception e) {}
+                }
 
             }
         }
@@ -66,30 +59,32 @@ public class FuntionDefinitionUtil {
 
     public static void printlnResult(){
         System.out.println("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv");
-        IAST_NODE_SET.keySet().stream().forEach(ins->{
-            //System.out.println("IASTNodeClass:" + ins.getClass().getName());
-            IASTName iastName = (IASTName) ins;
-            //System.out.println("IASTNameClass:" + iastName.getClass().getName());
-            IBinding iBinding = iastName.resolveBinding();
-            //System.out.println("IBindingClass:" + iBinding.getClass().getName());
-            if (!(iBinding instanceof ProblemBinding)) {
-                try {
-                    IScope iScope = iBinding.getScope();
-                    EScopeKind kind = iScope.getKind();
-                    IName iName = iScope.getScopeName();
-                    IASTFileLocation location = iName.getFileLocation();
-                    String simpleName = new String(iName.getSimpleID());
-                    System.out.println("kind:" + kind.toString()
-                                    + ",simpleName:" + simpleName
-                                    + ",rawSignature:" + ins.getRawSignature().replaceAll("\n" , "")
-                                    + ",lineNumber:" + ins.getFileLocation().getStartingLineNumber()
-                                    + ",file:" + ins.getFileLocation().getFileName()
-                                    )
-                    ;
-                }catch (Exception e) {}
-
-            }
-        });
+        DECLARE_VARIABLE.keySet().stream().forEach(System.out::println);
+        System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+//        IAST_NODE_SET.keySet().stream().forEach(ins->{
+//            //System.out.println("IASTNodeClass:" + ins.getClass().getName());
+//            IASTName iastName = (IASTName) ins;
+//            //System.out.println("IASTNameClass:" + iastName.getClass().getName());
+//            IBinding iBinding = iastName.resolveBinding();
+//            //System.out.println("IBindingClass:" + iBinding.getClass().getName());
+//            if (!(iBinding instanceof ProblemBinding)) {
+//                try {
+//                    IScope iScope = iBinding.getScope();
+//                    EScopeKind kind = iScope.getKind();
+//                    IName iName = iScope.getScopeName();
+//                    IASTFileLocation location = iName.getFileLocation();
+//                    String simpleName = new String(iName.getSimpleID());
+//                    System.out.println("kind:" + kind.toString()
+//                                    + ",simpleName:" + simpleName
+//                                    + ",rawSignature:" + ins.getRawSignature().replaceAll("\n" , "")
+//                                    + ",lineNumber:" + ins.getFileLocation().getStartingLineNumber()
+//                                    + ",file:" + ins.getFileLocation().getFileName()
+//                                    )
+//                    ;
+//                }catch (Exception e) {}
+//
+//            }
+//        });
     }
 
 }
