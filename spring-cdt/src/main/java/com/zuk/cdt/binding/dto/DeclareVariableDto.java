@@ -12,9 +12,12 @@ public class DeclareVariableDto {
     private DeclareVariableDto(Builder builder){
         this.builder = builder;
     }
+
+    public Builder getBuilder() { return builder; }
+
     public static Builder builder(){return new Builder();}
 
-    public static DeclareVariableDto createInstanceByIASTName(@NotNull IASTNode iastNode, @NotNull IASTName iastName){
+    public static DeclareVariableDto createInstanceByIASTName(@NotNull IASTName iastName){
         IBinding iBinding = iastName.resolveBinding();
         if(!(iBinding instanceof ProblemBinding)){
             try {
@@ -26,8 +29,8 @@ public class DeclareVariableDto {
                 return DeclareVariableDto.builder()
                         .seteScopeKind(iScope.getKind())
                         .setSimpleName(new String(iName.getSimpleID()))
-                        .setIastFileLocation(iastNode.getFileLocation())
-                        .setRawSignature(iastNode.getRawSignature())
+                        .setIastFileLocation(iastName.getFileLocation())
+                        .setRawSignature(iastName.getRawSignature())
                         .build();
             }catch (Exception e) {}
         }

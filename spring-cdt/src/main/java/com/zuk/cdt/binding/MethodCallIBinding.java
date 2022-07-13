@@ -1,5 +1,6 @@
 package com.zuk.cdt.binding;
 
+import com.zuk.cdt.binding.dto.DeclareVariableDto;
 import org.eclipse.cdt.core.dom.IName;
 import org.eclipse.cdt.core.dom.ast.*;
 import org.eclipse.cdt.internal.core.dom.parser.ProblemBinding;
@@ -36,15 +37,15 @@ public class MethodCallIBinding {
          * 推断CPPASTName为叶子节点。
          */
         FUNCTION_CALL.stream().forEach(e->{
-            System.out.println(e.getFileLocation().getStartingLineNumber() + "," + e.getRawSignature());
+            System.out.println(e.getFileLocation().getStartingLineNumber() + "," + e.getRawSignature()); checkIBinding(e);
             Arrays.stream(e.getChildren()).forEach(e1->{
-                System.out.println("--" + e1.getRawSignature() + ",class:" + e1.getClass().getName());
+                System.out.println("--" + e1.getRawSignature() + ",class:" + e1.getClass().getName()); checkIBinding(e1);
                 Arrays.stream(e1.getChildren()).forEach(e2->{
-                    System.out.println("----" + e2.getRawSignature() + ",class:" + e2.getClass().getName());
+                    System.out.println("----" + e2.getRawSignature() + ",class:" + e2.getClass().getName()); checkIBinding(e2);
                     Arrays.stream(e2.getChildren()).forEach(e3->{
-                        System.out.println("------" + e3.getRawSignature() + ",class:" + e3.getClass().getName());
+                        System.out.println("------" + e3.getRawSignature() + ",class:" + e3.getClass().getName()); checkIBinding(e3);
                         Arrays.stream(e3.getChildren()).forEach(e4->{
-                            System.out.println("--------" + e4.getRawSignature() + ",class:" + e4.getClass().getName());
+                            System.out.println("--------" + e4.getRawSignature() + ",class:" + e4.getClass().getName()); checkIBinding(e4);
                         });
                     });
                 });
@@ -69,6 +70,8 @@ public class MethodCallIBinding {
                     IASTNode iastNode = cppastIdExpression.getChildren()[0];
                     String functionCallName = iastNode.getRawSignature(); //方法调用名称；
                     int functionCallLineNumber = iastNode.getFileLocation().getStartingLineNumber(); //方法调用行号
+                    //多态暂时采用入参的个数进行区别，将来再优化
+
                     System.out.println();
                 }
 
@@ -77,7 +80,24 @@ public class MethodCallIBinding {
                     CPPASTFieldReference cppastFieldReference = (CPPASTFieldReference) iastNodeFirst;
                     int functionCallLineNumber = cppastFieldReference.getChildren()[0].getFileLocation().getStartingLineNumber(); //方法调用行号
                     String reference = cppastFieldReference.getChildren()[0].getRawSignature(); //引用类变量名称
+                    CPPASTName cppastName = new GetCPPASTName(cppastFieldReference.getChildren()[0]).getCPPASTName();
+                    if(cppastName != null){
+                        //获取作用域，根据作用域
+                        DeclareVariableDto dto = DeclareVariableDto.createInstanceByIASTName((IASTName) cppastName);
+                        if(dto != null){
+                            EScopeKind eScopeKind = dto.getBuilder().geteScopeKind();
+                            String simpleName = dto.getBuilder().getSimpleName();
+                            IASTFileLocation iastFileLocation = dto.getBuilder().getIastFileLocation();
+                            String rawSignature = dto.getBuilder().getRawSignature();
+                            System.out.println();
+                            //TODO 根据名称去文件的变量集合中查询需要跳转的外部文件
+                        }
+                        //
+                        System.out.println();
+                    }
+
                     String functionCallName = cppastFieldReference.getChildren()[1].getRawSignature(); //类变量方法调用名称
+
                     System.out.println();
                 }
             }
@@ -86,8 +106,8 @@ public class MethodCallIBinding {
     }
 
     private static void checkIBinding(IASTNode iastNode){
-        System.out.println(iastNode.getClass().getName());
-        System.out.println(iastNode.getRawSignature());
+//        System.out.println(iastNode.getClass().getName());
+//        System.out.println(iastNode.getRawSignature());
         if(iastNode instanceof IASTName){
             IASTName iastName = (IASTName) iastNode;
             IBinding iBinding = iastName.getBinding();
@@ -132,6 +152,28 @@ public class MethodCallIBinding {
             return true;
         }
         return false;
+    }
+
+
+    /***
+     * 获取作用域
+     */
+    private static class GetCPPASTName{
+        private  CPPASTName cppastName;
+        private GetCPPASTName(IASTNode iastNode) {
+            this.searchCPPASTName(iastNode);
+        }
+        private void searchCPPASTName(IASTNode iastNode){
+            if(iastNode instanceof CPPASTName){
+                this.cppastName = (CPPASTName)iastNode;
+            }
+            for (IASTNode n : iastNode.getChildren()) {
+                this.searchCPPASTName(n);
+            }
+        }
+        private CPPASTName getCPPASTName(){
+            return this.cppastName;
+        }
     }
 
 }

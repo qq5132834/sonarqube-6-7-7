@@ -45,7 +45,7 @@ public class FuntionDefinitionUtil {
                 IAST_NODE_SET.put(iastNode, iastNode);
 
                 //将IASTName转变dto
-                DeclareVariableDto declareVariableDto = DeclareVariableDto.createInstanceByIASTName(iastNode, iastName);
+                DeclareVariableDto declareVariableDto = DeclareVariableDto.createInstanceByIASTName(iastName);
                 if (declareVariableDto != null) {
                     DECLARE_VARIABLE.put(declareVariableDto, declareVariableDto);
                 }
