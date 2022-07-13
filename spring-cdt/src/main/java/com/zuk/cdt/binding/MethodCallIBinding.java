@@ -1,5 +1,6 @@
 package com.zuk.cdt.binding;
 
+import com.zuk.cdt.FuntionDefinitionUtil;
 import org.eclipse.cdt.core.dom.IName;
 import org.eclipse.cdt.core.dom.ast.*;
 import org.eclipse.cdt.internal.core.dom.parser.ProblemBinding;
@@ -50,15 +51,27 @@ public class MethodCallIBinding {
             IASTNode[] iastNodeChildren = e.getChildren();
             Arrays.stream(iastNodeChildren).forEach(child->{
                 if (child instanceof CPPASTFieldReference) {
-                    checkIBinding(child);
-
                     CPPASTFieldReference cppastFieldReference = (CPPASTFieldReference) child;
-                    IASTName iastName = cppastFieldReference.getFieldName();
 
-                    checkIBinding(iastName);
+//                    checkIBinding(child);
+//
+//
+//                    IASTName iastName = cppastFieldReference.getFieldName();
+//
+//                    checkIBinding(iastName);
                     IASTNode[] fieldChildren = cppastFieldReference.getChildren();
                     Arrays.stream(fieldChildren).forEach(f->{
                         checkIBinding(f);
+//                        IASTNode iastNode = FuntionDefinitionUtil.IAST_NODE_SET.get(f);
+//                        if(iastNode != null){
+//                            IASTName iastName1 = (IASTName) iastNode;
+//                            IBinding iBinding = iastName1.resolveBinding();
+//                            try {
+//                                IScope iScope = iBinding.getScope();
+//                                System.out.println();
+//                            } catch (Exception e11 ) {}
+//                        }
+
                     });
                 }
             });
