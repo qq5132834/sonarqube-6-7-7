@@ -27,7 +27,7 @@ public class FunctionCallDto {
                     System.out.println("");
                 }
                 return FunctionCallDto.builder()
-                        .seteScopeKind(iScope.getKind())
+                        .setScopeKind(iScope.getKind())
                         .setScopeSimpleName(new String(iName.getSimpleID()))
                         .setIastFileLocation(iastName.getFileLocation())
                         .setVariableName(iastName.getRawSignature())
@@ -70,6 +70,8 @@ public class FunctionCallDto {
         private IASTFileLocation iastFileLocation; //文件路径
         private String scopeSimpleName; //作用域名称
         private String variableName; //对象名称
+        private Integer startLineNumber;
+        private String fileName;
 
         //调用函数名称
         private String callFunctionName;
@@ -92,15 +94,21 @@ public class FunctionCallDto {
 
         public String getVariableName() { return variableName; }
 
-        public String getCallFunctionName() {return callFunctionName; }
+        public String getCallFunctionName() { return callFunctionName; }
 
-        public Builder seteScopeKind(EScopeKind eScopeKind) {
+        public int getStartLineNumber() { return startLineNumber; }
+
+        public String getFileName() { return fileName; }
+
+        public Builder setScopeKind(EScopeKind eScopeKind) {
             this.eScopeKind = eScopeKind;
             return this;
         }
 
         public Builder setIastFileLocation(IASTFileLocation iastFileLocation) {
             this.iastFileLocation = iastFileLocation;
+            this.startLineNumber = iastFileLocation.getStartingLineNumber();
+            this.fileName = iastFileLocation.getFileName();
             return this;
         }
 
@@ -116,6 +124,16 @@ public class FunctionCallDto {
 
         public Builder setCallFunctionName(String callFunctionName) {
             this.callFunctionName = callFunctionName;
+            return this;
+        }
+
+        public Builder setStartLineNumber(int startLineNumber) {
+            this.startLineNumber = startLineNumber;
+            return this;
+        }
+
+        public Builder setFileName(String fileName) {
+            this.fileName = fileName;
             return this;
         }
     }

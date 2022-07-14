@@ -5,14 +5,16 @@ import com.zuk.cdt.file.function.call.FunctionCallDto;
 import com.zuk.cdt.file.CppFileFrame;
 import com.zuk.cdt.file.function.FileFunctionDto;
 import com.zuk.cdt.file.function.var.FileFunctionVariableVo;
+import com.zuk.cdt.file.function.var.FunctionVariableDto;
 import com.zuk.cdt.file.function.var.FunctionVariableUtil;
+import org.eclipse.cdt.core.dom.ast.EScopeKind;
 import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition;
 import org.eclipse.cdt.core.dom.ast.IASTNode;
 import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 public class ZukMainForFile {
 
@@ -38,6 +40,19 @@ public class ZukMainForFile {
 
             //获取函数中变量集
             FileFunctionVariableVo fileFunctionVariableVo = FunctionVariableUtil.getFileFunctionVariableVo();
+
+//            Map<String, List<FunctionVariableDto>> eclassListMap = new HashMap<>();
+//            fileFunctionVariableVo.getClassVariableSet().stream().forEach(variableDto->{
+//                String key = variableDto.getBuilder().getSimpleName() + "::" + variableDto.getBuilder().getRawSignature();
+//                if (eclassListMap.get(key) == null) {
+//                    List<FunctionVariableDto> ls = new ArrayList<>();
+//                    ls.add(variableDto);
+//                    eclassListMap.put(key, ls);
+//                }
+//                else {
+//                    eclassListMap.get(key).add(variableDto);
+//                }
+//            });
 
             //方法内部调用外部函数集
             List<FunctionCallDto> declareVariableDtos = FunctionCallUtil.getFunctionCall();
