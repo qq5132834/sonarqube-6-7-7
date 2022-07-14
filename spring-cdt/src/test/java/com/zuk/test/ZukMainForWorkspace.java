@@ -1,4 +1,4 @@
-package com.zuk.cdt;
+package com.zuk.test;
 
 import org.eclipse.core.internal.resources.Workspace;
 import org.eclipse.core.resources.IWorkspace;
