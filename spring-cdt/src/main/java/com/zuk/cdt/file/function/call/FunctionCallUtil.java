@@ -146,7 +146,9 @@ public class FunctionCallUtil {
     public static List<FunctionCallDto> getFunctionCall(){
         try {
             printResultAndClearSet();
-            return DECLARE_VARIABLE_LIST;
+            List<FunctionCallDto> list = new ArrayList<>();
+            list.addAll(DECLARE_VARIABLE_LIST);
+            return list;
         }
         finally {
             cleanAll();

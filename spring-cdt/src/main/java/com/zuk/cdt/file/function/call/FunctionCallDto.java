@@ -40,12 +40,18 @@ public class FunctionCallDto {
     @Override
     public String toString(){
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(this.builder.geteScopeKind().toString());
-        stringBuilder.append(" ");
-        stringBuilder.append(this.builder.getScopeSimpleName());
-        stringBuilder.append("::");
-        stringBuilder.append(this.builder.getVariableName());
-        stringBuilder.append(".");
+        if(this.builder.geteScopeKind() != null){
+            stringBuilder.append(this.builder.geteScopeKind().toString());
+            stringBuilder.append(" ");
+        }
+        if(this.builder.getScopeSimpleName() != null) {
+            stringBuilder.append(this.builder.getScopeSimpleName());
+            stringBuilder.append("::");
+        }
+        if (this.builder.getVariableName() != null) {
+            stringBuilder.append(this.builder.getVariableName());
+            stringBuilder.append(".");
+        }
         stringBuilder.append(this.builder.getCallFunctionName());
         stringBuilder.append(";");
         stringBuilder.append("[");
