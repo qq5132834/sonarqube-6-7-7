@@ -3,9 +3,12 @@ package com.zuk.cdt;
 import com.zuk.cdt.binding.MethodCallIBinding;
 import com.zuk.cdt.file.var.FileVariableUtil;
 import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition;
+import org.eclipse.cdt.core.dom.ast.IASTNode;
 import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class ZukMainForFile {
 
@@ -24,7 +27,7 @@ public class ZukMainForFile {
             //截止位置
             int endLine = e.getFileLocation().getEndingLineNumber();
             //变量函数AST
-            IASTNodeRecursive.recur(e);
+            ZukMainForFile.recur(e);
             //输出函数中的IBinding和变量
             FileVariableUtil.printResultAndClearSet();
             //
@@ -35,22 +38,33 @@ public class ZukMainForFile {
     }
 
 
+    /***
+     * 遍历AST
+     */
+    public static void recur(IASTNode iastNode){
 
-//    public static ISet getMethodOverrides(IASTTranslationUnit tu) {
-//        ASTAmbiguousNode.NameCollector anc = new ASTAmbiguousNode.NameCollector();
-//        tu.accept(anc);
-//        Set<IBinding> bindings = new HashSet<>();
-//        Stream.of(anc.getNames()).forEach(it -> bindings.add(it.resolveBinding()));
-//        ISetWriter methodOverrides = vf.setWriter();
-//        bindings.stream().filter(ICPPMethod.class::isInstance).forEach(override -> {
-//            Stream.of(ClassTypeHelper.findOverridden((ICPPMethod) override, tu)).forEach(base -> {
-//                try {
-//                    methodOverrides.insert(vf.tuple(br.resolveBinding(base), br.resolveBinding(override)));
-//                } catch (FactTypeUseException | URISyntaxException e) {
-//                    err("Got FactTypeUseException\n" + e.getMessage());
-//                }
-//            });
-//        });
-//        return methodOverrides.done();
-//    }
+        //输出节点信息
+        //doIASTNode(iastNode, IASTNodeRecursive::printIASTNode);
+
+        //获取方法中入参、变量信息
+        doIASTNode(iastNode, FileVariableUtil::methodParams);
+
+        //获取方法中函数调用信息
+        doIASTNode(iastNode, MethodCallIBinding::funcationCall);
+
+        //递归遍历IASTNode的子节点
+        Arrays.stream(iastNode.getChildren()).forEach(ZukMainForFile::recur);
+
+    }
+
+    private static void printIASTNode(IASTNode iastNode){
+        System.out.println(iastNode.getFileLocation().getStartingLineNumber() + "\n" + iastNode.getRawSignature());
+    }
+
+    private static void doIASTNode(IASTNode iastNode, Consumer<IASTNode> consumer){
+        consumer.accept(iastNode);
+    }
+
+
+
 }
