@@ -1,20 +1,18 @@
 package com.zuk.cdt;
 
+import com.zuk.cdt.file.function.FileFunctionUtil;
 import com.zuk.cdt.file.function.call.FunctionCallUtil;
 import com.zuk.cdt.file.function.call.FunctionCallDto;
 import com.zuk.cdt.file.CppFileFrame;
 import com.zuk.cdt.file.function.FileFunctionDto;
 import com.zuk.cdt.file.function.var.FileFunctionVariableVo;
-import com.zuk.cdt.file.function.var.FunctionVariableDto;
 import com.zuk.cdt.file.function.var.FunctionVariableUtil;
-import org.eclipse.cdt.core.dom.ast.EScopeKind;
 import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition;
 import org.eclipse.cdt.core.dom.ast.IASTNode;
 import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit;
 
 import java.util.*;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 public class ZukMainForFile {
 
@@ -25,7 +23,7 @@ public class ZukMainForFile {
 
         final CppFileFrame cppFileFrame = CppFileFrame.getInstance();
         //文件函数输出
-        List<IASTFunctionDefinition> functionDefinitions = FuntionDefinitionUtil.getFuncationDefinistion(iastTranslationUnit, file);
+        List<IASTFunctionDefinition> functionDefinitions = FileFunctionUtil.getFuncationDefinistion(iastTranslationUnit, file);
         functionDefinitions.stream().forEach(e->{
 
             FileFunctionDto fileFunctionDto = FileFunctionDto.builder()
