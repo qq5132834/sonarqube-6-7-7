@@ -28,9 +28,9 @@ public class DeclareVariableDto {
                 }
                 return DeclareVariableDto.builder()
                         .seteScopeKind(iScope.getKind())
-                        .setSimpleName(new String(iName.getSimpleID()))
+                        .setScopeSimpleName(new String(iName.getSimpleID()))
                         .setIastFileLocation(iastName.getFileLocation())
-                        .setRawSignature(iastName.getRawSignature())
+                        .setVariableName(iastName.getRawSignature())
                         .build();
             }catch (Exception e) {}
         }
@@ -40,24 +40,33 @@ public class DeclareVariableDto {
     @Override
     public String toString(){
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("kind:" + this.builder.geteScopeKind().toString());
-        stringBuilder.append(",");
-        stringBuilder.append("simpleName:" + this.builder.getSimpleName());
-        stringBuilder.append(",");
-        stringBuilder.append("rawSignature:" + this.builder.getRawSignature());
-        stringBuilder.append(",");
+        stringBuilder.append(this.builder.geteScopeKind().toString());
+        stringBuilder.append(" ");
+        stringBuilder.append(this.builder.getScopeSimpleName());
+        stringBuilder.append("::");
+        stringBuilder.append(this.builder.getVariableName());
+        stringBuilder.append(".");
+        stringBuilder.append(this.builder.getCallFunctionName());
+        stringBuilder.append(";");
+        stringBuilder.append("[");
         stringBuilder.append("lineNumber:" + (this.builder.getIastFileLocation()==null?"??":this.builder.getIastFileLocation().getStartingLineNumber()));
         stringBuilder.append(",");
         stringBuilder.append("file:" + (this.builder.getIastFileLocation()==null?"??":this.builder.getIastFileLocation().getFileName()));
+        stringBuilder.append("]");
         return stringBuilder.toString();
     }
 
     //
     public static class Builder {
-        private EScopeKind eScopeKind;
-        private IASTFileLocation iastFileLocation;
-        private String simpleName;
-        private String rawSignature;
+
+        //作用域
+        private EScopeKind eScopeKind; //作用域类型
+        private IASTFileLocation iastFileLocation; //文件路径
+        private String scopeSimpleName; //作用域名称
+        private String variableName; //对象名称
+
+        //调用函数名称
+        private String callFunctionName;
 
         public DeclareVariableDto build(){
             return new DeclareVariableDto(this);
@@ -71,13 +80,13 @@ public class DeclareVariableDto {
             return iastFileLocation;
         }
 
-        public String getSimpleName() {
-            return simpleName;
+        public String getScopeSimpleName() {
+            return scopeSimpleName;
         }
 
-        public String getRawSignature() {
-            return rawSignature;
-        }
+        public String getVariableName() { return variableName; }
+
+        public String getCallFunctionName() {return callFunctionName; }
 
         public Builder seteScopeKind(EScopeKind eScopeKind) {
             this.eScopeKind = eScopeKind;
@@ -89,13 +98,18 @@ public class DeclareVariableDto {
             return this;
         }
 
-        public Builder setSimpleName(String simpleName) {
-            this.simpleName = simpleName;
+        public Builder setScopeSimpleName(String scopeSimpleName) {
+            this.scopeSimpleName = scopeSimpleName;
             return this;
         }
 
-        public Builder setRawSignature(String rawSignature) {
-            this.rawSignature = rawSignature;
+        public Builder setVariableName(String variableName) {
+            this.variableName = variableName;
+            return this;
+        }
+
+        public Builder setCallFunctionName(String callFunctionName) {
+            this.callFunctionName = callFunctionName;
             return this;
         }
     }

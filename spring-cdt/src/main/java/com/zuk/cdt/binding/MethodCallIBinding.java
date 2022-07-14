@@ -73,12 +73,14 @@ public class MethodCallIBinding {
                     int functionCallLineNumber = iastNode.getFileLocation().getStartingLineNumber(); //
                     // 方法调用行号
                     //多态暂时采用入参的个数进行区别，将来再优化
+                    DeclareVariableDto dto = null;
                     CPPASTName cppastName = new GetCPPASTName(iastNode).getCPPASTName();
                     if(cppastName != null){
-                        DeclareVariableDto dto = DeclareVariableDto.createInstanceByIASTName((IASTName) cppastName);
-                        if(dto != null){
-
+                        dto = DeclareVariableDto.createInstanceByIASTName((IASTName) cppastName);
+                        if(dto == null){
+                            dto = DeclareVariableDto.builder().setCallFunctionName(functionCallName).build();
                         }
+                        DECLARE_VARIABLE_LIST.add(dto);
                         System.out.println();
                     }
                     System.out.println();
@@ -90,24 +92,29 @@ public class MethodCallIBinding {
                     int functionCallLineNumber = cppastFieldReference.getChildren()[0].getFileLocation().getStartingLineNumber(); //方法调用行号
                     String reference = cppastFieldReference.getChildren()[0].getRawSignature(); //引用类变量名称
                     CPPASTName cppastName = new GetCPPASTName(cppastFieldReference.getChildren()[0]).getCPPASTName();
+                    DeclareVariableDto dto = null;
                     if(cppastName != null){
                         //获取作用域，根据作用域
-                        DeclareVariableDto dto = DeclareVariableDto.createInstanceByIASTName((IASTName) cppastName);
+                        dto = DeclareVariableDto.createInstanceByIASTName((IASTName) cppastName);
                         if(dto != null){
                             EScopeKind eScopeKind = dto.getBuilder().geteScopeKind();
                             String simpleName = dto.getBuilder().getSimpleName();
                             IASTFileLocation iastFileLocation = dto.getBuilder().getIastFileLocation();
-                            String rawSignature = dto.getBuilder().getRawSignature();
+                            String rawSignature = dto.getBuilder().getVariableName();
                             System.out.println();
                             //TODO 根据名称去文件的变量集合中查询需要跳转的外部文件
 
-                            DECLARE_VARIABLE_LIST.add(dto);
+
                         }
                         //
                         System.out.println();
                     }
 
-                    //String functionCallName = cppastFieldReference.getChildren()[1].getRawSignature(); //类变量方法调用名称
+                    if(dto != null){
+                        String callFunctionName = cppastFieldReference.getChildren()[1].getRawSignature();
+                        dto.getBuilder().setCallFunctionName(callFunctionName);
+                        DECLARE_VARIABLE_LIST.add(dto);
+                    }
 
                     System.out.println();
                 }
@@ -159,7 +166,6 @@ public class MethodCallIBinding {
         if(iastNode instanceof CPPASTFunctionCallExpression){
             /***
              * 函数调用
-             *
              */
             FUNCTION_CALL.add(iastNode);
             return true;
