@@ -21,8 +21,10 @@ public class FileFunctionDto {
         private String functionName;
         //用来计算多态
         private String md5;
-        //行号
+        //开始行号
         private int startLineNumber;
+        //截止行号
+        private int endLineNumber;
         //
         private IASTFileLocation iastFileLocation;
 
@@ -46,6 +48,8 @@ public class FileFunctionDto {
             return iastFileLocation;
         }
 
+        public int getEndLineNumber() { return endLineNumber; }
+
         public Builder setFunctionName(String functionName) {
             this.functionName = functionName;
             return this;
@@ -63,6 +67,11 @@ public class FileFunctionDto {
 
         public Builder setIastFileLocation(IASTFileLocation iastFileLocation) {
             this.iastFileLocation = iastFileLocation;
+            return this;
+        }
+
+        public Builder setEndLineNumber(int endLineNumber) {
+            this.endLineNumber = endLineNumber;
             return this;
         }
     }

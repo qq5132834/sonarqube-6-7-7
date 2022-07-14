@@ -95,7 +95,7 @@ public class FunctionVariableUtil {
         return false;
     }
 
-    public static FileFunctionVariableVo getFileFunctionCallVariable(){
+    public static FileFunctionVariableVo getFileFunctionVariableVo(){
         Set<FunctionVariableDto> eClassSet = new HashSet<>();
         Set<FunctionVariableDto> eGlobalSet = new HashSet<>();
         Set<FunctionVariableDto> eLocalSet = new HashSet<>();

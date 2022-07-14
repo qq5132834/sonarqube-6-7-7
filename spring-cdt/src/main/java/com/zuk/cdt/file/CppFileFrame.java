@@ -10,6 +10,10 @@ public class CppFileFrame {
 
     private List<CppFuntion> cppFuntionList = Collections.emptyList();
 
+    public static CppFileFrame getInstance() {
+        return new CppFileFrame();
+    }
+
     public CppFileFrame addCppFuntion(CppFuntion cppFuntion) {
         this.cppFuntionList.add(cppFuntion);
         return this;
@@ -23,14 +27,14 @@ public class CppFileFrame {
         //函数基本信息
         private FileFunctionDto fileFunctionDto;
         //函数中变量信息
-        private FileFunctionVariableVo functionVariableDto;
+        private FileFunctionVariableVo fileFunctionVariableVo;
 
         public FileFunctionDto getFileFunctionDto() {
             return fileFunctionDto;
         }
 
-        public FileFunctionVariableVo getFunctionVariableDto() {
-            return functionVariableDto;
+        public FileFunctionVariableVo getFileFunctionVariableVo() {
+            return fileFunctionVariableVo;
         }
 
         public CppFuntion setFileFunctionDto(FileFunctionDto fileFunctionDto) {
@@ -38,8 +42,8 @@ public class CppFileFrame {
             return this;
         }
 
-        public CppFuntion setFunctionVariableDto(FileFunctionVariableVo functionVariableDto) {
-            this.functionVariableDto = functionVariableDto;
+        public CppFuntion setFileFunctionVariableVo(FileFunctionVariableVo fileFunctionVariableVo) {
+            this.fileFunctionVariableVo = fileFunctionVariableVo;
             return this;
         }
     }

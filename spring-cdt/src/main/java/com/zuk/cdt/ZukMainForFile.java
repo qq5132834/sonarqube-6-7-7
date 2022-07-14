@@ -3,6 +3,7 @@ package com.zuk.cdt;
 import com.zuk.cdt.binding.MethodCallIBinding;
 import com.zuk.cdt.file.CppFileFrame;
 import com.zuk.cdt.file.function.FileFunctionDto;
+import com.zuk.cdt.file.var.FileFunctionVariableVo;
 import com.zuk.cdt.file.var.FunctionVariableUtil;
 import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition;
 import org.eclipse.cdt.core.dom.ast.IASTNode;
@@ -19,33 +20,30 @@ public class ZukMainForFile {
         String file = "C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\spring-cdt\\src\\main\\resources\\c\\src\\DnsCache.cc";
         IASTTranslationUnit iastTranslationUnit = CDTParser.parse(file, CDTParser.Language.CPP);
 
+        CppFileFrame cppFileFrame = CppFileFrame.getInstance();
         //文件函数输出
         List<IASTFunctionDefinition> functionDefinitions = FuntionDefinitionUtil.getFuncationDefinistion(iastTranslationUnit, file);
         functionDefinitions.stream().forEach(e->{
-            //函数方法名
-            String funcationMethodName = e.getDeclarator().getName().toString();
-            //起始位置
-            int startLine = e.getFileLocation().getStartingLineNumber();
-            //截止位置
-            int endLine = e.getFileLocation().getEndingLineNumber();
 
-            CppFileFrame.CppFuntion cppFuntion = new CppFileFrame.CppFuntion();
-            cppFuntion.setFileFunctionDto(
-                    FileFunctionDto
-                            .builder()
-                            .setFunctionName(funcationMethodName)
-                            .setStartLineNumber(startLine)
-                            .setIastFileLocation(e.getFileLocation())
-                            .build());
+            FileFunctionDto fileFunctionDto = FileFunctionDto.builder()
+                                                    .setFunctionName(e.getDeclarator().getName().toString())
+                                                    .setStartLineNumber(e.getFileLocation().getStartingLineNumber())
+                                                    .setIastFileLocation(e.getFileLocation())
+                                                    .build();
 
-
-            //变量函数AST
+            //处理当前函数节点，从中提取变量集合（入参、本地变量、全局变量、类变量等）
             ZukMainForFile.recur(e);
 
-            //输出函数中的IBinding和变量
-            FunctionVariableUtil.printResultAndClearSet();
+            //获取函数中变量集
+            FileFunctionVariableVo fileFunctionVariableVo = FunctionVariableUtil.getFileFunctionVariableVo();
+
+            CppFileFrame.CppFuntion cppFuntion = new CppFileFrame.CppFuntion();
+            cppFuntion.setFileFunctionDto(fileFunctionDto);
+            cppFuntion.setFileFunctionVariableVo(fileFunctionVariableVo);
+
             //
-            MethodCallIBinding.printResultAndClearSet();
+            cppFileFrame.addCppFuntion(cppFuntion);
+
         });
 
         System.out.println("");
@@ -78,7 +76,5 @@ public class ZukMainForFile {
     private static void doIASTNode(IASTNode iastNode, Consumer<IASTNode> consumer){
         consumer.accept(iastNode);
     }
-
-
 
 }
