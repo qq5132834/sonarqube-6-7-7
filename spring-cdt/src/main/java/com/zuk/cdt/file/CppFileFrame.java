@@ -1,9 +1,12 @@
 package com.zuk.cdt.file;
 
-import org.eclipse.cdt.core.dom.ast.EScopeKind;
-import org.eclipse.cdt.core.dom.ast.IScope;
+import com.zuk.cdt.file.var.FileVariableUtil;
 
 public class CppFileFrame {
+
+    private FileVariableUtil.FileFunctionCallVariable fileFunctionCallVariable;
+
+
 
 
 

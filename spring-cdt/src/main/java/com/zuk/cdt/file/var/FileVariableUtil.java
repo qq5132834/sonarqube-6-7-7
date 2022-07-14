@@ -8,6 +8,7 @@ import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPParameter;
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPScope;
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPVariable;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,12 +20,14 @@ public class FileVariableUtil {
     private static Set<Class> CLASS_SET = new HashSet<>();
     private static Set<IBinding> PARAM_VAL_SET = new HashSet<>();
     private static Set<IScope> SCOPE_SET = new HashSet<>();
-    private static Set<IASTNode> IAST_NODE_SET = new HashSet<>();
+    private static Set<IASTNode> IAST_NODE_ALL_SET = new HashSet<>();
+    private static Set<IASTName> IAST_NODE_WITH_IBINDING_SET = new HashSet<>();
 
     public static void methodParams(IASTNode iastNode){
         if(iastNode instanceof IASTName){
 
-            IAST_NODE_SET.add(iastNode);
+            //查看全局
+            IAST_NODE_ALL_SET.add(iastNode);
 
             IASTName iastName = (IASTName) iastNode;
             IBinding iBinding = iastName.resolveBinding();
@@ -35,6 +38,7 @@ public class FileVariableUtil {
             boolean isProblemBinding = checkProblemBinding(iBinding);
             if(!isProblemBinding){
                 try{
+                    IAST_NODE_WITH_IBINDING_SET.add(iastName);
                     IScope iScope = iBinding.getScope();
                     SCOPE_SET.add(iScope);
                 }catch (Exception e) {
@@ -92,6 +96,38 @@ public class FileVariableUtil {
         return false;
     }
 
+    public static FileFunctionCallVariable getFileFunctionCallVariable(){
+        Set<FileVariableDto> eClassSet = new HashSet<>();
+        Set<FileVariableDto> eGlobalSet = new HashSet<>();
+        IAST_NODE_WITH_IBINDING_SET.stream().forEach(iastName->{
+            try {
+                IBinding iBinding = iastName.resolveBinding();
+                IScope iScope = iBinding.getScope();
+                EScopeKind eScopeKind = iScope.getKind();
+                IName iName = iScope.getScopeName();
+                IASTFileLocation iastFileLocation = iName.getFileLocation();
+                if(iastFileLocation == null){
+                     return;
+                }
+                FileVariableDto dto = FileVariableDto.builder()
+                        .seteScopeKind(eScopeKind)
+                        .setIastFileLocation(iastFileLocation)
+                        .setSimpleName(new String(iName.getSimpleID()))
+                        .setRawSignature(iastName.getRawSignature())
+                        .build();
+                if(eScopeKind == EScopeKind.eClassType){
+                    eClassSet.add(dto);
+                }
+                else if (eScopeKind == EScopeKind.eGlobal) {
+                    eGlobalSet.add(dto);
+                }
+            } catch (DOMException ex) {
+                ex.printStackTrace();
+            }
+        });
+        return new FileFunctionCallVariable(eClassSet, eGlobalSet);
+    }
+
     public static void printResultAndClearSet(){
         //输出IBinding的主要类
         FileVariableUtil.CLASS_SET.stream().map(e->e.getName()).forEach(System.out::println);
@@ -106,7 +142,7 @@ public class FileVariableUtil {
         //清空作用域
         FileVariableUtil.SCOPE_SET.clear();
         //输出ibinding的节点
-        IAST_NODE_SET.stream().forEach(ins->{
+        IAST_NODE_ALL_SET.stream().forEach(ins->{
             //System.out.println("IASTNodeClass:" + ins.getClass().getName());
             IASTName iastName = (IASTName) ins;
             //System.out.println("IASTNameClass:" + iastName.getClass().getName());
@@ -124,7 +160,30 @@ public class FileVariableUtil {
 
             }
         });
-        System.out.println();
+        IAST_NODE_ALL_SET.clear();
+    }
+
+    public static class FileFunctionCallVariable {
+
+        //类变量
+        private final Set<FileVariableDto> classVariableSet;
+        //全局变量
+        private final Set<FileVariableDto> globalVariableSet;
+
+
+        public FileFunctionCallVariable(Set<FileVariableDto> classVariableSet,
+                                        Set<FileVariableDto> globalVariableSet) {
+            this.classVariableSet = classVariableSet;
+            this.globalVariableSet = globalVariableSet;
+        }
+
+        public Set<FileVariableDto> getClassVariableSet() {
+            return classVariableSet;
+        }
+
+        public Set<FileVariableDto> getGlobalVariableSet() {
+            return globalVariableSet;
+        }
     }
 
 }
