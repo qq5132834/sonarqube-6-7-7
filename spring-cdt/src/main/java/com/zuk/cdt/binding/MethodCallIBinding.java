@@ -18,13 +18,14 @@ public class MethodCallIBinding {
     private static List<IASTNode> FUNCTION_DEFINITION = new ArrayList<>();
     private static List<IASTNode> FUNCTION_CALL = new ArrayList<>();
     private static List<IASTNode> FUNCTION_DECLARATOR = new ArrayList<>();
+    private static List<DeclareVariableDto> DECLARE_VARIABLE_LIST = new ArrayList<>();
 
     public static void funcationCall(IASTNode iastNode){
         //CLASS_SET.add(iastNode.getClass());
         checkIASTNode(iastNode);
     }
 
-    public static void printResultAndClearSet(){
+    private static void printResultAndClearSet(){
         //输出节点类型
         CLASS_SET.stream().forEach(e->{
             System.out.println(e.getName());
@@ -69,9 +70,17 @@ public class MethodCallIBinding {
                     CPPASTIdExpression cppastIdExpression = (CPPASTIdExpression) iastNodeFirst;
                     IASTNode iastNode = cppastIdExpression.getChildren()[0];
                     String functionCallName = iastNode.getRawSignature(); //方法调用名称；
-                    int functionCallLineNumber = iastNode.getFileLocation().getStartingLineNumber(); //方法调用行号
+                    int functionCallLineNumber = iastNode.getFileLocation().getStartingLineNumber(); //
+                    // 方法调用行号
                     //多态暂时采用入参的个数进行区别，将来再优化
+                    CPPASTName cppastName = new GetCPPASTName(iastNode).getCPPASTName();
+                    if(cppastName != null){
+                        DeclareVariableDto dto = DeclareVariableDto.createInstanceByIASTName((IASTName) cppastName);
+                        if(dto != null){
 
+                        }
+                        System.out.println();
+                    }
                     System.out.println();
                 }
 
@@ -91,12 +100,14 @@ public class MethodCallIBinding {
                             String rawSignature = dto.getBuilder().getRawSignature();
                             System.out.println();
                             //TODO 根据名称去文件的变量集合中查询需要跳转的外部文件
+
+                            DECLARE_VARIABLE_LIST.add(dto);
                         }
                         //
                         System.out.println();
                     }
 
-                    String functionCallName = cppastFieldReference.getChildren()[1].getRawSignature(); //类变量方法调用名称
+                    //String functionCallName = cppastFieldReference.getChildren()[1].getRawSignature(); //类变量方法调用名称
 
                     System.out.println();
                 }
@@ -124,6 +135,24 @@ public class MethodCallIBinding {
                 }catch (Exception ex) { }
             }
         }
+    }
+
+    public static List<DeclareVariableDto> getFunctionCall(){
+        try {
+            printResultAndClearSet();
+            return DECLARE_VARIABLE_LIST;
+        }
+        finally {
+            cleanAll();
+        }
+    }
+
+    private static void cleanAll(){
+        CLASS_SET.clear();
+        FUNCTION_DEFINITION.clear();
+        FUNCTION_CALL.clear();
+        FUNCTION_DECLARATOR.clear();
+        DECLARE_VARIABLE_LIST.clear();
     }
 
     private static boolean checkIASTNode(IASTNode iastNode){
