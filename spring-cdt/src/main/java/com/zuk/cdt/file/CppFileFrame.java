@@ -1,10 +1,9 @@
 package com.zuk.cdt.file;
 
 import com.zuk.cdt.file.function.FileFunctionDto;
-import com.zuk.cdt.file.var.FileFunctionVariableVo;
+import com.zuk.cdt.file.function.var.FileFunctionVariableVo;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class CppFileFrame {

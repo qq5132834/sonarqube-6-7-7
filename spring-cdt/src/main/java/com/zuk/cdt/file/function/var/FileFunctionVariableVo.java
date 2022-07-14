@@ -1,4 +1,4 @@
-package com.zuk.cdt.file.var;
+package com.zuk.cdt.file.function.var;
 
 import java.util.Set;
 
