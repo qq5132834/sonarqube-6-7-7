@@ -3,18 +3,20 @@ package com.zuk.cdt.file;
 import com.zuk.cdt.file.function.FileFunctionDto;
 import com.zuk.cdt.file.var.FileFunctionVariableVo;
 
+import java.util.Collections;
 import java.util.List;
 
 public class CppFileFrame {
 
-    private List<CppFuntion> cppFuntionList;
+    private List<CppFuntion> cppFuntionList = Collections.emptyList();
 
-    public List<CppFuntion> getCppFuntionList() {
-        return cppFuntionList;
+    public CppFileFrame addCppFuntion(CppFuntion cppFuntion) {
+        this.cppFuntionList.add(cppFuntion);
+        return this;
     }
 
-    public void setCppFuntionList(List<CppFuntion> cppFuntionList) {
-        this.cppFuntionList = cppFuntionList;
+    public List<CppFuntion> getCppFuntionList() {
+        return this.cppFuntionList;
     }
 
     public static class CppFuntion {
