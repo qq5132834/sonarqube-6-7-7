@@ -28,6 +28,7 @@ public class ZukMainForFile {
             int endLine = e.getFileLocation().getEndingLineNumber();
             //变量函数AST
             ZukMainForFile.recur(e);
+
             //输出函数中的IBinding和变量
             FileVariableUtil.printResultAndClearSet();
             //

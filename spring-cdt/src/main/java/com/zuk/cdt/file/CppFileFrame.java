@@ -12,4 +12,7 @@ public class CppFileFrame {
     public void setFileFunctionCallVariable(FileVariableUtil.FileFunctionCallVariable fileFunctionCallVariable) {
         this.fileFunctionCallVariable = fileFunctionCallVariable;
     }
+
+
+
 }

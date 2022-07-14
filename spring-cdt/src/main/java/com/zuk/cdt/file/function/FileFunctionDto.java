@@ -1,0 +1,69 @@
+package com.zuk.cdt.file.function;
+
+import org.eclipse.cdt.core.dom.ast.IASTFileLocation;
+
+public class FileFunctionDto {
+
+    private FileFunctionDto.Builder builder;
+
+    private FileFunctionDto(FileFunctionDto.Builder builder){
+        this.builder = builder;
+    }
+
+    public static FileFunctionDto.Builder builder(){
+        return new FileFunctionDto.Builder();
+    }
+
+    public Builder getBuilder() { return builder; }
+
+    public static class Builder {
+        //方法名
+        private String functionName;
+        //用来计算多态
+        private String md5;
+        //行号
+        private int lineNumber;
+        //
+        private IASTFileLocation iastFileLocation;
+
+        public FileFunctionDto build(){
+            return new FileFunctionDto(this);
+        }
+
+        public String getFunctionName() {
+            return functionName;
+        }
+
+        public String getMd5() {
+            return md5;
+        }
+
+        public int getLineNumber() {
+            return lineNumber;
+        }
+
+        public IASTFileLocation getIastFileLocation() {
+            return iastFileLocation;
+        }
+
+        public Builder setFunctionName(String functionName) {
+            this.functionName = functionName;
+            return this;
+        }
+
+        public Builder setMd5(String md5) {
+            this.md5 = md5;
+            return this;
+        }
+
+        public Builder setLineNumber(int lineNumber) {
+            this.lineNumber = lineNumber;
+            return this;
+        }
+
+        public Builder setIastFileLocation(IASTFileLocation iastFileLocation) {
+            this.iastFileLocation = iastFileLocation;
+            return this;
+        }
+    }
+}
