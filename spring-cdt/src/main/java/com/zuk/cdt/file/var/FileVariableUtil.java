@@ -1,4 +1,4 @@
-package com.zuk.cdt.binding;
+package com.zuk.cdt.file.var;
 
 import org.eclipse.cdt.core.dom.ILinkage;
 import org.eclipse.cdt.core.dom.IName;
@@ -14,7 +14,7 @@ import java.util.Set;
 /***
  * 遍历函数的入参、变量、和作用域(用起止行的位置进行描述)
  */
-public class MethodParamsIBinding {
+public class FileVariableUtil {
 
     private static Set<Class> CLASS_SET = new HashSet<>();
     private static Set<IBinding> PARAM_VAL_SET = new HashSet<>();
@@ -94,17 +94,17 @@ public class MethodParamsIBinding {
 
     public static void printResultAndClearSet(){
         //输出IBinding的主要类
-        MethodParamsIBinding.CLASS_SET.stream().map(e->e.getName()).forEach(System.out::println);
+        FileVariableUtil.CLASS_SET.stream().map(e->e.getName()).forEach(System.out::println);
         //清空集合
-        MethodParamsIBinding.CLASS_SET.clear();
+        FileVariableUtil.CLASS_SET.clear();
         //输出函数中的参数：函数入参，函数中定义的局部变量
-        MethodParamsIBinding.PARAM_VAL_SET.stream().forEach(pv->{System.out.println(pv.getName());});
+        FileVariableUtil.PARAM_VAL_SET.stream().forEach(pv->{System.out.println(pv.getName());});
         //清空参数集合
-        MethodParamsIBinding.PARAM_VAL_SET.clear();
+        FileVariableUtil.PARAM_VAL_SET.clear();
         //输出作用域
-        MethodParamsIBinding.SCOPE_SET.stream().forEach(ss->{System.out.println(ss.getKind().toString() + "," + ss.getScopeName());});
+        FileVariableUtil.SCOPE_SET.stream().forEach(ss->{System.out.println(ss.getKind().toString() + "," + ss.getScopeName());});
         //清空作用域
-        MethodParamsIBinding.SCOPE_SET.clear();
+        FileVariableUtil.SCOPE_SET.clear();
         //输出ibinding的节点
         IAST_NODE_SET.stream().forEach(ins->{
             //System.out.println("IASTNodeClass:" + ins.getClass().getName());

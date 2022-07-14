@@ -1,7 +1,7 @@
 package com.zuk.cdt;
 
 import com.zuk.cdt.binding.MethodCallIBinding;
-import com.zuk.cdt.binding.MethodParamsIBinding;
+import com.zuk.cdt.file.var.FileVariableUtil;
 import org.eclipse.cdt.core.dom.ast.IASTNode;
 
 import java.util.Arrays;
@@ -20,7 +20,7 @@ public class IASTNodeRecursive {
         //输出节点信息
         doIASTNode(iastNode, IASTNodeRecursive::printIASTNode);
         //获取节点IBinding信息
-        doIASTNode(iastNode, MethodParamsIBinding::methodParams);
+        doIASTNode(iastNode, FileVariableUtil::methodParams);
         //获取函数与函数调用信息
         doIASTNode(iastNode, MethodCallIBinding::funcationCall);
 

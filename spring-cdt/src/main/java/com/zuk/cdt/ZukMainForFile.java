@@ -1,7 +1,7 @@
 package com.zuk.cdt;
 
 import com.zuk.cdt.binding.MethodCallIBinding;
-import com.zuk.cdt.binding.MethodParamsIBinding;
+import com.zuk.cdt.file.var.FileVariableUtil;
 import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition;
 import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit;
 
@@ -26,7 +26,7 @@ public class ZukMainForFile {
             //变量函数AST
             IASTNodeRecursive.recur(e);
             //输出函数中的IBinding和变量
-            MethodParamsIBinding.printResultAndClearSet();
+            FileVariableUtil.printResultAndClearSet();
             //
             MethodCallIBinding.printResultAndClearSet();
         });
