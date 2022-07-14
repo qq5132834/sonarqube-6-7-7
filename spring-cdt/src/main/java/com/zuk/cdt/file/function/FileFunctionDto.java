@@ -22,7 +22,7 @@ public class FileFunctionDto {
         //用来计算多态
         private String md5;
         //行号
-        private int lineNumber;
+        private int startLineNumber;
         //
         private IASTFileLocation iastFileLocation;
 
@@ -38,8 +38,8 @@ public class FileFunctionDto {
             return md5;
         }
 
-        public int getLineNumber() {
-            return lineNumber;
+        public int getStartLineNumber() {
+            return startLineNumber;
         }
 
         public IASTFileLocation getIastFileLocation() {
@@ -56,8 +56,8 @@ public class FileFunctionDto {
             return this;
         }
 
-        public Builder setLineNumber(int lineNumber) {
-            this.lineNumber = lineNumber;
+        public Builder setStartLineNumber(int startLineNumber) {
+            this.startLineNumber = startLineNumber;
             return this;
         }
 
