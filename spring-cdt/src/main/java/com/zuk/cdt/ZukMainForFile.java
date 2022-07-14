@@ -20,7 +20,7 @@ public class ZukMainForFile {
         String file = "C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\spring-cdt\\src\\main\\resources\\c\\src\\DnsCache.cc";
         IASTTranslationUnit iastTranslationUnit = CDTParser.parse(file, CDTParser.Language.CPP);
 
-        CppFileFrame cppFileFrame = CppFileFrame.getInstance();
+        final CppFileFrame cppFileFrame = CppFileFrame.getInstance();
         //文件函数输出
         List<IASTFunctionDefinition> functionDefinitions = FuntionDefinitionUtil.getFuncationDefinistion(iastTranslationUnit, file);
         functionDefinitions.stream().forEach(e->{
