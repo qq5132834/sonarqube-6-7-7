@@ -37,9 +37,15 @@ public class FunctionVariableUtil {
             boolean isProblemBinding = checkProblemBinding(iBinding);
             if(!isProblemBinding){
                 try{
-                    IAST_NAME_WITH_IBINDING_SET.add(iastName);
                     IScope iScope = iBinding.getScope();
                     SCOPE_SET.add(iScope);
+                    IName iName = iScope.getScopeName();
+                    if(iName != null){
+                        IASTFileLocation iastFileLocation = iName.getFileLocation();
+                        if (iastFileLocation != null) {
+                            IAST_NAME_WITH_IBINDING_SET.add(iastName);
+                        }
+                    }
                 }catch (Exception e) {
                     e.printStackTrace();
                 }

@@ -3,12 +3,13 @@ package com.zuk.cdt.file;
 import com.zuk.cdt.file.function.FileFunctionDto;
 import com.zuk.cdt.file.var.FileFunctionVariableVo;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class CppFileFrame {
 
-    private List<CppFuntion> cppFuntionList = Collections.emptyList();
+    private List<CppFuntion> cppFuntionList = new ArrayList<>();
 
     public static CppFileFrame getInstance() {
         return new CppFileFrame();

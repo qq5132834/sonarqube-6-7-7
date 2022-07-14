@@ -28,6 +28,7 @@ public class ZukMainForFile {
             FileFunctionDto fileFunctionDto = FileFunctionDto.builder()
                                                     .setFunctionName(e.getDeclarator().getName().toString())
                                                     .setStartLineNumber(e.getFileLocation().getStartingLineNumber())
+                                                    .setEndLineNumber(e.getFileLocation().getEndingLineNumber())
                                                     .setIastFileLocation(e.getFileLocation())
                                                     .build();
 
@@ -43,6 +44,8 @@ public class ZukMainForFile {
 
             //
             cppFileFrame.addCppFuntion(cppFuntion);
+            //
+            System.out.println("");
 
         });
 
