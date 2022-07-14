@@ -8,7 +8,6 @@ import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPParameter;
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPScope;
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPVariable;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,7 +20,7 @@ public class FileVariableUtil {
     private static Set<IBinding> PARAM_VAL_SET = new HashSet<>();
     private static Set<IScope> SCOPE_SET = new HashSet<>();
     private static Set<IASTNode> IAST_NODE_ALL_SET = new HashSet<>();
-    private static Set<IASTName> IAST_NODE_WITH_IBINDING_SET = new HashSet<>();
+    private static Set<IASTName> IAST_NAME_WITH_IBINDING_SET = new HashSet<>();
 
     public static void methodParams(IASTNode iastNode){
         if(iastNode instanceof IASTName){
@@ -38,7 +37,7 @@ public class FileVariableUtil {
             boolean isProblemBinding = checkProblemBinding(iBinding);
             if(!isProblemBinding){
                 try{
-                    IAST_NODE_WITH_IBINDING_SET.add(iastName);
+                    IAST_NAME_WITH_IBINDING_SET.add(iastName);
                     IScope iScope = iBinding.getScope();
                     SCOPE_SET.add(iScope);
                 }catch (Exception e) {
@@ -99,7 +98,7 @@ public class FileVariableUtil {
     public static FileFunctionCallVariable getFileFunctionCallVariable(){
         Set<FileVariableDto> eClassSet = new HashSet<>();
         Set<FileVariableDto> eGlobalSet = new HashSet<>();
-        IAST_NODE_WITH_IBINDING_SET.stream().forEach(iastName->{
+        IAST_NAME_WITH_IBINDING_SET.stream().forEach(iastName->{
             try {
                 IBinding iBinding = iastName.resolveBinding();
                 IScope iScope = iBinding.getScope();
@@ -125,22 +124,17 @@ public class FileVariableUtil {
                 ex.printStackTrace();
             }
         });
+        cleanAllSet();
         return new FileFunctionCallVariable(eClassSet, eGlobalSet);
     }
 
     public static void printResultAndClearSet(){
         //输出IBinding的主要类
-        FileVariableUtil.CLASS_SET.stream().map(e->e.getName()).forEach(System.out::println);
-        //清空集合
-        FileVariableUtil.CLASS_SET.clear();
+        CLASS_SET.stream().map(e->e.getName()).forEach(System.out::println);
         //输出函数中的参数：函数入参，函数中定义的局部变量
-        FileVariableUtil.PARAM_VAL_SET.stream().forEach(pv->{System.out.println(pv.getName());});
-        //清空参数集合
-        FileVariableUtil.PARAM_VAL_SET.clear();
+        PARAM_VAL_SET.stream().forEach(pv->{System.out.println(pv.getName());});
         //输出作用域
-        FileVariableUtil.SCOPE_SET.stream().forEach(ss->{System.out.println(ss.getKind().toString() + "," + ss.getScopeName());});
-        //清空作用域
-        FileVariableUtil.SCOPE_SET.clear();
+        SCOPE_SET.stream().forEach(ss->{System.out.println(ss.getKind().toString() + "," + ss.getScopeName());});
         //输出ibinding的节点
         IAST_NODE_ALL_SET.stream().forEach(ins->{
             //System.out.println("IASTNodeClass:" + ins.getClass().getName());
@@ -160,9 +154,39 @@ public class FileVariableUtil {
 
             }
         });
-        IAST_NODE_ALL_SET.clear();
+
+
+        IAST_NAME_WITH_IBINDING_SET.stream().forEach(iastName -> {
+            IBinding iBinding = iastName.resolveBinding();
+            try {
+                String rawSignature = iastName.getRawSignature();
+                IScope iScope = iBinding.getScope();
+                EScopeKind eScopeKind = iScope.getKind();
+                IName iName = iScope.getScopeName();
+                IASTFileLocation iastFileLocation = iName.getFileLocation();
+                String fileName = iastFileLocation.getFileName();
+                int startLineNumber = iastFileLocation.getStartingLineNumber();
+                String simpleName = new String(iName.getSimpleID());
+                if (EScopeKind.eClassType == eScopeKind ||  EScopeKind.eGlobal == eScopeKind) {
+                    System.out.println();
+                }
+            }catch (Exception ex) {}
+
+        });
+        cleanAllSet();
     }
 
+    private static void cleanAllSet(){
+        CLASS_SET.clear();
+        PARAM_VAL_SET.clear();
+        SCOPE_SET.clear();
+        IAST_NODE_ALL_SET.clear();
+        IAST_NAME_WITH_IBINDING_SET.clear();
+    }
+
+    /***
+     * 文件中的变量
+     */
     public static class FileFunctionCallVariable {
 
         //类变量
