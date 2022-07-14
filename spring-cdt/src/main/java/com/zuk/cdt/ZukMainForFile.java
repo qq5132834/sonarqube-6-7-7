@@ -1,7 +1,7 @@
 package com.zuk.cdt;
 
-import com.zuk.cdt.binding.MethodCallIBinding;
-import com.zuk.cdt.binding.dto.DeclareVariableDto;
+import com.zuk.cdt.file.function.call.FunctionCallUtil;
+import com.zuk.cdt.file.function.call.FunctionCallDto;
 import com.zuk.cdt.file.CppFileFrame;
 import com.zuk.cdt.file.function.FileFunctionDto;
 import com.zuk.cdt.file.function.var.FileFunctionVariableVo;
@@ -40,7 +40,7 @@ public class ZukMainForFile {
             FileFunctionVariableVo fileFunctionVariableVo = FunctionVariableUtil.getFileFunctionVariableVo();
 
             //方法内部调用外部函数集
-            List<DeclareVariableDto> declareVariableDtos = MethodCallIBinding.getFunctionCall();
+            List<FunctionCallDto> declareVariableDtos = FunctionCallUtil.getFunctionCall();
 
             CppFileFrame.CppFuntion cppFuntion = new CppFileFrame.CppFuntion();
             cppFuntion.setFileFunctionDto(fileFunctionDto);
@@ -70,7 +70,7 @@ public class ZukMainForFile {
         doIASTNode(iastNode, FunctionVariableUtil::methodParams);
 
         //获取方法中函数调用信息
-        doIASTNode(iastNode, MethodCallIBinding::funcationCall);
+        doIASTNode(iastNode, FunctionCallUtil::funcationCall);
 
         //递归遍历IASTNode的子节点
         Arrays.stream(iastNode.getChildren()).forEach(ZukMainForFile::recur);

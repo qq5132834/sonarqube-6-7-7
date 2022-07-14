@@ -1,15 +1,15 @@
-package com.zuk.cdt.binding.dto;
+package com.zuk.cdt.file.function.call;
 
 import com.sun.istack.internal.NotNull;
 import org.eclipse.cdt.core.dom.IName;
 import org.eclipse.cdt.core.dom.ast.*;
 import org.eclipse.cdt.internal.core.dom.parser.ProblemBinding;
 
-public class DeclareVariableDto {
+public class FunctionCallDto {
 
     private Builder builder;
 
-    private DeclareVariableDto(Builder builder){
+    private FunctionCallDto(Builder builder){
         this.builder = builder;
     }
 
@@ -17,7 +17,7 @@ public class DeclareVariableDto {
 
     public static Builder builder(){return new Builder();}
 
-    public static DeclareVariableDto createInstanceByIASTName(@NotNull IASTName iastName){
+    public static FunctionCallDto createInstanceByIASTName(@NotNull IASTName iastName){
         IBinding iBinding = iastName.resolveBinding();
         if(!(iBinding instanceof ProblemBinding)){
             try {
@@ -26,7 +26,7 @@ public class DeclareVariableDto {
                 if(iName.getFileLocation() == null){
                     System.out.println("");
                 }
-                return DeclareVariableDto.builder()
+                return FunctionCallDto.builder()
                         .seteScopeKind(iScope.getKind())
                         .setScopeSimpleName(new String(iName.getSimpleID()))
                         .setIastFileLocation(iastName.getFileLocation())
@@ -68,8 +68,8 @@ public class DeclareVariableDto {
         //调用函数名称
         private String callFunctionName;
 
-        public DeclareVariableDto build(){
-            return new DeclareVariableDto(this);
+        public FunctionCallDto build(){
+            return new FunctionCallDto(this);
         }
 
         public EScopeKind geteScopeKind() {

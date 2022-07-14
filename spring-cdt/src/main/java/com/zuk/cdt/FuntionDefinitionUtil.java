@@ -1,6 +1,6 @@
 package com.zuk.cdt;
 
-import com.zuk.cdt.binding.dto.DeclareVariableDto;
+import com.zuk.cdt.file.function.call.FunctionCallDto;
 import org.eclipse.cdt.core.dom.ast.*;
 import org.eclipse.cdt.internal.core.dom.parser.ProblemBinding;
 
@@ -25,7 +25,7 @@ public class FuntionDefinitionUtil {
 
     //存储文件的ibinding
     public static Map<IASTNode, IASTNode> IAST_NODE_SET = new HashMap<>();
-    public static Map<DeclareVariableDto, DeclareVariableDto> DECLARE_VARIABLE = new HashMap<>();
+    public static Map<FunctionCallDto, FunctionCallDto> DECLARE_VARIABLE = new HashMap<>();
     private static void getIBinding(IASTNode iastNode){
         if(iastNode instanceof IASTName){
             IASTName iastName = (IASTName) iastNode;
@@ -34,7 +34,7 @@ public class FuntionDefinitionUtil {
                 IAST_NODE_SET.put(iastNode, iastNode);
 
                 //将IASTName转变dto
-                DeclareVariableDto declareVariableDto = DeclareVariableDto.createInstanceByIASTName(iastName);
+                FunctionCallDto declareVariableDto = FunctionCallDto.createInstanceByIASTName(iastName);
                 if (declareVariableDto != null) {
                     DECLARE_VARIABLE.put(declareVariableDto, declareVariableDto);
                 }

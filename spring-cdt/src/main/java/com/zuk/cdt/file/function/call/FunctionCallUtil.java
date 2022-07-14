@@ -1,6 +1,5 @@
-package com.zuk.cdt.binding;
+package com.zuk.cdt.file.function.call;
 
-import com.zuk.cdt.binding.dto.DeclareVariableDto;
 import org.eclipse.cdt.core.dom.IName;
 import org.eclipse.cdt.core.dom.ast.*;
 import org.eclipse.cdt.internal.core.dom.parser.ProblemBinding;
@@ -11,14 +10,14 @@ import java.util.*;
 /***
  * 变量函数和函数的调用关系
  */
-public class MethodCallIBinding {
+public class FunctionCallUtil {
 
     private static Set<Class> CLASS_SET = new HashSet<>();
 
     private static List<IASTNode> FUNCTION_DEFINITION = new ArrayList<>();
     private static List<IASTNode> FUNCTION_CALL = new ArrayList<>();
     private static List<IASTNode> FUNCTION_DECLARATOR = new ArrayList<>();
-    private static List<DeclareVariableDto> DECLARE_VARIABLE_LIST = new ArrayList<>();
+    private static List<FunctionCallDto> DECLARE_VARIABLE_LIST = new ArrayList<>();
 
     public static void funcationCall(IASTNode iastNode){
         //CLASS_SET.add(iastNode.getClass());
@@ -73,12 +72,12 @@ public class MethodCallIBinding {
                     int functionCallLineNumber = iastNode.getFileLocation().getStartingLineNumber(); //
                     // 方法调用行号
                     //多态暂时采用入参的个数进行区别，将来再优化
-                    DeclareVariableDto dto = null;
+                    FunctionCallDto dto = null;
                     CPPASTName cppastName = new GetCPPASTName(iastNode).getCPPASTName();
                     if(cppastName != null){
-                        dto = DeclareVariableDto.createInstanceByIASTName((IASTName) cppastName);
+                        dto = FunctionCallDto.createInstanceByIASTName((IASTName) cppastName);
                         if(dto == null){
-                            dto = DeclareVariableDto.builder().setCallFunctionName(functionCallName).build();
+                            dto = FunctionCallDto.builder().setCallFunctionName(functionCallName).build();
                         }
                         DECLARE_VARIABLE_LIST.add(dto);
                         System.out.println();
@@ -92,13 +91,13 @@ public class MethodCallIBinding {
                     int functionCallLineNumber = cppastFieldReference.getChildren()[0].getFileLocation().getStartingLineNumber(); //方法调用行号
                     String reference = cppastFieldReference.getChildren()[0].getRawSignature(); //引用类变量名称
                     CPPASTName cppastName = new GetCPPASTName(cppastFieldReference.getChildren()[0]).getCPPASTName();
-                    DeclareVariableDto dto = null;
+                    FunctionCallDto dto = null;
                     if(cppastName != null){
                         //获取作用域，根据作用域
-                        dto = DeclareVariableDto.createInstanceByIASTName((IASTName) cppastName);
+                        dto = FunctionCallDto.createInstanceByIASTName((IASTName) cppastName);
                         if(dto != null){
                             EScopeKind eScopeKind = dto.getBuilder().geteScopeKind();
-                            String simpleName = dto.getBuilder().getSimpleName();
+                            String simpleName = dto.getBuilder().getScopeSimpleName();
                             IASTFileLocation iastFileLocation = dto.getBuilder().getIastFileLocation();
                             String rawSignature = dto.getBuilder().getVariableName();
                             System.out.println();
@@ -144,7 +143,7 @@ public class MethodCallIBinding {
         }
     }
 
-    public static List<DeclareVariableDto> getFunctionCall(){
+    public static List<FunctionCallDto> getFunctionCall(){
         try {
             printResultAndClearSet();
             return DECLARE_VARIABLE_LIST;

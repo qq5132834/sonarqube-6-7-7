@@ -1,6 +1,6 @@
 package com.zuk.cdt.file;
 
-import com.zuk.cdt.binding.dto.DeclareVariableDto;
+import com.zuk.cdt.file.function.call.FunctionCallDto;
 import com.zuk.cdt.file.function.FileFunctionDto;
 import com.zuk.cdt.file.function.var.FileFunctionVariableVo;
 
@@ -30,7 +30,7 @@ public class CppFileFrame {
         //函数中变量信息
         private FileFunctionVariableVo fileFunctionVariableVo;
         //函数调用外部集
-        private List<DeclareVariableDto> declareVariableDtos;
+        private List<FunctionCallDto> declareVariableDtos;
 
         public FileFunctionDto getFileFunctionDto() {
             return fileFunctionDto;
@@ -40,7 +40,7 @@ public class CppFileFrame {
             return fileFunctionVariableVo;
         }
 
-        public List<DeclareVariableDto> getDeclareVariableDtos() { return declareVariableDtos; }
+        public List<FunctionCallDto> getDeclareVariableDtos() { return declareVariableDtos; }
 
         public CppFuntion setFileFunctionDto(FileFunctionDto fileFunctionDto) {
             this.fileFunctionDto = fileFunctionDto;
@@ -52,7 +52,7 @@ public class CppFileFrame {
             return this;
         }
 
-        public CppFuntion setDeclareVariableDtos(List<DeclareVariableDto> declareVariableDtos) {
+        public CppFuntion setDeclareVariableDtos(List<FunctionCallDto> declareVariableDtos) {
             this.declareVariableDtos = declareVariableDtos;
             return this;
         }
