@@ -14,7 +14,7 @@ import java.util.Set;
 /***
  * 遍历函数的入参、变量、和作用域(用起止行的位置进行描述)
  */
-public class FileVariableUtil {
+public class FunctionVariableUtil {
 
     private static Set<Class> CLASS_SET = new HashSet<>();
     private static Set<IBinding> PARAM_VAL_SET = new HashSet<>();
@@ -96,8 +96,9 @@ public class FileVariableUtil {
     }
 
     public static FileFunctionCallVariable getFileFunctionCallVariable(){
-        Set<FileVariableDto> eClassSet = new HashSet<>();
-        Set<FileVariableDto> eGlobalSet = new HashSet<>();
+        Set<FunctionVariableDto> eClassSet = new HashSet<>();
+        Set<FunctionVariableDto> eGlobalSet = new HashSet<>();
+        Set<FunctionVariableDto> eLocalSet = new HashSet<>();
         IAST_NAME_WITH_IBINDING_SET.stream().forEach(iastName->{
             try {
                 IBinding iBinding = iastName.resolveBinding();
@@ -108,7 +109,7 @@ public class FileVariableUtil {
                 if(iastFileLocation == null){
                      return;
                 }
-                FileVariableDto dto = FileVariableDto.builder()
+                FunctionVariableDto dto = FunctionVariableDto.builder()
                         .seteScopeKind(eScopeKind)
                         .setIastFileLocation(iastFileLocation)
                         .setSimpleName(new String(iName.getSimpleID()))
@@ -120,12 +121,15 @@ public class FileVariableUtil {
                 else if (eScopeKind == EScopeKind.eGlobal) {
                     eGlobalSet.add(dto);
                 }
+                else if (eScopeKind == EScopeKind.eLocal) {
+                    eLocalSet.add(dto);
+                }
             } catch (DOMException ex) {
                 ex.printStackTrace();
             }
         });
         cleanAllSet();
-        return new FileFunctionCallVariable(eClassSet, eGlobalSet);
+        return new FileFunctionCallVariable(eClassSet, eGlobalSet, eLocalSet);
     }
 
     public static void printResultAndClearSet(){
@@ -190,24 +194,24 @@ public class FileVariableUtil {
     public static class FileFunctionCallVariable {
 
         //类变量
-        private final Set<FileVariableDto> classVariableSet;
+        private final Set<FunctionVariableDto> classVariableSet;
         //全局变量
-        private final Set<FileVariableDto> globalVariableSet;
+        private final Set<FunctionVariableDto> globalVariableSet;
+        //本地变量
+        private final Set<FunctionVariableDto> localVariableSet;
 
-
-        public FileFunctionCallVariable(Set<FileVariableDto> classVariableSet,
-                                        Set<FileVariableDto> globalVariableSet) {
+        public FileFunctionCallVariable(Set<FunctionVariableDto> classVariableSet,
+                                        Set<FunctionVariableDto> globalVariableSet,
+                                        Set<FunctionVariableDto> localVariableSet) {
             this.classVariableSet = classVariableSet;
             this.globalVariableSet = globalVariableSet;
+            this.localVariableSet = localVariableSet;
         }
-
-        public Set<FileVariableDto> getClassVariableSet() {
-            return classVariableSet;
-        }
-
-        public Set<FileVariableDto> getGlobalVariableSet() {
+        public Set<FunctionVariableDto> getClassVariableSet() { return classVariableSet; }
+        public Set<FunctionVariableDto> getGlobalVariableSet() {
             return globalVariableSet;
         }
+        public Set<FunctionVariableDto> getLocalVariableSet() { return localVariableSet; }
     }
 
 }

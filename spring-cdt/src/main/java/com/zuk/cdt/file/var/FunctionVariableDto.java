@@ -7,18 +7,18 @@ import org.eclipse.cdt.core.dom.ast.IScope;
 /***
  * 全局变量、类定义变量
  */
-public class FileVariableDto {
+public class FunctionVariableDto {
 
-    private final FileVariableDto.Builder builder;
+    private final FunctionVariableDto.Builder builder;
 
-    private FileVariableDto(Builder builder){
+    private FunctionVariableDto(Builder builder){
         this.builder = builder;
     }
 
     public Builder getBuilder() { return builder; }
 
-    public static FileVariableDto.Builder builder(){
-        return new FileVariableDto.Builder();
+    public static FunctionVariableDto.Builder builder(){
+        return new FunctionVariableDto.Builder();
     }
 
     public static class Builder {
@@ -29,8 +29,8 @@ public class FileVariableDto {
         private IScope iScope;
         private String rawSignature;
 
-        public FileVariableDto build(){
-            return new FileVariableDto(this);
+        public FunctionVariableDto build(){
+            return new FunctionVariableDto(this);
         }
 
         public EScopeKind geteScopeKind() {
