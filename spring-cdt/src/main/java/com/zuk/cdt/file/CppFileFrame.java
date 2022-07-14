@@ -27,16 +27,18 @@ public class CppFileFrame {
             return fileFunctionDto;
         }
 
-        public void setFileFunctionDto(FileFunctionDto fileFunctionDto) {
-            this.fileFunctionDto = fileFunctionDto;
-        }
-
         public FileFunctionVariableVo getFunctionVariableDto() {
             return functionVariableDto;
         }
 
-        public void setFunctionVariableDto(FileFunctionVariableVo functionVariableDto) {
+        public CppFuntion setFileFunctionDto(FileFunctionDto fileFunctionDto) {
+            this.fileFunctionDto = fileFunctionDto;
+            return this;
+        }
+
+        public CppFuntion setFunctionVariableDto(FileFunctionVariableVo functionVariableDto) {
             this.functionVariableDto = functionVariableDto;
+            return this;
         }
     }
 
