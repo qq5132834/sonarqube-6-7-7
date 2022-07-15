@@ -1,6 +1,7 @@
 package com.zuk.cdt.report;
 
 import com.zuk.cdt.file.CppFileFrame;
+import com.zuk.cdt.file.function.var.FunctionVariableDto;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
@@ -13,18 +14,19 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
-public class File2CallsReport implements DoReport {
+public class Func2VarsReport implements DoReport {
 
-    private static String FILE_NAME = "File2Calls.xml";
+    private static String FILE_NAME = "Func2Vars.xml";
     private static String PATH = "C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\spring-cdt\\src\\test\\resources\\results\\";
 
     @Override
     public void report(Map<String, Optional<CppFileFrame>> cppFileFrameSet) {
         Document doc = DocumentHelper.createDocument();
-        doc.addComment("函数调用图");
+        doc.addComment("函数变量图");
         Element ubiSec = doc.addElement("UbiSec");
-        Element func2Calls = ubiSec.addElement("Func2Calls");
+        Element func2Vars = ubiSec.addElement("Func2Vars");
 
         cppFileFrameSet.values().stream().forEach(optionalCppFileFrame -> {
             if(!optionalCppFileFrame.isPresent()){
@@ -38,25 +40,30 @@ public class File2CallsReport implements DoReport {
                 String functionName = cppFuntion.getFileFunctionDto().getBuilder().getFunctionName();
                 int line = cppFuntion.getFileFunctionDto().getBuilder().getStartLineNumber();
 
-                Element funcInfo = func2Calls.addElement("FuncInfo");
+                Element funcInfo = func2Vars.addElement("FuncInfo");
                 funcInfo.addAttribute("path", filePath);
                 funcInfo.addAttribute("name", functionName);
                 funcInfo.addAttribute("line", String.valueOf(line));
 
-                cppFuntion.getFunctionCallDtos().stream().forEach(call -> {
-                    Element callFunction = funcInfo.addElement("CallFuncInfo");
+                Set<FunctionVariableDto> classVarSet = cppFuntion.getFileFunctionVariableVo().getClassVariableSet();
+                Set<FunctionVariableDto> globalVarSet = cppFuntion.getFileFunctionVariableVo().getGlobalVariableSet();
+                Set<FunctionVariableDto> localVarSet = cppFuntion.getFileFunctionVariableVo().getLocalVariableSet();
 
-                    if (call.getBuilder().geteScopeKind() == null) {
-                        callFunction.addAttribute("path", filePath);
-                        callFunction.addAttribute("name", call.getBuilder().getCallFunctionName());
-//                        callFunction.addAttribute("line", String.valueOf(call.getBuilder().getStartLineNumber()));
-                    }
-                    else {
-                        callFunction.addAttribute("path", call.getBuilder().getFileName());
-                        callFunction.addAttribute("name", call.getBuilder().getCallFunctionName());
-                        callFunction.addAttribute("line", String.valueOf(call.getBuilder().getStartLineNumber()));
-                    }
+                classVarSet.stream().forEach(e->{
+                    Element element = funcInfo.addElement("VariableInfo");
+                    element.addAttribute("name", e.getBuilder().getRawSignature());
                 });
+
+                globalVarSet.stream().forEach(e->{
+                    Element element = funcInfo.addElement("VariableInfo");
+                    element.addAttribute("name", e.getBuilder().getRawSignature());
+                });
+
+                localVarSet.stream().forEach(e->{
+                    Element element = funcInfo.addElement("VariableInfo");
+                    element.addAttribute("name", e.getBuilder().getRawSignature());
+                });
+
             });
         });
 
@@ -69,10 +76,11 @@ public class File2CallsReport implements DoReport {
             XMLWriter writer = new XMLWriter(out, format);
             writer.write(doc);
             writer.close();
-            System.out.println("生成函数调用关系图成功");
+            System.out.println("生成函数变量图成功");
         } catch (IOException e) {
             e.printStackTrace();
         }
+
 
     }
 

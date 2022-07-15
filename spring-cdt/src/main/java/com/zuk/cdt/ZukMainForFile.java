@@ -9,6 +9,7 @@ import com.zuk.cdt.file.function.var.FileFunctionVariableVo;
 import com.zuk.cdt.file.function.var.FunctionVariableUtil;
 import com.zuk.cdt.report.File2CallsReport;
 import com.zuk.cdt.report.File2FuncsReport;
+import com.zuk.cdt.report.Func2VarsReport;
 import org.eclipse.cdt.core.dom.ast.EScopeKind;
 import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition;
 import org.eclipse.cdt.core.dom.ast.IASTNode;
@@ -58,6 +59,7 @@ public class ZukMainForFile {
 
         new File2FuncsReport().report(CPP_FILE_FRAME_MAP);
         new File2CallsReport().report(CPP_FILE_FRAME_MAP);
+        new Func2VarsReport().report(CPP_FILE_FRAME_MAP);
 
         System.out.println();
     }
