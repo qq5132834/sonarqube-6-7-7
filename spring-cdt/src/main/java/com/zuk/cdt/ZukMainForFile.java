@@ -7,24 +7,69 @@ import com.zuk.cdt.file.CppFileFrame;
 import com.zuk.cdt.file.function.FileFunctionDto;
 import com.zuk.cdt.file.function.var.FileFunctionVariableVo;
 import com.zuk.cdt.file.function.var.FunctionVariableUtil;
+import com.zuk.cdt.report.File2FuncsReport;
 import org.eclipse.cdt.core.dom.ast.EScopeKind;
 import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition;
 import org.eclipse.cdt.core.dom.ast.IASTNode;
 import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit;
 
+import java.io.File;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class ZukMainForFile {
 
-    private static Map<String, CppFileFrame> cppFileFrameMap = new HashMap<>();
+    private static Map<String, Optional<CppFileFrame>> CPP_FILE_FRAME_MAP = new ConcurrentHashMap<>();
 
-    public static void main(String[] args) throws Exception {
+    private static Set<String> SUFFIX_SET = new HashSet<>();
+    static {
+        SUFFIX_SET.add(".cc");
+//        SUFFIX_SET.add(".cpp");
+//        SUFFIX_SET.add(".h");
+    }
+    private static Set<String> FILE_SET = new HashSet<>();
 
+    public static void recus(File file) {
+
+        if ( file.isFile() && SUFFIX_SET.stream().filter(e->{
+            if (file.getName().endsWith(e)) {
+                return true;
+            }
+            return false;
+        }).count() > 0 ) {
+            try {
+                SUFFIX_SET.add(file.getCanonicalPath());
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (file.isDirectory()) {
+            Arrays.stream(file.listFiles()).forEach(ZukMainForFile::recus);
+        }
+    }
+
+    public static void main(String[] args) {
+        recus(new File("D:\\development\\java\\eclipse-cpp-indigo-SR2-incubation-win32-x86_64\\sogou_workflow\\workflow"));
+        SUFFIX_SET.stream().forEach(file -> analyzeFile(file));
+
+        new File2FuncsReport().report(CPP_FILE_FRAME_MAP);
+
+        System.out.println();
+    }
+
+    /***
+     * 单个文件追踪
+     * @param args
+     * @throws Exception
+     */
+    public static void main1(String[] args) throws Exception {
 
         String file = "C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\spring-cdt\\src\\main\\resources\\c\\src\\DnsCache.cc";
         CppFileFrame cppFileFrame = analyzeFile(file);
+
         if(cppFileFrame != null){
             cppFileFrame.getCppFuntionList().stream().forEach(cppFuntion -> {
                 System.out.println("起始函数:" + cppFuntion.getFileFunctionDto().getBuilder().getFunctionName());
@@ -46,8 +91,8 @@ public class ZukMainForFile {
     public static void recuCallFunction(String filePath, String callFunctionName){
         System.out.println("调用函数:" + callFunctionName);
         CppFileFrame cppFileFrame = null;
-        if (cppFileFrameMap.keySet().contains(filePath)) {
-            cppFileFrame = cppFileFrameMap.get(filePath);
+        if (CPP_FILE_FRAME_MAP.keySet().contains(filePath)) {
+            cppFileFrame = CPP_FILE_FRAME_MAP.get(filePath).get();
         }
         else {
             cppFileFrame = analyzeFile(filePath);
@@ -116,13 +161,13 @@ public class ZukMainForFile {
 
             System.out.println("");
 
-            cppFileFrameMap.put(filepath, cppFileFrame);
+            CPP_FILE_FRAME_MAP.put(filepath, Optional.of(cppFileFrame));
 
             return cppFileFrame;
         }catch (Exception e) {
             e.printStackTrace();
         }
-        cppFileFrameMap.put(filepath, null);
+        CPP_FILE_FRAME_MAP.put(filepath, Optional.empty());
         return null;
     }
 
