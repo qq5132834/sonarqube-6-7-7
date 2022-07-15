@@ -28,7 +28,6 @@ public class ZukMainForFile {
 //        SUFFIX_SET.add(".cpp");
 //        SUFFIX_SET.add(".h");
     }
-    private static Set<String> FILE_SET = new HashSet<>();
 
     public static void recus(File file) {
 
@@ -61,33 +60,33 @@ public class ZukMainForFile {
         System.out.println();
     }
 
-    /***
-     * 单个文件追踪
-     * @param args
-     * @throws Exception
-     */
-    public static void main1(String[] args) throws Exception {
-
-        String file = "C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\spring-cdt\\src\\main\\resources\\c\\src\\DnsCache.cc";
-        CppFileFrame cppFileFrame = analyzeFile(file);
-
-        if(cppFileFrame != null){
-            cppFileFrame.getCppFuntionList().stream().forEach(cppFuntion -> {
-                System.out.println("起始函数:" + cppFuntion.getFileFunctionDto().getBuilder().getFunctionName());
-                cppFuntion.getFunctionCallDtos().stream().forEach(functionCallDto -> {
-                    String callFunctionName = functionCallDto.getBuilder().getCallFunctionName();
-                    EScopeKind eScopeKind = functionCallDto.getBuilder().geteScopeKind();
-                    if (eScopeKind != null) {
-                        String filePath = functionCallDto.getBuilder().getFileName();
-                        recuCallFunction(filePath, callFunctionName);
-                    }
-                    else {
-                        System.out.println("调用函数:" + callFunctionName);
-                    }
-                });
-            });
-        }
-    }
+//    /***
+//     * 单个文件追踪
+//     * @param args
+//     * @throws Exception
+//     */
+//    public static void main1(String[] args) throws Exception {
+//
+//        String file = "C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\spring-cdt\\src\\main\\resources\\c\\src\\DnsCache.cc";
+//        CppFileFrame cppFileFrame = analyzeFile(file);
+//
+//        if(cppFileFrame != null){
+//            cppFileFrame.getCppFuntionList().stream().forEach(cppFuntion -> {
+//                System.out.println("起始函数:" + cppFuntion.getFileFunctionDto().getBuilder().getFunctionName());
+//                cppFuntion.getFunctionCallDtos().stream().forEach(functionCallDto -> {
+//                    String callFunctionName = functionCallDto.getBuilder().getCallFunctionName();
+//                    EScopeKind eScopeKind = functionCallDto.getBuilder().geteScopeKind();
+//                    if (eScopeKind != null) {
+//                        String filePath = functionCallDto.getBuilder().getFileName();
+//                        recuCallFunction(filePath, callFunctionName);
+//                    }
+//                    else {
+//                        System.out.println("调用函数:" + callFunctionName);
+//                    }
+//                });
+//            });
+//        }
+//    }
 
     public static void recuCallFunction(String filePath, String callFunctionName){
         System.out.println("调用函数:" + callFunctionName);
