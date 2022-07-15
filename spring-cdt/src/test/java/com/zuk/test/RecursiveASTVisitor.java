@@ -1,4 +1,4 @@
-package com.zuk.cdt;
+package com.zuk.test;
 
 import org.eclipse.cdt.core.dom.ast.ASTVisitor;
 
