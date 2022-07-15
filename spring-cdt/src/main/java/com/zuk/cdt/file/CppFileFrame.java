@@ -5,14 +5,22 @@ import com.zuk.cdt.file.function.FileFunctionDto;
 import com.zuk.cdt.file.function.var.FileFunctionVariableVo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CppFileFrame {
 
+    private final String filePath;
     private List<CppFuntion> cppFuntionList = new ArrayList<>();
+    private Map<String, CppFuntion> cppFuntionMap = new HashMap<>();
 
-    public static CppFileFrame getInstance() {
-        return new CppFileFrame();
+    public CppFileFrame(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public static CppFileFrame getInstance(String filePath) {
+        return new CppFileFrame(filePath);
     }
 
     public CppFileFrame addCppFuntion(CppFuntion cppFuntion) {

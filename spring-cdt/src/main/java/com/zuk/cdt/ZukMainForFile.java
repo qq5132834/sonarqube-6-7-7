@@ -19,19 +19,24 @@ public class ZukMainForFile {
 
     public static void main(String[] args) throws Exception {
         String file = "C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\spring-cdt\\src\\main\\resources\\c\\src\\DnsCache.cc";
-        IASTTranslationUnit iastTranslationUnit = CDTParser.parse(file, CDTParser.Language.CPP);
+        analyze(file);
+    }
 
-        final CppFileFrame cppFileFrame = CppFileFrame.getInstance();
+    public static void analyze(String filepath) throws Exception {
+
+        IASTTranslationUnit iastTranslationUnit = CDTParser.parse(filepath, CDTParser.Language.CPP);
+
+        final CppFileFrame cppFileFrame = CppFileFrame.getInstance(filepath);
         //文件函数输出
-        List<IASTFunctionDefinition> functionDefinitions = FileFunctionUtil.getFuncationDefinistion(iastTranslationUnit, file);
+        List<IASTFunctionDefinition> functionDefinitions = FileFunctionUtil.getFuncationDefinistion(iastTranslationUnit, filepath);
         functionDefinitions.stream().forEach(e->{
 
             FileFunctionDto fileFunctionDto = FileFunctionDto.builder()
-                                                    .setFunctionName(e.getDeclarator().getName().toString())
-                                                    .setStartLineNumber(e.getFileLocation().getStartingLineNumber())
-                                                    .setEndLineNumber(e.getFileLocation().getEndingLineNumber())
-                                                    .setIastFileLocation(e.getFileLocation())
-                                                    .build();
+                    .setFunctionName(e.getDeclarator().getName().toString())
+                    .setStartLineNumber(e.getFileLocation().getStartingLineNumber())
+                    .setEndLineNumber(e.getFileLocation().getEndingLineNumber())
+                    .setIastFileLocation(e.getFileLocation())
+                    .build();
 
             //处理当前函数节点，从中提取变量集合（入参、本地变量、全局变量、类变量等）
             ZukMainForFile.recur(e);
@@ -51,12 +56,11 @@ public class ZukMainForFile {
             cppFileFrame.addCppFuntion(cppFuntion);
             //
             System.out.println("");
-
         });
 
         System.out.println("");
-    }
 
+    }
 
     /***
      * 遍历AST
