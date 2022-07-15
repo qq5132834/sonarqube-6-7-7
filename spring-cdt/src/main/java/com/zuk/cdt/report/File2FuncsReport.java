@@ -58,16 +58,12 @@ public class File2FuncsReport implements DoReport{
         format.setEncoding("utf-8");
         Writer out;
         try {
-            //创建一个输出流对象
             out = new FileWriter(PATH + File.separator + FILE_NAME);
-            //创建一个dom4j创建xml的对象
             XMLWriter writer = new XMLWriter(out, format);
-            //调用write方法将doc文档写到指定路径
             writer.write(doc);
             writer.close();
-            System.out.print("生成XML文件成功");
+            System.out.print("生成文件关系图成功");
         } catch (IOException e) {
-            System.out.print("生成XML文件失败");
             e.printStackTrace();
         }
     }
