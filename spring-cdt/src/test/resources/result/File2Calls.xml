@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UbiSec>
+    <Func2Calls>
+        <FuncInfo path="函数所在文件路径" name="函数名称" line="函数行号" column="所在列">
+            <CallFuncInfo path="被调用函数所在文件路径" name="被调用函数名称" line="所在行号" column="所在列" />
+        </FuncInfo>
+    </Func2Calls>
+</UbiSec>

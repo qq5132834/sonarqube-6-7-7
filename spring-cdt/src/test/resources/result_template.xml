@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project id="project_id">
+    <files>
+        <file id="file_id1">
+            <path>文件路径</path>
+            <functionSet>
+                <function id="function_id1">
+                    <functionName>函数名称</functionName>
+                    <startLineNumer>开始行号</startLineNumer>
+                    <endLineNumber>截止行号</endLineNumber>
+
+                    <!-- 控制流图 -->
+                    <cfg>
+                        <dot>dot路径</dot>
+                    </cfg>
+
+                    <!-- 变量调用集 -->
+                    <variableSet>
+                        <variable>
+                            <name>变量名称</name>
+                            <declareLineNumber>变量声明行号</declareLineNumber>
+                            <scope>
+                                <!-- 变量在函数中的作用范围 -->
+                                <startLineNumber>开始行号</startLineNumber>
+                                <endLineNumber>截止行号</endLineNumber>
+                            </scope>
+                        </variable>
+                    </variableSet>
+
+                    <!-- 函数调用集 -->
+                    <callFunctonSet>
+                        <callFunction>
+                            <callLineNumber>调用行号</callLineNumber>
+                            <name>调用函数名</name>
+                            <filePath>文件路径</filePath>
+                        </callFunction>
+                    </callFunctonSet>
+                </function>
+            </functionSet>
+        </file>
+        <file id="file_id2" >
+            <path>...</path>
+            <functionSet>
+                ...
+            </functionSet>
+        </file>
+    </files>
+</project>

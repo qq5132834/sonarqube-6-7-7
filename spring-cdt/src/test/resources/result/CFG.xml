@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UbiSec>
+    <CFG>
+        <FuncInfo path="文件路径" name="函数名称" line="行号" column="列号" dot="dot路径" />
+    </CFG>
+</UbiSec>
