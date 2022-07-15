@@ -6,7 +6,7 @@ import com.zuk.cdt.file.function.call.FunctionCallDto;
 import com.zuk.cdt.file.CppFileFrame;
 import com.zuk.cdt.file.function.FileFunctionDto;
 import com.zuk.cdt.file.function.var.FileFunctionVariableVo;
-import com.zuk.cdt.file.function.var.FunctionVariableUtil;
+import com.zuk.cdt.file.function.var.CxxFunctionVariableUtil;
 import com.zuk.cdt.report.File2CallsReport;
 import com.zuk.cdt.report.File2FuncsReport;
 import com.zuk.cdt.report.Func2VarsReport;
@@ -147,7 +147,7 @@ public class ZukMainForFile {
                 ZukMainForFile.recur(e);
 
                 //获取函数中变量集
-                FileFunctionVariableVo fileFunctionVariableVo = FunctionVariableUtil.getFileFunctionVariableVo();
+                FileFunctionVariableVo fileFunctionVariableVo = CxxFunctionVariableUtil.getFileFunctionVariableVo();
 
                 //方法内部调用外部函数集
                 List<FunctionCallDto> declareVariableDtos = CxxFunctionCallUtil.getFunctionCall();
@@ -184,7 +184,7 @@ public class ZukMainForFile {
         //doIASTNode(iastNode, IASTNodeRecursive::printIASTNode);
 
         //获取方法中入参、变量信息
-        doIASTNode(iastNode, FunctionVariableUtil::methodParams);
+        doIASTNode(iastNode, CxxFunctionVariableUtil::methodParams);
 
         //获取方法中函数调用信息
         doIASTNode(iastNode, CxxFunctionCallUtil::funcationCall);

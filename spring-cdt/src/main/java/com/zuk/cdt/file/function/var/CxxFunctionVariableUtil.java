@@ -12,9 +12,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 /***
+ * C++
  * 遍历函数的入参、变量、和作用域(用起止行的位置进行描述)
  */
-public class FunctionVariableUtil {
+public class CxxFunctionVariableUtil {
 
     private static Set<Class> CLASS_SET = new HashSet<>();
     private static Set<IBinding> PARAM_VAL_SET = new HashSet<>();
