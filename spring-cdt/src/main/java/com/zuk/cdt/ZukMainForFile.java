@@ -19,10 +19,13 @@ public class ZukMainForFile {
 
     public static void main(String[] args) throws Exception {
         String file = "C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\spring-cdt\\src\\main\\resources\\c\\src\\DnsCache.cc";
-        analyze(file);
+        CppFileFrame cppFileFrame = analyze(file);
+        cppFileFrame.getCppFuntionList().stream().forEach(cppFuntion -> {
+
+        });
     }
 
-    public static void analyze(String filepath) throws Exception {
+    public static CppFileFrame analyze(String filepath) throws Exception {
 
         IASTTranslationUnit iastTranslationUnit = CDTParser.parse(filepath, CDTParser.Language.CPP);
 
@@ -50,7 +53,7 @@ public class ZukMainForFile {
             CppFileFrame.CppFuntion cppFuntion = new CppFileFrame.CppFuntion();
             cppFuntion.setFileFunctionDto(fileFunctionDto);
             cppFuntion.setFileFunctionVariableVo(fileFunctionVariableVo);
-            cppFuntion.setDeclareVariableDtos(declareVariableDtos);
+            cppFuntion.setFunctionCallDtos(declareVariableDtos);
 
             //
             cppFileFrame.addCppFuntion(cppFuntion);
@@ -59,7 +62,7 @@ public class ZukMainForFile {
         });
 
         System.out.println("");
-
+        return cppFileFrame;
     }
 
     /***
