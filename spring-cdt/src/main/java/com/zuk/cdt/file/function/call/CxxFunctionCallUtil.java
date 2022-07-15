@@ -8,9 +8,10 @@ import org.eclipse.cdt.internal.core.dom.parser.cpp.*;
 import java.util.*;
 
 /***
- * 变量函数和函数的调用关系
+ * C++
+ * 函数和函数的调用关系
  */
-public class FunctionCallUtil {
+public class CxxFunctionCallUtil {
 
     private static Set<Class> CLASS_SET = new HashSet<>();
 
