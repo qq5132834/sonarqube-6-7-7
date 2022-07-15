@@ -10,10 +10,7 @@ import com.zuk.cdt.file.function.var.CxxFunctionVariableUtil;
 import com.zuk.cdt.report.File2CallsReport;
 import com.zuk.cdt.report.File2FuncsReport;
 import com.zuk.cdt.report.Func2VarsReport;
-import org.eclipse.cdt.core.dom.ast.EScopeKind;
-import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition;
-import org.eclipse.cdt.core.dom.ast.IASTNode;
-import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit;
+import org.eclipse.cdt.core.dom.ast.*;
 
 import java.io.File;
 import java.util.*;
@@ -147,7 +144,8 @@ public class ZukMainForFile {
                 ZukMainForFile.recur(e);
 
                 //获取函数中变量集
-                CxxFileFunctionVariableVo fileFunctionVariableVo = CxxFunctionVariableUtil.getFileFunctionVariableVo();
+                CxxFileFunctionVariableVo fileFunctionVariableVo = CxxFunctionVariableUtil.getFileFunctionVariableVo(IAST_NAME_WITH_IBINDING_SET);
+                IAST_NAME_WITH_IBINDING_SET.clear();
 
                 //方法内部调用外部函数集
                 List<CxxFunctionCallDto> declareVariableDtos = CxxFunctionCallUtil.getFunctionCall();
@@ -175,6 +173,7 @@ public class ZukMainForFile {
         return null;
     }
 
+    private static Set<IASTName> IAST_NAME_WITH_IBINDING_SET = new HashSet<>();
     /***
      * 遍历AST
      */
@@ -184,7 +183,9 @@ public class ZukMainForFile {
         //doIASTNode(iastNode, IASTNodeRecursive::printIASTNode);
 
         //获取方法中入参、变量信息
-        doIASTNode(iastNode, CxxFunctionVariableUtil::methodParams);
+        CxxFunctionVariableUtil cxxFunctionVariableUtil = new CxxFunctionVariableUtil();
+        doIASTNode(iastNode, cxxFunctionVariableUtil::methodParams);
+        IAST_NAME_WITH_IBINDING_SET.addAll(cxxFunctionVariableUtil.getIAST_NAME_WITH_IBINDING_SET());
 
         //获取方法中函数调用信息
         doIASTNode(iastNode, CxxFunctionCallUtil::funcationCall);

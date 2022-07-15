@@ -17,13 +17,17 @@ import java.util.Set;
  */
 public class CxxFunctionVariableUtil {
 
-    private static Set<Class> CLASS_SET = new HashSet<>();
-    private static Set<IBinding> PARAM_VAL_SET = new HashSet<>();
-    private static Set<IScope> SCOPE_SET = new HashSet<>();
-    private static Set<IASTNode> IAST_NODE_ALL_SET = new HashSet<>();
-    private static Set<IASTName> IAST_NAME_WITH_IBINDING_SET = new HashSet<>();
+    private Set<Class> CLASS_SET = new HashSet<>();
+    private Set<IBinding> PARAM_VAL_SET = new HashSet<>();
+    private Set<IScope> SCOPE_SET = new HashSet<>();
+    private Set<IASTNode> IAST_NODE_ALL_SET = new HashSet<>();
+    private Set<IASTName> IAST_NAME_WITH_IBINDING_SET = new HashSet<>();
 
-    public static void methodParams(IASTNode iastNode){
+    public Set<IASTName> getIAST_NAME_WITH_IBINDING_SET() {
+        return IAST_NAME_WITH_IBINDING_SET;
+    }
+
+    public void methodParams(IASTNode iastNode){
         if(iastNode instanceof IASTName){
 
             //查看全局
@@ -62,7 +66,7 @@ public class CxxFunctionVariableUtil {
      * @param iBinding
      * @return true有问题的ibinding
      */
-    private static boolean checkProblemBinding(IBinding iBinding){
+    private boolean checkProblemBinding(IBinding iBinding){
         if(iBinding instanceof ProblemBinding
                 || iBinding instanceof CPPScope.CPPScopeProblem){
             //可以通过解析在AST中找到的名称（调用IASTName.resolveBinding()）并查看结果绑定是否为IProblemBinding来检查许多类别的错误
@@ -102,11 +106,11 @@ public class CxxFunctionVariableUtil {
         return false;
     }
 
-    public static CxxFileFunctionVariableVo getFileFunctionVariableVo(){
+    public static CxxFileFunctionVariableVo getFileFunctionVariableVo(Set<IASTName> iastNameSet){
         Set<CxxFunctionVariableDto> eClassSet = new HashSet<>();
         Set<CxxFunctionVariableDto> eGlobalSet = new HashSet<>();
         Set<CxxFunctionVariableDto> eLocalSet = new HashSet<>();
-        IAST_NAME_WITH_IBINDING_SET.stream().forEach(iastName->{
+        iastNameSet.stream().forEach(iastName->{
             try {
                 IBinding iBinding = iastName.resolveBinding();
                 IScope iScope = iBinding.getScope();
@@ -135,11 +139,11 @@ public class CxxFunctionVariableUtil {
                 ex.printStackTrace();
             }
         });
-        cleanAllSet();
+        //cleanAllSet();
         return new CxxFileFunctionVariableVo(eClassSet, eGlobalSet, eLocalSet);
     }
 
-    public static void printResultAndClearSet(){
+    public void printResultAndClearSet(){
         //输出IBinding的主要类
         CLASS_SET.stream().map(e->e.getName()).forEach(System.out::println);
         //输出函数中的参数：函数入参，函数中定义的局部变量
@@ -187,7 +191,7 @@ public class CxxFunctionVariableUtil {
         cleanAllSet();
     }
 
-    private static void cleanAllSet(){
+    private void cleanAllSet(){
         CLASS_SET.clear();
         PARAM_VAL_SET.clear();
         SCOPE_SET.clear();
