@@ -35,6 +35,9 @@ public class ZukMainForFile {
                         String filePath = functionCallDto.getBuilder().getFileName();
                         recuCallFunction(filePath, callFunctionName);
                     }
+                    else {
+                        System.out.println("调用函数:" + callFunctionName);
+                    }
                 });
             });
         }
@@ -65,6 +68,9 @@ public class ZukMainForFile {
                     if (eScopeKind != null) {
                         String filePath1 = functionCallDto.getBuilder().getFileName();
                         recuCallFunction(filePath1, callFunctionName1);
+                    }
+                    else {
+                        System.out.println("调用函数:" + callFunctionName1);
                     }
                 });
             }

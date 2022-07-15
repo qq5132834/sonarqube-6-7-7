@@ -93,19 +93,22 @@ const DnsCache::DnsHandle *DnsCache::put(const HostPort& host_port,
 const DnsCache::DnsHandle *DnsCache::get(const DnsCache::HostPort& host_port)
 {
 	std::lock_guard<std::mutex> lock(mutex_);
-	return cache_pool_.get(host_port);
+//	return cache_pool_.get(host_port);
+	return null;
 }
 
 void DnsCache::release(const DnsCache::DnsHandle *handle)
 {
 	std::lock_guard<std::mutex> lock(mutex_);
-	cache_pool_.release(handle);
+//	cache_pool_.release(handle);
+    return null;
 }
 
 void DnsCache::del(const DnsCache::HostPort& key)
 {
 	std::lock_guard<std::mutex> lock(mutex_);
-	cache_pool_.del(key);
+//	cache_pool_.del(key);
+    return null;
 }
 
 DnsCache::DnsCache()
