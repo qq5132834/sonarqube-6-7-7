@@ -18,8 +18,11 @@ import java.util.stream.Collectors;
 
 public class ZukMainForFile {
 
+    private static Map<String, CppFileFrame> cppFileFrameMap = new HashMap<>();
 
     public static void main(String[] args) throws Exception {
+
+
         String file = "C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\spring-cdt\\src\\main\\resources\\c\\src\\DnsCache.cc";
         CppFileFrame cppFileFrame = analyzeFile(file);
         if(cppFileFrame != null){
@@ -39,7 +42,13 @@ public class ZukMainForFile {
 
     public static void recuCallFunction(String filePath, String callFunctionName){
         System.out.println("调用函数:" + callFunctionName);
-        CppFileFrame cppFileFrame = analyzeFile(filePath);
+        CppFileFrame cppFileFrame = null;
+        if (cppFileFrameMap.keySet().contains(filePath)) {
+            cppFileFrame = cppFileFrameMap.get(filePath);
+        }
+        else {
+            cppFileFrame = analyzeFile(filePath);
+        }
         if (cppFileFrame != null) {
             List<CppFileFrame.CppFuntion> list = cppFileFrame.getCppFuntionList().stream().filter(e->{
                 if(e.getFileFunctionDto().getBuilder().getFunctionName().endsWith(callFunctionName)){
@@ -100,10 +109,14 @@ public class ZukMainForFile {
             });
 
             System.out.println("");
+
+            cppFileFrameMap.put(filepath, cppFileFrame);
+
             return cppFileFrame;
         }catch (Exception e) {
             e.printStackTrace();
         }
+        cppFileFrameMap.put(filepath, null);
         return null;
     }
 
