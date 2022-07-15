@@ -1,8 +1,8 @@
 package com.zuk.cdt.file;
 
 import com.zuk.cdt.file.function.FileFunctionDto;
-import com.zuk.cdt.file.function.call.FunctionCallDto;
-import com.zuk.cdt.file.function.var.FileFunctionVariableVo;
+import com.zuk.cdt.file.function.call.CxxFunctionCallDto;
+import com.zuk.cdt.file.function.var.CxxFileFunctionVariableVo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,31 +37,31 @@ public class CppFileFrame {
         //函数基本信息
         private FileFunctionDto fileFunctionDto;
         //函数中变量信息
-        private FileFunctionVariableVo fileFunctionVariableVo;
+        private CxxFileFunctionVariableVo fileFunctionVariableVo;
         //函数调用外部集
-        private List<FunctionCallDto> functionCallDtos;
+        private List<CxxFunctionCallDto> functionCallDtos;
 
         public FileFunctionDto getFileFunctionDto() {
             return fileFunctionDto;
         }
 
-        public FileFunctionVariableVo getFileFunctionVariableVo() {
+        public CxxFileFunctionVariableVo getFileFunctionVariableVo() {
             return fileFunctionVariableVo;
         }
 
-        public List<FunctionCallDto> getFunctionCallDtos() { return functionCallDtos; }
+        public List<CxxFunctionCallDto> getFunctionCallDtos() { return functionCallDtos; }
 
         public CppFuntion setFileFunctionDto(FileFunctionDto fileFunctionDto) {
             this.fileFunctionDto = fileFunctionDto;
             return this;
         }
 
-        public CppFuntion setFileFunctionVariableVo(FileFunctionVariableVo fileFunctionVariableVo) {
+        public CppFuntion setFileFunctionVariableVo(CxxFileFunctionVariableVo fileFunctionVariableVo) {
             this.fileFunctionVariableVo = fileFunctionVariableVo;
             return this;
         }
 
-        public CppFuntion setFunctionCallDtos(List<FunctionCallDto> functionCallDtos) {
+        public CppFuntion setFunctionCallDtos(List<CxxFunctionCallDto> functionCallDtos) {
             this.functionCallDtos = functionCallDtos;
             return this;
         }

@@ -18,7 +18,7 @@ public class CxxFunctionCallUtil {
     private static List<IASTNode> FUNCTION_DEFINITION = new ArrayList<>();
     private static List<IASTNode> FUNCTION_CALL = new ArrayList<>();
     private static List<IASTNode> FUNCTION_DECLARATOR = new ArrayList<>();
-    private static List<FunctionCallDto> DECLARE_VARIABLE_LIST = new ArrayList<>();
+    private static List<CxxFunctionCallDto> DECLARE_VARIABLE_LIST = new ArrayList<>();
 
     public static void funcationCall(IASTNode iastNode){
         //CLASS_SET.add(iastNode.getClass());
@@ -73,12 +73,12 @@ public class CxxFunctionCallUtil {
                     int functionCallLineNumber = iastNode.getFileLocation().getStartingLineNumber(); //
                     // 方法调用行号
                     //多态暂时采用入参的个数进行区别，将来再优化
-                    FunctionCallDto dto = null;
+                    CxxFunctionCallDto dto = null;
                     CPPASTName cppastName = new GetCPPASTName(iastNode).getCPPASTName();
                     if(cppastName != null){
-                        dto = FunctionCallDto.createInstanceByIASTName((IASTName) cppastName);
+                        dto = CxxFunctionCallDto.createInstanceByIASTName((IASTName) cppastName);
                         if(dto == null){
-                            dto = FunctionCallDto.builder().setCallFunctionName(functionCallName).build();
+                            dto = CxxFunctionCallDto.builder().setCallFunctionName(functionCallName).build();
                         }
                         DECLARE_VARIABLE_LIST.add(dto);
                         System.out.println();
@@ -92,10 +92,10 @@ public class CxxFunctionCallUtil {
                     int functionCallLineNumber = cppastFieldReference.getChildren()[0].getFileLocation().getStartingLineNumber(); //方法调用行号
                     String reference = cppastFieldReference.getChildren()[0].getRawSignature(); //引用类变量名称
                     CPPASTName cppastName = new GetCPPASTName(cppastFieldReference.getChildren()[0]).getCPPASTName();
-                    FunctionCallDto dto = null;
+                    CxxFunctionCallDto dto = null;
                     if(cppastName != null){
                         //获取作用域，根据作用域
-                        dto = FunctionCallDto.createInstanceByIASTName((IASTName) cppastName);
+                        dto = CxxFunctionCallDto.createInstanceByIASTName((IASTName) cppastName);
                         if(dto != null){
                             EScopeKind eScopeKind = dto.getBuilder().geteScopeKind();
                             String simpleName = dto.getBuilder().getScopeSimpleName();
@@ -144,10 +144,10 @@ public class CxxFunctionCallUtil {
         }
     }
 
-    public static List<FunctionCallDto> getFunctionCall(){
+    public static List<CxxFunctionCallDto> getFunctionCall(){
         try {
             printResultAndClearSet();
-            List<FunctionCallDto> list = new ArrayList<>();
+            List<CxxFunctionCallDto> list = new ArrayList<>();
             list.addAll(DECLARE_VARIABLE_LIST);
             return list;
         }
