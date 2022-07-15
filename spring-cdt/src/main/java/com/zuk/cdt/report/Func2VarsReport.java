@@ -52,12 +52,16 @@ public class Func2VarsReport implements DoReport {
                 classVarSet.stream().forEach(e->{
                     Element element = funcInfo.addElement("VariableInfo");
                     element.addAttribute("name", e.getBuilder().getRawSignature());
+                    if (e.getBuilder().getIastFileLocation() != null) {
+                        element.addAttribute("path", e.getBuilder().getIastFileLocation().getFileName());
+                        element.addAttribute("line", String.valueOf(e.getBuilder().getIastFileLocation().getStartingLineNumber()));
+                    }
                 });
 
-                globalVarSet.stream().forEach(e->{
-                    Element element = funcInfo.addElement("VariableInfo");
-                    element.addAttribute("name", e.getBuilder().getRawSignature());
-                });
+//                globalVarSet.stream().forEach(e->{
+//                    Element element = funcInfo.addElement("VariableInfo");
+//                    element.addAttribute("name", e.getBuilder().getRawSignature());
+//                });
 
 //                localVarSet.stream().forEach(e->{
 //                    Element element = funcInfo.addElement("VariableInfo");
