@@ -6,7 +6,7 @@ import org.eclipse.cdt.internal.core.dom.parser.ProblemBinding;
 
 import java.util.*;
 
-public class CxxFileFunctionUtil {
+public class CFileFunctionUtil {
     public static List<IASTFunctionDefinition> getFuncationDefinistion(IASTTranslationUnit unit){
         List<IASTFunctionDefinition> fds = new ArrayList<>();
         IASTDeclaration[] iastDeclarations = unit.getDeclarations();
@@ -41,7 +41,7 @@ public class CxxFileFunctionUtil {
             }
         }
         if(iastNode != null && iastNode.getChildren() != null){
-            Arrays.stream(iastNode.getChildren()).forEach(CxxFileFunctionUtil::getIBinding);
+            Arrays.stream(iastNode.getChildren()).forEach(CFileFunctionUtil::getIBinding);
         }
     }
 

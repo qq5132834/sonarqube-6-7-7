@@ -132,7 +132,7 @@ public class ZukMainForCxx {
 
             final CxxFileFrame cppFileFrame = CxxFileFrame.getInstance(filepath);
             //文件函数输出
-            List<IASTFunctionDefinition> functionDefinitions = CxxFileFunctionUtil.getFuncationDefinistion(iastTranslationUnit, filepath);
+            List<IASTFunctionDefinition> functionDefinitions = CxxFileFunctionUtil.getFuncationDefinistion(iastTranslationUnit);
             functionDefinitions.stream().forEach(e->{
 
                 CxxFileFunctionDto fileFunctionDto = CxxFileFunctionDto.builder()
