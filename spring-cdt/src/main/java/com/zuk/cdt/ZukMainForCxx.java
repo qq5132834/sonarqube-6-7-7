@@ -18,7 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-public class ZukMainForFile {
+public class ZukMainForCxx {
 
     private static Map<String, Optional<CppFileFrame>> CPP_FILE_FRAME_MAP = new ConcurrentHashMap<>();
 
@@ -45,7 +45,7 @@ public class ZukMainForFile {
         }
 
         if (file.isDirectory()) {
-            Arrays.stream(file.listFiles()).forEach(ZukMainForFile::recus);
+            Arrays.stream(file.listFiles()).forEach(ZukMainForCxx::recus);
         }
     }
 
@@ -140,7 +140,7 @@ public class ZukMainForFile {
                         .build();
 
                 //处理当前函数节点，从中提取变量集合（入参、本地变量、全局变量、类变量等）
-                ZukMainForFile.recur(e);
+                ZukMainForCxx.recur(e);
 
                 //获取函数中变量集
                 CxxFileFunctionVariableVo fileFunctionVariableVo = CxxFunctionVariableUtil.getFileFunctionVariableVo(IAST_NAME_WITH_IBINDING_SET);
@@ -190,7 +190,7 @@ public class ZukMainForFile {
         doIASTNode(iastNode, CxxFunctionCallUtil::funcationCall);
 
         //递归遍历IASTNode的子节点
-        Arrays.stream(iastNode.getChildren()).forEach(ZukMainForFile::recur);
+        Arrays.stream(iastNode.getChildren()).forEach(ZukMainForCxx::recur);
 
     }
 
