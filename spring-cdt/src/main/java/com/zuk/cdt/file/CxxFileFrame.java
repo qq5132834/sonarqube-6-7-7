@@ -1,18 +1,18 @@
 package com.zuk.cdt.file;
 
-import com.zuk.cdt.file.function.FileFunctionDto;
+import com.zuk.cdt.file.function.CxxFileFunctionDto;
 import com.zuk.cdt.file.function.call.CxxFunctionCallDto;
 import com.zuk.cdt.file.function.var.CxxFileFunctionVariableVo;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CppFileFrame {
+public class CxxFileFrame {
 
     private final String filePath;
-    private List<CppFuntion> cppFuntionList = new ArrayList<>();
+    private List<CxxFuntion> cppFuntionList = new ArrayList<>();
 
-    public CppFileFrame(String filePath) {
+    public CxxFileFrame(String filePath) {
         this.filePath = filePath;
     }
 
@@ -20,28 +20,28 @@ public class CppFileFrame {
         return filePath;
     }
 
-    public static CppFileFrame getInstance(String filePath) {
-        return new CppFileFrame(filePath);
+    public static CxxFileFrame getInstance(String filePath) {
+        return new CxxFileFrame(filePath);
     }
 
-    public CppFileFrame addCppFuntion(CppFuntion cppFuntion) {
+    public CxxFileFrame addCppFuntion(CxxFuntion cppFuntion) {
         this.cppFuntionList.add(cppFuntion);
         return this;
     }
 
-    public List<CppFuntion> getCppFuntionList() {
+    public List<CxxFuntion> getCppFuntionList() {
         return this.cppFuntionList;
     }
 
-    public static class CppFuntion {
+    public static class CxxFuntion {
         //函数基本信息
-        private FileFunctionDto fileFunctionDto;
+        private CxxFileFunctionDto fileFunctionDto;
         //函数中变量信息
         private CxxFileFunctionVariableVo fileFunctionVariableVo;
         //函数调用外部集
         private List<CxxFunctionCallDto> functionCallDtos;
 
-        public FileFunctionDto getFileFunctionDto() {
+        public CxxFileFunctionDto getFileFunctionDto() {
             return fileFunctionDto;
         }
 
@@ -51,17 +51,17 @@ public class CppFileFrame {
 
         public List<CxxFunctionCallDto> getFunctionCallDtos() { return functionCallDtos; }
 
-        public CppFuntion setFileFunctionDto(FileFunctionDto fileFunctionDto) {
+        public CxxFuntion setFileFunctionDto(CxxFileFunctionDto fileFunctionDto) {
             this.fileFunctionDto = fileFunctionDto;
             return this;
         }
 
-        public CppFuntion setFileFunctionVariableVo(CxxFileFunctionVariableVo fileFunctionVariableVo) {
+        public CxxFuntion setFileFunctionVariableVo(CxxFileFunctionVariableVo fileFunctionVariableVo) {
             this.fileFunctionVariableVo = fileFunctionVariableVo;
             return this;
         }
 
-        public CppFuntion setFunctionCallDtos(List<CxxFunctionCallDto> functionCallDtos) {
+        public CxxFuntion setFunctionCallDtos(List<CxxFunctionCallDto> functionCallDtos) {
             this.functionCallDtos = functionCallDtos;
             return this;
         }

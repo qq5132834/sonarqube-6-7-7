@@ -1,10 +1,10 @@
 package com.zuk.cdt;
 
-import com.zuk.cdt.file.function.FileFunctionUtil;
+import com.zuk.cdt.file.function.CxxFileFunctionUtil;
 import com.zuk.cdt.file.function.call.CxxFunctionCallUtil;
 import com.zuk.cdt.file.function.call.CxxFunctionCallDto;
-import com.zuk.cdt.file.CppFileFrame;
-import com.zuk.cdt.file.function.FileFunctionDto;
+import com.zuk.cdt.file.CxxFileFrame;
+import com.zuk.cdt.file.function.CxxFileFunctionDto;
 import com.zuk.cdt.file.function.var.CxxFileFunctionVariableVo;
 import com.zuk.cdt.file.function.var.CxxFunctionVariableUtil;
 import com.zuk.cdt.report.File2CallsReport;
@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  */
 public class ZukMainForCxx {
 
-    private static Map<String, Optional<CppFileFrame>> CPP_FILE_FRAME_MAP = new ConcurrentHashMap<>();
+    private static Map<String, Optional<CxxFileFrame>> CPP_FILE_FRAME_MAP = new ConcurrentHashMap<>();
 
     private static Set<String> SUFFIX_SET = new HashSet<>();
     static {
@@ -93,7 +93,7 @@ public class ZukMainForCxx {
 
     public static void recuCallFunction(String filePath, String callFunctionName){
         System.out.println("调用函数:" + callFunctionName);
-        CppFileFrame cppFileFrame = null;
+        CxxFileFrame cppFileFrame = null;
         if (CPP_FILE_FRAME_MAP.keySet().contains(filePath)) {
             cppFileFrame = CPP_FILE_FRAME_MAP.get(filePath).get();
         }
@@ -101,7 +101,7 @@ public class ZukMainForCxx {
             cppFileFrame = analyzeFile(filePath);
         }
         if (cppFileFrame != null) {
-            List<CppFileFrame.CppFuntion> list = cppFileFrame.getCppFuntionList().stream().filter(e->{
+            List<CxxFileFrame.CxxFuntion> list = cppFileFrame.getCppFuntionList().stream().filter(e->{
                 if(e.getFileFunctionDto().getBuilder().getFunctionName().endsWith(callFunctionName)){
                     return true;
                 }
@@ -109,7 +109,7 @@ public class ZukMainForCxx {
             }).collect(Collectors.toList());
 
             if(list != null && list.size() > 0){
-                CppFileFrame.CppFuntion cppFuntion = list.get(0);
+                CxxFileFrame.CxxFuntion cppFuntion = list.get(0);
                 cppFuntion.getFunctionCallDtos().stream().forEach(functionCallDto -> {
                     String callFunctionName1 = functionCallDto.getBuilder().getCallFunctionName();
                     EScopeKind eScopeKind = functionCallDto.getBuilder().geteScopeKind();
@@ -125,17 +125,17 @@ public class ZukMainForCxx {
         }
     }
 
-    public static CppFileFrame analyzeFile(String filepath) {
+    public static CxxFileFrame analyzeFile(String filepath) {
 
         try {
             IASTTranslationUnit iastTranslationUnit = CDTParser.parse(filepath, CDTParser.Language.CPP);
 
-            final CppFileFrame cppFileFrame = CppFileFrame.getInstance(filepath);
+            final CxxFileFrame cppFileFrame = CxxFileFrame.getInstance(filepath);
             //文件函数输出
-            List<IASTFunctionDefinition> functionDefinitions = FileFunctionUtil.getFuncationDefinistion(iastTranslationUnit, filepath);
+            List<IASTFunctionDefinition> functionDefinitions = CxxFileFunctionUtil.getFuncationDefinistion(iastTranslationUnit, filepath);
             functionDefinitions.stream().forEach(e->{
 
-                FileFunctionDto fileFunctionDto = FileFunctionDto.builder()
+                CxxFileFunctionDto fileFunctionDto = CxxFileFunctionDto.builder()
                         .setFunctionName(e.getDeclarator().getName().toString())
                         .setStartLineNumber(e.getFileLocation().getStartingLineNumber())
                         .setEndLineNumber(e.getFileLocation().getEndingLineNumber())
@@ -152,7 +152,7 @@ public class ZukMainForCxx {
                 //方法内部调用外部函数集
                 List<CxxFunctionCallDto> declareVariableDtos = CxxFunctionCallUtil.getFunctionCall();
 
-                CppFileFrame.CppFuntion cppFuntion = new CppFileFrame.CppFuntion();
+                CxxFileFrame.CxxFuntion cppFuntion = new CxxFileFrame.CxxFuntion();
                 cppFuntion.setFileFunctionDto(fileFunctionDto);
                 cppFuntion.setFileFunctionVariableVo(fileFunctionVariableVo);
                 cppFuntion.setFunctionCallDtos(declareVariableDtos);

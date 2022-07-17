@@ -2,16 +2,16 @@ package com.zuk.cdt.file.function;
 
 import org.eclipse.cdt.core.dom.ast.IASTFileLocation;
 
-public class FileFunctionDto {
+public class CxxFileFunctionDto {
 
-    private FileFunctionDto.Builder builder;
+    private CxxFileFunctionDto.Builder builder;
 
-    private FileFunctionDto(FileFunctionDto.Builder builder){
+    private CxxFileFunctionDto(CxxFileFunctionDto.Builder builder){
         this.builder = builder;
     }
 
-    public static FileFunctionDto.Builder builder(){
-        return new FileFunctionDto.Builder();
+    public static CxxFileFunctionDto.Builder builder(){
+        return new CxxFileFunctionDto.Builder();
     }
 
     public Builder getBuilder() { return builder; }
@@ -28,8 +28,8 @@ public class FileFunctionDto {
         //
         private IASTFileLocation iastFileLocation;
 
-        public FileFunctionDto build(){
-            return new FileFunctionDto(this);
+        public CxxFileFunctionDto build(){
+            return new CxxFileFunctionDto(this);
         }
 
         public String getFunctionName() {
