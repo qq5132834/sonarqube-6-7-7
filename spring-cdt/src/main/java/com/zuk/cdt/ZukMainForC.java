@@ -8,6 +8,8 @@ import com.zuk.cdt.file.function.call.FunctionCallDto;
 import com.zuk.cdt.file.function.var.CFunctionVariableUtil;
 import com.zuk.cdt.file.function.var.FunctionVariableVo;
 import com.zuk.cdt.report.File2CallsReport;
+import com.zuk.cdt.report.File2FuncsReport;
+import com.zuk.cdt.report.Func2VarsReport;
 import org.eclipse.cdt.core.dom.ast.*;
 
 import java.io.File;
@@ -61,6 +63,8 @@ public class ZukMainForC {
         });
 
         new File2CallsReport().report(CPP_FILE_FRAME_MAP);
+        new File2FuncsReport().report(CPP_FILE_FRAME_MAP);
+        new Func2VarsReport().report(CPP_FILE_FRAME_MAP);
 
     }
 
@@ -88,18 +92,22 @@ public class ZukMainForC {
                 //C语言函数名称输出
                 System.out.println("函数名称：" + iastName.getRawSignature());
 
-                recur(fun);
+
+                CFunctionVariableUtil cFunctionVariableUtil = new CFunctionVariableUtil();
+
+                List<Consumer<IASTNode>> consumerList = new ArrayList<>();
+                consumerList.add(ZukMainForC::printIASTNode);
+                consumerList.add(CFunctionCallUtil::funcationCall);
+                consumerList.add(cFunctionVariableUtil::methodParams);
+                recur(fun, consumerList);
 
                 List<FunctionCallDto> cFunctionCallDtoList = CFunctionCallUtil.getFunctionCall();
-
-                FunctionVariableVo fileFunctionVariableVo = CFunctionVariableUtil.getFileFunctionVariableVo(IAST_NAME_WITH_IBINDING_SET);
-                IAST_NAME_WITH_IBINDING_SET.clear();
-
+                FunctionVariableVo functionVariableVo = cFunctionVariableUtil.getFunctionVariableVo();
 
                 FileFrame.Funtion cppFuntion = new FileFrame.Funtion();
                 cppFuntion.setFileFunctionDto(fileFunctionDto);
                 cppFuntion.setFunctionCallDtos(cFunctionCallDtoList);
-                cppFuntion.setFileFunctionVariableVo(fileFunctionVariableVo);
+                cppFuntion.setFileFunctionVariableVo(functionVariableVo);
 
                 //
                 cppFileFrame.addFuntion(cppFuntion);
@@ -119,87 +127,16 @@ public class ZukMainForC {
 
     }
 
-
-    private static Set<IASTName> IAST_NAME_WITH_IBINDING_SET = new HashSet<>();
     /***
      * 遍历AST
      */
-    public static void recur(IASTNode iastNode){
-
-        //输出节点信息
-        doIASTNode(iastNode, ZukMainForC::printIASTNode);
-
-        //收集当前函数中的函数调用
-        doIASTNode(iastNode, CFunctionCallUtil::funcationCall);
-
-        //
-        CFunctionVariableUtil cFunctionVariableUtil = new CFunctionVariableUtil();
-        doIASTNode(iastNode, cFunctionVariableUtil::methodParams);
-        Set<IASTName> iastNameSet = cFunctionVariableUtil.getIAST_NAME_WITH_IBINDING_SET();
-        IAST_NAME_WITH_IBINDING_SET.addAll(iastNameSet);
-        //
-
-//        if (iastNode instanceof CASTFieldReference) {
-//            //变量定义
-//            System.out.println();
-//        }
-//        if (iastNode instanceof CASTFunctionCallExpression) {
-//            //函数调用
-//            System.out.println();
-//        }
-//        if(iastNode instanceof IASTName){
-//            IASTName iastName = (IASTName) iastNode;
-//            IBinding iBinding = iastName.resolveBinding();
-//            Class cls = iBinding.getClass();
-//            System.out.println(iBinding.getClass().getName());
-//            System.out.println(iastName.getClass().getName());
-//            if (iBinding instanceof CField) {
-//                try {//属性
-//                    IScope iScope = iBinding.getScope();
-//                    EScopeKind eScopeKind = iScope.getKind();
-//                    IName iName = iScope.getScopeName();
-//                    if (iName != null) {
-//                        String simpleName = new String(iName.getSimpleID());
-//                        IASTFileLocation iastFileLocation = iName.getFileLocation();
-//                        String filename = iastFileLocation.getFileName();
-//                        int startLineNumber = iastFileLocation.getStartingLineNumber();
-//                    }
-//                    System.out.println();
-//                }catch (Exception ex) {
-//                    ex.printStackTrace();
-//                }
-//                System.out.println();
-//            }
-//            if (iBinding instanceof CVariable){
-//                try {//变量
-//                    IScope iScope = iBinding.getScope();
-//                    EScopeKind eScopeKind = iScope.getKind();
-//                    IName iName = iScope.getScopeName();
-//                    if (iName != null) {
-//                        String simpleName = new String(iName.getSimpleID());
-//                        IASTFileLocation iastFileLocation = iName.getFileLocation();
-//                        String filename = iastFileLocation.getFileName();
-//                        int startLineNumber = iastFileLocation.getStartingLineNumber();
-//                    }
-//                    System.out.println();
-//                }catch (Exception ex) {
-//                    ex.printStackTrace();
-//                }
-//                System.out.println();
-//            }
-//        }
-
-//        //获取方法中入参、变量信息
-//        CxxFunctionVariableUtil cxxFunctionVariableUtil = new CxxFunctionVariableUtil();
-//        doIASTNode(iastNode, cxxFunctionVariableUtil::methodParams);
-//        IAST_NAME_WITH_IBINDING_SET.addAll(cxxFunctionVariableUtil.getIAST_NAME_WITH_IBINDING_SET());
-//
-//        //获取方法中函数调用信息
-//        doIASTNode(iastNode, CxxFunctionCallUtil::funcationCall);
-
+    public static void recur(IASTNode iastNode, List<Consumer<IASTNode>> consumerList){
+        consumerList.forEach(e-> e.accept(iastNode));
         //递归遍历IASTNode的子节点
         if (iastNode.getChildren() != null) {
-            Arrays.stream(iastNode.getChildren()).forEach(ZukMainForC::recur);
+            Arrays.stream(iastNode.getChildren()).forEach(e -> {
+                recur(e, consumerList);
+            });
         }
     }
 

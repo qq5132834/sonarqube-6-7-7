@@ -22,7 +22,7 @@ public class FunctionCallDto {
 
     public static FunctionCallDto createInstanceByIASTName(@NotNull IASTName iastName){
         IBinding iBinding = iastName.resolveBinding();
-        if(!(iBinding instanceof ProblemBinding)){
+        if(iBinding !=null && !(iBinding instanceof ProblemBinding)){
             try {
                 IScope iScope = iBinding.getScope();
                 if(iScope != null && iScope.getScopeName() != null){
