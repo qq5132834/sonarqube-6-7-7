@@ -6,7 +6,7 @@ import com.zuk.cdt.file.function.FileFunctionDto;
 import com.zuk.cdt.file.function.call.CFunctionCallUtil;
 import com.zuk.cdt.file.function.call.FunctionCallDto;
 import com.zuk.cdt.file.function.var.CFunctionVariableUtil;
-import com.zuk.cdt.file.function.var.FileFunctionVariableVo;
+import com.zuk.cdt.file.function.var.FunctionVariableVo;
 import com.zuk.cdt.report.File2CallsReport;
 import org.eclipse.cdt.core.dom.ast.*;
 
@@ -92,7 +92,7 @@ public class ZukMainForC {
 
                 List<FunctionCallDto> cFunctionCallDtoList = CFunctionCallUtil.getFunctionCall();
 
-                FileFunctionVariableVo fileFunctionVariableVo = CFunctionVariableUtil.getFileFunctionVariableVo(IAST_NAME_WITH_IBINDING_SET);
+                FunctionVariableVo fileFunctionVariableVo = CFunctionVariableUtil.getFileFunctionVariableVo(IAST_NAME_WITH_IBINDING_SET);
                 IAST_NAME_WITH_IBINDING_SET.clear();
 
 

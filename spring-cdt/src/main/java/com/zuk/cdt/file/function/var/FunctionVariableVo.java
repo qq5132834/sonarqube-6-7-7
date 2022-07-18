@@ -2,7 +2,7 @@ package com.zuk.cdt.file.function.var;
 
 import java.util.Set;
 
-public class FileFunctionVariableVo {
+public class FunctionVariableVo {
 
     //类变量
     private final Set<FunctionVariableDto> classVariableSet;
@@ -11,9 +11,9 @@ public class FileFunctionVariableVo {
     //本地变量
     private final Set<FunctionVariableDto> localVariableSet;
 
-    public FileFunctionVariableVo(Set<FunctionVariableDto> classVariableSet,
-                                  Set<FunctionVariableDto> globalVariableSet,
-                                  Set<FunctionVariableDto> localVariableSet) {
+    public FunctionVariableVo(Set<FunctionVariableDto> classVariableSet,
+                              Set<FunctionVariableDto> globalVariableSet,
+                              Set<FunctionVariableDto> localVariableSet) {
         this.classVariableSet = classVariableSet;
         this.globalVariableSet = globalVariableSet;
         this.localVariableSet = localVariableSet;

@@ -106,7 +106,7 @@ public class CFunctionVariableUtil {
         return false;
     }
 
-    public static FileFunctionVariableVo getFileFunctionVariableVo(Set<IASTName> iastNameSet){
+    public static FunctionVariableVo getFileFunctionVariableVo(Set<IASTName> iastNameSet){
         Set<FunctionVariableDto> eClassSet = new HashSet<>();
         Set<FunctionVariableDto> eGlobalSet = new HashSet<>();
         Set<FunctionVariableDto> eLocalSet = new HashSet<>();
@@ -140,7 +140,7 @@ public class CFunctionVariableUtil {
             }
         });
         //cleanAllSet();
-        return new FileFunctionVariableVo(eClassSet, eGlobalSet, eLocalSet);
+        return new FunctionVariableVo(eClassSet, eGlobalSet, eLocalSet);
     }
 
     public void printResultAndClearSet(){

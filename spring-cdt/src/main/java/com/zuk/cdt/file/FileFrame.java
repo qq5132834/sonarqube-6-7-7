@@ -2,7 +2,7 @@ package com.zuk.cdt.file;
 
 import com.zuk.cdt.file.function.FileFunctionDto;
 import com.zuk.cdt.file.function.call.FunctionCallDto;
-import com.zuk.cdt.file.function.var.FileFunctionVariableVo;
+import com.zuk.cdt.file.function.var.FunctionVariableVo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +37,7 @@ public class FileFrame {
         //函数基本信息
         private FileFunctionDto fileFunctionDto;
         //函数中变量信息
-        private FileFunctionVariableVo fileFunctionVariableVo;
+        private FunctionVariableVo fileFunctionVariableVo;
         //函数调用外部集
         private List<FunctionCallDto> functionCallDtos;
 
@@ -45,7 +45,7 @@ public class FileFrame {
             return fileFunctionDto;
         }
 
-        public FileFunctionVariableVo getFileFunctionVariableVo() {
+        public FunctionVariableVo getFileFunctionVariableVo() {
             return fileFunctionVariableVo;
         }
 
@@ -56,7 +56,7 @@ public class FileFrame {
             return this;
         }
 
-        public CxxFuntion setFileFunctionVariableVo(FileFunctionVariableVo fileFunctionVariableVo) {
+        public CxxFuntion setFileFunctionVariableVo(FunctionVariableVo fileFunctionVariableVo) {
             this.fileFunctionVariableVo = fileFunctionVariableVo;
             return this;
         }
