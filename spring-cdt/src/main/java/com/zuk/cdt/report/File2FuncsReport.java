@@ -1,6 +1,6 @@
 package com.zuk.cdt.report;
 
-import com.zuk.cdt.file.CxxFileFrame;
+import com.zuk.cdt.file.FileFrame;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
@@ -23,7 +23,7 @@ public class File2FuncsReport implements DoReport{
     private static String PATH = "C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\spring-cdt\\src\\test\\resources\\results\\";
 
     @Override
-    public void report(Map<String, Optional<CxxFileFrame>> cppFileFrameSet){
+    public void report(Map<String, Optional<FileFrame>> cppFileFrameSet){
         Document doc = DocumentHelper.createDocument();
         doc.addComment("文件关系图");
         Element ubiSec = doc.addElement("UbiSec");
@@ -33,7 +33,7 @@ public class File2FuncsReport implements DoReport{
             if(!optionalCppFileFrame.isPresent()){
                 return;
             }
-            CxxFileFrame cppFileFrame = optionalCppFileFrame.get();
+            FileFrame cppFileFrame = optionalCppFileFrame.get();
             String filePath = cppFileFrame.getFilePath();
             //文件节点
             Element fileInfo = file2Funcs.addElement("FileInfo");
