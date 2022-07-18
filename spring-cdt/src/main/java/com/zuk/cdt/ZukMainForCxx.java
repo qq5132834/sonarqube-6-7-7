@@ -25,6 +25,7 @@ public class ZukMainForCxx {
 
     private static Map<String, Optional<CxxFileFrame>> CPP_FILE_FRAME_MAP = new ConcurrentHashMap<>();
 
+    private static Set<String> FILE_SET = new HashSet<>();
     private static Set<String> SUFFIX_SET = new HashSet<>();
     static {
         SUFFIX_SET.add(".cc");
@@ -41,7 +42,7 @@ public class ZukMainForCxx {
             return false;
         }).count() > 0 ) {
             try {
-                SUFFIX_SET.add(file.getCanonicalPath());
+                FILE_SET.add(file.getCanonicalPath());
             }catch (Exception e) {
                 e.printStackTrace();
             }
@@ -54,7 +55,7 @@ public class ZukMainForCxx {
 
     public static void main(String[] args) {
         recus(new File("D:\\development\\java\\eclipse-cpp-indigo-SR2-incubation-win32-x86_64\\sogou_workflow\\workflow"));
-        SUFFIX_SET.stream().forEach(file -> analyzeFile(file));
+        FILE_SET.stream().forEach(file -> analyzeFile(file));
 
         new File2FuncsReport().report(CPP_FILE_FRAME_MAP);
         new File2CallsReport().report(CPP_FILE_FRAME_MAP);

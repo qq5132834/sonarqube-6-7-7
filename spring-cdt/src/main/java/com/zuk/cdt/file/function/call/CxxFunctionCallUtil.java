@@ -105,19 +105,18 @@ public class CxxFunctionCallUtil {
                             IASTFileLocation iastFileLocation = dto.getBuilder().getIastFileLocation();
                             String rawSignature = dto.getBuilder().getVariableName();
                             System.out.println();
-                            //TODO 根据名称去文件的变量集合中查询需要跳转的外部文件
-
-
                         }
-                        //
+                        else {
+                            dto = FunctionCallDto.builder().build();
+                        }
                         System.out.println();
                     }
 
-                    if(dto != null){
-                        String callFunctionName = cppastFieldReference.getChildren()[1].getRawSignature();
-                        dto.getBuilder().setCallFunctionName(callFunctionName);
-                        DECLARE_VARIABLE_LIST.add(dto);
-                    }
+                    //
+                    String callFunctionName = cppastFieldReference.getChildren()[1].getRawSignature();
+                    dto.getBuilder().setCallFunctionName(callFunctionName)
+                            .setCallFunctionLineNumber(cppastFieldReference.getChildren()[1].getFileLocation().getStartingLineNumber());;
+                    DECLARE_VARIABLE_LIST.add(dto);
 
                     System.out.println();
                 }

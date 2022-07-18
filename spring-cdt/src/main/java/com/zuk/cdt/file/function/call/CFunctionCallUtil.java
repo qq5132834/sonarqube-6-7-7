@@ -40,7 +40,7 @@ public class CFunctionCallUtil {
          * 推断CPPASTName为叶子节点。
          */
         FUNCTION_CALL.stream().forEach(e->{
-            System.out.println("\\n" + e.getFileLocation().getStartingLineNumber() + "," + e.getRawSignature()); checkIBinding(e);
+            System.out.println("\n\n" + e.getFileLocation().getStartingLineNumber() + "," + e.getRawSignature()); checkIBinding(e);
             Arrays.stream(e.getChildren()).forEach(e1->{
                 System.out.println("--" + e1.getRawSignature() + ",class:" + e1.getClass().getName()); checkIBinding(e1);
                 Arrays.stream(e1.getChildren()).forEach(e2->{
@@ -96,11 +96,11 @@ public class CFunctionCallUtil {
                     CASTFieldReference castFieldReference = (CASTFieldReference) iastNodeFirst;
                     int functionCallLineNumber = castFieldReference.getChildren()[0].getFileLocation().getStartingLineNumber(); //方法调用行号
                     String reference = castFieldReference.getChildren()[0].getRawSignature(); //引用类变量名称
-                    CASTName cppastName = new GetCASTName(castFieldReference.getChildren()[0]).getCASTName();
+                    CASTName castName = new GetCASTName(castFieldReference.getChildren()[0]).getCASTName();
                     FunctionCallDto dto = null;
-                    if(cppastName != null){
+                    if(castName != null){
                         //获取作用域，根据作用域
-                        dto = FunctionCallDto.createInstanceByIASTName((IASTName) cppastName);
+                        dto = FunctionCallDto.createInstanceByIASTName((IASTName) castName);
                         if(dto != null){
                             EScopeKind eScopeKind = dto.getBuilder().geteScopeKind();
                             String simpleName = dto.getBuilder().getScopeSimpleName();
@@ -108,18 +108,19 @@ public class CFunctionCallUtil {
                             String rawSignature = dto.getBuilder().getVariableName();
                             System.out.println();
                             //TODO 根据名称去文件的变量集合中查询需要跳转的外部文件
-
-
+                        }
+                        else {
+                            dto = FunctionCallDto.builder().build();
                         }
                         //
                         System.out.println();
                     }
 
-                    if(dto != null){
-                        String callFunctionName = castFieldReference.getChildren()[1].getRawSignature();
-                        dto.getBuilder().setCallFunctionName(callFunctionName);
-                        DECLARE_VARIABLE_LIST.add(dto);
-                    }
+                    //设置调用方信息
+                    String callFunctionName = castFieldReference.getChildren()[1].getRawSignature();
+                    dto.getBuilder().setCallFunctionName(callFunctionName)
+                            .setCallFunctionLineNumber(castFieldReference.getChildren()[1].getFileLocation().getStartingLineNumber());
+                    DECLARE_VARIABLE_LIST.add(dto);
 
                     System.out.println();
                 }

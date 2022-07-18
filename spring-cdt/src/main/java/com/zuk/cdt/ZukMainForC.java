@@ -17,6 +17,7 @@ import java.util.function.Consumer;
 
 public class ZukMainForC {
 
+    private static Set<String> FILE_SET = new HashSet<>();
     private static Set<String> SUFFIX_SET = new HashSet<>();
     static {
         SUFFIX_SET.add(".c");
@@ -33,41 +34,58 @@ public class ZukMainForC {
             return false;
         }).count() > 0 ) {
             try {
-                SUFFIX_SET.add(file.getCanonicalPath());
+                FILE_SET.add(file.getCanonicalPath());
             }catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
         if (file.isDirectory()) {
-            Arrays.stream(file.listFiles()).forEach(ZukMainForCxx::recus);
+            Arrays.stream(file.listFiles()).forEach(ZukMainForC::recus);
         }
     }
 
     public static void main(String[] args) throws Exception {
-        String filepath = "C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\spring-cdt\\src\\main\\resources\\c\\src\\btree.c";
+
+        //
+        String filepath = "C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\spring-cdt\\src\\main\\resources\\c\\src\\callback.c";
         analyzeFile(filepath);
+
+
+        //
+//        String fileDir = "C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\spring-cdt\\src\\main\\resources\\c\\src";
+//        recus(new File(fileDir));
+//        FILE_SET.stream().forEach(file -> {
+//            analyzeFile(file);
+//        });
+
     }
 
 
-    public static CxxFileFrame analyzeFile(String filepath) throws IOException, CoreException {
-        IASTTranslationUnit iastTranslationUnit = CDTParser.parse(filepath, CDTParser.Language.C);
-        List<IASTFunctionDefinition>  iastFunctionDefinitionList = CFileFunctionUtil.getFuncationDefinistion(iastTranslationUnit);
-        iastFunctionDefinitionList.stream().forEach(fun -> {
+    public static CxxFileFrame analyzeFile(String filepath) {
+        try {
+            IASTTranslationUnit iastTranslationUnit = CDTParser.parse(filepath, CDTParser.Language.C);
+            List<IASTFunctionDefinition>  iastFunctionDefinitionList = CFileFunctionUtil.getFuncationDefinistion(iastTranslationUnit);
+            iastFunctionDefinitionList.stream().forEach(fun -> {
 
-            System.out.println(fun.getRawSignature());
+                System.out.println(fun.getRawSignature());
 
-            IASTFunctionDeclarator iastFunctionDeclarator = fun.getDeclarator();
-            IASTName iastName = iastFunctionDeclarator.getName();
-            //C语言函数名称输出
-            System.out.println("函数名称：" + iastName.getRawSignature());
+                IASTFunctionDeclarator iastFunctionDeclarator = fun.getDeclarator();
+                IASTName iastName = iastFunctionDeclarator.getName();
+                //C语言函数名称输出
+                System.out.println("函数名称：" + iastName.getRawSignature());
 
-            recur(fun);
+                recur(fun);
 
-            List<FunctionCallDto> cxxFunctionCallDtoList = CFunctionCallUtil.getFunctionCall();
-            System.out.println();
-        });
+                List<FunctionCallDto> cxxFunctionCallDtoList = CFunctionCallUtil.getFunctionCall();
+                System.out.println();
+            });
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
         return null;
+
     }
 
     /***
