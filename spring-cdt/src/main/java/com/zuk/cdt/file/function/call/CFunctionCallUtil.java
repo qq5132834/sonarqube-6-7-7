@@ -109,16 +109,15 @@ public class CFunctionCallUtil {
                             System.out.println();
                             //TODO 根据名称去文件的变量集合中查询需要跳转的外部文件
                         }
-                        else {
-                            dto = FunctionCallDto.builder().build();
-                        }
                         //
                         System.out.println();
                     }
 
                     //设置调用方信息
-                    String callFunctionName = castFieldReference.getChildren()[1].getRawSignature();
-                    dto.getBuilder().setCallFunctionName(callFunctionName)
+                    if (dto == null) {
+                        dto = dto.getBuilder().build();
+                    }
+                    dto.getBuilder().setCallFunctionName(castFieldReference.getChildren()[1].getRawSignature())
                             .setCallFunctionLineNumber(castFieldReference.getChildren()[1].getFileLocation().getStartingLineNumber());
                     DECLARE_VARIABLE_LIST.add(dto);
 

@@ -25,11 +25,10 @@ public class FunctionCallDto {
         if(!(iBinding instanceof ProblemBinding)){
             try {
                 IScope iScope = iBinding.getScope();
-                EScopeKind eScopeKind = iScope.getKind();
-                IName iName = iScope.getScopeName();
-                if(iName != null){
+                if(iScope != null && iScope.getScopeName() != null){
+                    IName iName = iScope.getScopeName();
                     return FunctionCallDto.builder()
-                            .setScopeKind(eScopeKind)
+                            .setScopeKind(iScope.getKind())
                             .setScopeSimpleName(new String(iName.getSimpleID()))
                             .setIastFileLocation(iastName.getFileLocation())
                             .setVariableName(iastName.getRawSignature())

@@ -2,20 +2,22 @@ package com.zuk.cdt;
 
 import com.zuk.cdt.file.CxxFileFrame;
 import com.zuk.cdt.file.function.CFileFunctionUtil;
+import com.zuk.cdt.file.function.CxxFileFunctionDto;
 import com.zuk.cdt.file.function.call.CFunctionCallUtil;
 import com.zuk.cdt.file.function.call.FunctionCallDto;
+import com.zuk.cdt.report.File2CallsReport;
 import org.eclipse.cdt.core.dom.ast.*;
 import org.eclipse.core.runtime.CoreException;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
 public class ZukMainForC {
+
+    private static Map<String, Optional<CxxFileFrame>> CPP_FILE_FRAME_MAP = new ConcurrentHashMap<>();
 
     private static Set<String> FILE_SET = new HashSet<>();
     private static Set<String> SUFFIX_SET = new HashSet<>();
@@ -48,16 +50,17 @@ public class ZukMainForC {
     public static void main(String[] args) throws Exception {
 
         //
-        String filepath = "C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\spring-cdt\\src\\main\\resources\\c\\src\\callback.c";
-        analyzeFile(filepath);
-
+//        String filepath = "C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\spring-cdt\\src\\main\\resources\\c\\src\\callback.c";
+//        analyzeFile(filepath);
 
         //
-//        String fileDir = "C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\spring-cdt\\src\\main\\resources\\c\\src";
-//        recus(new File(fileDir));
-//        FILE_SET.stream().forEach(file -> {
-//            analyzeFile(file);
-//        });
+        String fileDir = "C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\spring-cdt\\src\\main\\resources\\c\\src";
+        recus(new File(fileDir));
+        FILE_SET.stream().forEach(file -> {
+            analyzeFile(file);
+        });
+
+        new File2CallsReport().report(CPP_FILE_FRAME_MAP);
 
     }
 
@@ -65,8 +68,18 @@ public class ZukMainForC {
     public static CxxFileFrame analyzeFile(String filepath) {
         try {
             IASTTranslationUnit iastTranslationUnit = CDTParser.parse(filepath, CDTParser.Language.C);
+
+            final CxxFileFrame cppFileFrame = CxxFileFrame.getInstance(filepath);
+
             List<IASTFunctionDefinition>  iastFunctionDefinitionList = CFileFunctionUtil.getFuncationDefinistion(iastTranslationUnit);
             iastFunctionDefinitionList.stream().forEach(fun -> {
+
+                CxxFileFunctionDto fileFunctionDto = CxxFileFunctionDto.builder()
+                        .setFunctionName(fun.getDeclarator().getName().toString())
+                        .setStartLineNumber(fun.getFileLocation().getStartingLineNumber())
+                        .setEndLineNumber(fun.getFileLocation().getEndingLineNumber())
+                        .setIastFileLocation(fun.getFileLocation())
+                        .build();
 
                 System.out.println(fun.getRawSignature());
 
@@ -78,8 +91,21 @@ public class ZukMainForC {
                 recur(fun);
 
                 List<FunctionCallDto> cxxFunctionCallDtoList = CFunctionCallUtil.getFunctionCall();
+
+                CxxFileFrame.CxxFuntion cppFuntion = new CxxFileFrame.CxxFuntion();
+                cppFuntion.setFileFunctionDto(fileFunctionDto);
+                cppFuntion.setFunctionCallDtos(cxxFunctionCallDtoList);
+
+                //
+                cppFileFrame.addCppFuntion(cppFuntion);
+
                 System.out.println();
+
             });
+
+            CPP_FILE_FRAME_MAP.put(filepath, Optional.of(cppFileFrame));
+
+            return cppFileFrame;
 
         }catch (Exception e) {
             e.printStackTrace();
@@ -164,7 +190,7 @@ public class ZukMainForC {
     }
 
     private static void printIASTNode(IASTNode iastNode){
-        System.out.println("行号：" + iastNode.getFileLocation().getStartingLineNumber() + ",\n内容：" + iastNode.getRawSignature() + ",\nclass:" + iastNode.getClass().getName());
+        //System.out.println("行号：" + iastNode.getFileLocation().getStartingLineNumber() + ",\n内容：" + iastNode.getRawSignature() + ",\nclass:" + iastNode.getClass().getName());
     }
 
     private static void doIASTNode(IASTNode iastNode, Consumer<IASTNode> consumer){
