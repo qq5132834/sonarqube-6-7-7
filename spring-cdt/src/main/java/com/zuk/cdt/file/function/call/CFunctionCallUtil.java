@@ -115,7 +115,7 @@ public class CFunctionCallUtil {
 
                     //设置调用方信息
                     if (dto == null) {
-                        dto = dto.getBuilder().build();
+                        dto = FunctionCallDto.builder().build();
                     }
                     dto.getBuilder().setCallFunctionName(castFieldReference.getChildren()[1].getRawSignature())
                             .setCallFunctionLineNumber(castFieldReference.getChildren()[1].getFileLocation().getStartingLineNumber());
