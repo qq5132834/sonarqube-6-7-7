@@ -94,14 +94,15 @@ public class ZukMainForC {
 
 
                 CFunctionVariableUtil cFunctionVariableUtil = new CFunctionVariableUtil();
+                CFunctionCallUtil cFunctionCallUtil = new CFunctionCallUtil();
 
                 List<Consumer<IASTNode>> consumerList = new ArrayList<>();
                 consumerList.add(ZukMainForC::printIASTNode);
-                consumerList.add(CFunctionCallUtil::funcationCall);
+                consumerList.add(cFunctionCallUtil::funcationCall);
                 consumerList.add(cFunctionVariableUtil::methodParams);
                 recur(fun, consumerList);
 
-                List<FunctionCallDto> cFunctionCallDtoList = CFunctionCallUtil.getFunctionCall();
+                List<FunctionCallDto> cFunctionCallDtoList = cFunctionCallUtil.getFunctionCall();
                 FunctionVariableVo functionVariableVo = cFunctionVariableUtil.getFunctionVariableVo();
 
                 FileFrame.Funtion cppFuntion = new FileFrame.Funtion();
