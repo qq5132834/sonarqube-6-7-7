@@ -78,7 +78,10 @@ public class CxxFunctionCallUtil {
                     if(cppastName != null){
                         dto = FunctionCallDto.createInstanceByIASTName((IASTName) cppastName);
                         if(dto == null){
-                            dto = FunctionCallDto.builder().setCallFunctionName(functionCallName).build();
+                            dto = FunctionCallDto.builder()
+                                                .setCallFunctionName(functionCallName)
+                                                .setCallFunctionLineNumber(functionCallLineNumber)
+                                                .build();
                         }
                         DECLARE_VARIABLE_LIST.add(dto);
                         System.out.println();
