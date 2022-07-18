@@ -2,6 +2,8 @@ package com.zuk.cdt;
 
 import com.zuk.cdt.file.CxxFileFrame;
 import com.zuk.cdt.file.function.CFileFunctionUtil;
+import com.zuk.cdt.file.function.call.CFunctionCallUtil;
+import com.zuk.cdt.file.function.call.CxxFunctionCallDto;
 import com.zuk.cdt.file.function.call.CxxFunctionCallUtil;
 import com.zuk.cdt.file.function.var.CxxFunctionVariableUtil;
 import org.eclipse.cdt.core.dom.IName;
@@ -20,7 +22,7 @@ import java.util.function.Consumer;
 public class ZukMainForC {
 
     public static void main(String[] args) throws Exception {
-        String filepath = "C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\spring-cdt\\src\\main\\resources\\c\\src\\btree.c";
+        String filepath = "C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\spring-cdt\\src\\main\\resources\\c\\src\\btree1.c";
         analyzeFile(filepath);
     }
 
@@ -39,6 +41,8 @@ public class ZukMainForC {
 
             recur(fun);
 
+            List<CxxFunctionCallDto> cxxFunctionCallDtoList = CFunctionCallUtil.getFunctionCall();
+
         });
         return null;
     }
@@ -51,55 +55,58 @@ public class ZukMainForC {
         //输出节点信息
         doIASTNode(iastNode, ZukMainForC::printIASTNode);
 
-        if (iastNode instanceof CASTFieldReference) {
-            //变量定义
-            System.out.println();
-        }
-        if (iastNode instanceof CASTFunctionCallExpression) {
-            //函数调用
+        //收集当前函数中的函数调用
+        doIASTNode(iastNode, CFunctionCallUtil::funcationCall);
 
-        }
-        if(iastNode instanceof IASTName){
-            IASTName iastName = (IASTName) iastNode;
-            IBinding iBinding = iastName.resolveBinding();
-            Class cls = iBinding.getClass();
-            System.out.println(iBinding.getClass().getName());
-            System.out.println(iastName.getClass().getName());
-            if (iBinding instanceof CField) {
-                try {//属性
-                    IScope iScope = iBinding.getScope();
-                    EScopeKind eScopeKind = iScope.getKind();
-                    IName iName = iScope.getScopeName();
-                    if (iName != null) {
-                        String simpleName = new String(iName.getSimpleID());
-                        IASTFileLocation iastFileLocation = iName.getFileLocation();
-                        String filename = iastFileLocation.getFileName();
-                        int startLineNumber = iastFileLocation.getStartingLineNumber();
-                    }
-                    System.out.println();
-                }catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-                System.out.println();
-            }
-            if (iBinding instanceof CVariable){
-                try {//变量
-                    IScope iScope = iBinding.getScope();
-                    EScopeKind eScopeKind = iScope.getKind();
-                    IName iName = iScope.getScopeName();
-                    if (iName != null) {
-                        String simpleName = new String(iName.getSimpleID());
-                        IASTFileLocation iastFileLocation = iName.getFileLocation();
-                        String filename = iastFileLocation.getFileName();
-                        int startLineNumber = iastFileLocation.getStartingLineNumber();
-                    }
-                    System.out.println();
-                }catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-                System.out.println();
-            }
-        }
+//        if (iastNode instanceof CASTFieldReference) {
+//            //变量定义
+//            System.out.println();
+//        }
+//        if (iastNode instanceof CASTFunctionCallExpression) {
+//            //函数调用
+//            System.out.println();
+//        }
+//        if(iastNode instanceof IASTName){
+//            IASTName iastName = (IASTName) iastNode;
+//            IBinding iBinding = iastName.resolveBinding();
+//            Class cls = iBinding.getClass();
+//            System.out.println(iBinding.getClass().getName());
+//            System.out.println(iastName.getClass().getName());
+//            if (iBinding instanceof CField) {
+//                try {//属性
+//                    IScope iScope = iBinding.getScope();
+//                    EScopeKind eScopeKind = iScope.getKind();
+//                    IName iName = iScope.getScopeName();
+//                    if (iName != null) {
+//                        String simpleName = new String(iName.getSimpleID());
+//                        IASTFileLocation iastFileLocation = iName.getFileLocation();
+//                        String filename = iastFileLocation.getFileName();
+//                        int startLineNumber = iastFileLocation.getStartingLineNumber();
+//                    }
+//                    System.out.println();
+//                }catch (Exception ex) {
+//                    ex.printStackTrace();
+//                }
+//                System.out.println();
+//            }
+//            if (iBinding instanceof CVariable){
+//                try {//变量
+//                    IScope iScope = iBinding.getScope();
+//                    EScopeKind eScopeKind = iScope.getKind();
+//                    IName iName = iScope.getScopeName();
+//                    if (iName != null) {
+//                        String simpleName = new String(iName.getSimpleID());
+//                        IASTFileLocation iastFileLocation = iName.getFileLocation();
+//                        String filename = iastFileLocation.getFileName();
+//                        int startLineNumber = iastFileLocation.getStartingLineNumber();
+//                    }
+//                    System.out.println();
+//                }catch (Exception ex) {
+//                    ex.printStackTrace();
+//                }
+//                System.out.println();
+//            }
+//        }
 
 //        //获取方法中入参、变量信息
 //        CxxFunctionVariableUtil cxxFunctionVariableUtil = new CxxFunctionVariableUtil();
