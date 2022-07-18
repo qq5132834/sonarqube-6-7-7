@@ -3,7 +3,7 @@ package com.zuk.cdt;
 import com.zuk.cdt.file.function.CxxFileFunctionUtil;
 import com.zuk.cdt.file.function.call.CxxFunctionCallUtil;
 import com.zuk.cdt.file.function.call.FunctionCallDto;
-import com.zuk.cdt.file.CxxFileFrame;
+import com.zuk.cdt.file.FileFrame;
 import com.zuk.cdt.file.function.FileFunctionDto;
 import com.zuk.cdt.file.function.var.FileFunctionVariableVo;
 import com.zuk.cdt.file.function.var.CxxFunctionVariableUtil;
@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  */
 public class ZukMainForCxx {
 
-    private static Map<String, Optional<CxxFileFrame>> CPP_FILE_FRAME_MAP = new ConcurrentHashMap<>();
+    private static Map<String, Optional<FileFrame>> CPP_FILE_FRAME_MAP = new ConcurrentHashMap<>();
 
     private static Set<String> FILE_SET = new HashSet<>();
     private static Set<String> SUFFIX_SET = new HashSet<>();
@@ -94,7 +94,7 @@ public class ZukMainForCxx {
 
     public static void recuCallFunction(String filePath, String callFunctionName){
         System.out.println("调用函数:" + callFunctionName);
-        CxxFileFrame cppFileFrame = null;
+        FileFrame cppFileFrame = null;
         if (CPP_FILE_FRAME_MAP.keySet().contains(filePath)) {
             cppFileFrame = CPP_FILE_FRAME_MAP.get(filePath).get();
         }
@@ -102,7 +102,7 @@ public class ZukMainForCxx {
             cppFileFrame = analyzeFile(filePath);
         }
         if (cppFileFrame != null) {
-            List<CxxFileFrame.CxxFuntion> list = cppFileFrame.getCppFuntionList().stream().filter(e->{
+            List<FileFrame.CxxFuntion> list = cppFileFrame.getCppFuntionList().stream().filter(e->{
                 if(e.getFileFunctionDto().getBuilder().getFunctionName().endsWith(callFunctionName)){
                     return true;
                 }
@@ -110,7 +110,7 @@ public class ZukMainForCxx {
             }).collect(Collectors.toList());
 
             if(list != null && list.size() > 0){
-                CxxFileFrame.CxxFuntion cppFuntion = list.get(0);
+                FileFrame.CxxFuntion cppFuntion = list.get(0);
                 cppFuntion.getFunctionCallDtos().stream().forEach(functionCallDto -> {
                     String callFunctionName1 = functionCallDto.getBuilder().getCallFunctionName();
                     EScopeKind eScopeKind = functionCallDto.getBuilder().geteScopeKind();
@@ -126,12 +126,12 @@ public class ZukMainForCxx {
         }
     }
 
-    public static CxxFileFrame analyzeFile(String filepath) {
+    public static FileFrame analyzeFile(String filepath) {
 
         try {
             IASTTranslationUnit iastTranslationUnit = CDTParser.parse(filepath, CDTParser.Language.CPP);
 
-            final CxxFileFrame cppFileFrame = CxxFileFrame.getInstance(filepath);
+            final FileFrame cppFileFrame = FileFrame.getInstance(filepath);
             //文件函数输出
             List<IASTFunctionDefinition> functionDefinitions = CxxFileFunctionUtil.getFuncationDefinistion(iastTranslationUnit);
             functionDefinitions.stream().forEach(e->{
@@ -153,7 +153,7 @@ public class ZukMainForCxx {
                 //方法内部调用外部函数集
                 List<FunctionCallDto> declareVariableDtos = CxxFunctionCallUtil.getFunctionCall();
 
-                CxxFileFrame.CxxFuntion cppFuntion = new CxxFileFrame.CxxFuntion();
+                FileFrame.CxxFuntion cppFuntion = new FileFrame.CxxFuntion();
                 cppFuntion.setFileFunctionDto(fileFunctionDto);
                 cppFuntion.setFileFunctionVariableVo(fileFunctionVariableVo);
                 cppFuntion.setFunctionCallDtos(declareVariableDtos);

@@ -1,12 +1,11 @@
 package com.zuk.cdt;
 
-import com.zuk.cdt.file.CxxFileFrame;
+import com.zuk.cdt.file.FileFrame;
 import com.zuk.cdt.file.function.CFileFunctionUtil;
 import com.zuk.cdt.file.function.FileFunctionDto;
 import com.zuk.cdt.file.function.call.CFunctionCallUtil;
 import com.zuk.cdt.file.function.call.FunctionCallDto;
 import com.zuk.cdt.file.function.var.CFunctionVariableUtil;
-import com.zuk.cdt.file.function.var.CxxFunctionVariableUtil;
 import com.zuk.cdt.file.function.var.FileFunctionVariableVo;
 import com.zuk.cdt.report.File2CallsReport;
 import org.eclipse.cdt.core.dom.ast.*;
@@ -18,7 +17,7 @@ import java.util.function.Consumer;
 
 public class ZukMainForC {
 
-    private static Map<String, Optional<CxxFileFrame>> CPP_FILE_FRAME_MAP = new ConcurrentHashMap<>();
+    private static Map<String, Optional<FileFrame>> CPP_FILE_FRAME_MAP = new ConcurrentHashMap<>();
 
     private static Set<String> FILE_SET = new HashSet<>();
     private static Set<String> SUFFIX_SET = new HashSet<>();
@@ -66,11 +65,11 @@ public class ZukMainForC {
     }
 
 
-    public static CxxFileFrame analyzeFile(String filepath) {
+    public static FileFrame analyzeFile(String filepath) {
         try {
             IASTTranslationUnit iastTranslationUnit = CDTParser.parse(filepath, CDTParser.Language.C);
 
-            final CxxFileFrame cppFileFrame = CxxFileFrame.getInstance(filepath);
+            final FileFrame cppFileFrame = FileFrame.getInstance(filepath);
 
             List<IASTFunctionDefinition>  iastFunctionDefinitionList = CFileFunctionUtil.getFuncationDefinistion(iastTranslationUnit);
             iastFunctionDefinitionList.stream().forEach(fun -> {
@@ -97,7 +96,7 @@ public class ZukMainForC {
                 IAST_NAME_WITH_IBINDING_SET.clear();
 
 
-                CxxFileFrame.CxxFuntion cppFuntion = new CxxFileFrame.CxxFuntion();
+                FileFrame.CxxFuntion cppFuntion = new FileFrame.CxxFuntion();
                 cppFuntion.setFileFunctionDto(fileFunctionDto);
                 cppFuntion.setFunctionCallDtos(cFunctionCallDtoList);
                 cppFuntion.setFileFunctionVariableVo(fileFunctionVariableVo);

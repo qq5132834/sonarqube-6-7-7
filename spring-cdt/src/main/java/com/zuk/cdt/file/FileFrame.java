@@ -7,12 +7,12 @@ import com.zuk.cdt.file.function.var.FileFunctionVariableVo;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CxxFileFrame {
+public class FileFrame {
 
     private final String filePath;
     private List<CxxFuntion> cppFuntionList = new ArrayList<>();
 
-    public CxxFileFrame(String filePath) {
+    public FileFrame(String filePath) {
         this.filePath = filePath;
     }
 
@@ -20,11 +20,11 @@ public class CxxFileFrame {
         return filePath;
     }
 
-    public static CxxFileFrame getInstance(String filePath) {
-        return new CxxFileFrame(filePath);
+    public static FileFrame getInstance(String filePath) {
+        return new FileFrame(filePath);
     }
 
-    public CxxFileFrame addCppFuntion(CxxFuntion cppFuntion) {
+    public FileFrame addCppFuntion(CxxFuntion cppFuntion) {
         this.cppFuntionList.add(cppFuntion);
         return this;
     }
