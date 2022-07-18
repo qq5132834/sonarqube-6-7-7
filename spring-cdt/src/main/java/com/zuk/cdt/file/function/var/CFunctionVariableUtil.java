@@ -4,9 +4,9 @@ import org.eclipse.cdt.core.dom.ILinkage;
 import org.eclipse.cdt.core.dom.IName;
 import org.eclipse.cdt.core.dom.ast.*;
 import org.eclipse.cdt.internal.core.dom.parser.ProblemBinding;
-import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPParameter;
+import org.eclipse.cdt.internal.core.dom.parser.c.CParameter;
+import org.eclipse.cdt.internal.core.dom.parser.c.CVariable;
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPScope;
-import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPVariable;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -77,30 +77,30 @@ public class CFunctionVariableUtil {
             return true;
         }
         //定义局部变量
-        if(iBinding instanceof CPPVariable){
+        if(iBinding instanceof CVariable){
             PARAM_VAL_SET.add(iBinding);
-            CPPVariable cppVariable = (CPPVariable) iBinding;
-            cppVariable.getDefinition();
-            IValue iValue = cppVariable.getInitialValue();
-            IASTNode iastNodeDefinition = cppVariable.getDefinition();
-            String name = cppVariable.getName();
-            IBinding iBindingOwner = cppVariable.getOwner();
-            IScope iScope = cppVariable.getScope();
-            IType iType = cppVariable.getType();
+            CVariable cVariable = (CVariable) iBinding;
+            cVariable.getDefinition();
+            IValue iValue = cVariable.getInitialValue();
+            IASTNode iastNodeDefinition = cVariable.getDefinition();
+            String name = cVariable.getName();
+            IBinding iBindingOwner = cVariable.getOwner();
+            IScope iScope = cVariable.getScope();
+            IType iType = cVariable.getType();
             System.out.println();
         }
         //方法入参
-        if(iBinding instanceof CPPParameter){
+        if(iBinding instanceof CParameter){
             PARAM_VAL_SET.add(iBinding);
-            CPPParameter cppParameter = (CPPParameter) iBinding;
-            int paramPosition = cppParameter.getParameterPosition();
-            IASTNode iastNode = cppParameter.getPhysicalNode();
-            IASTNode iastNodeDefinition = cppParameter.getDefinition();
-            IValue iValue = cppParameter.getInitialValue();
-            ILinkage iLinkage = cppParameter.getLinkage();
-            IBinding iBindingOwner = cppParameter.getOwner();
-            IType iType = cppParameter.getType();
-            IScope iScope = cppParameter.getScope();
+            CParameter cParameter = (CParameter) iBinding;
+//            int paramPosition = cParameter.getParameterPosition();
+//            IASTNode iastNode = cParameter.getPhysicalNode();
+//            IASTNode iastNodeDefinition = cParameter.getDefinition();
+            IValue iValue = cParameter.getInitialValue();
+            ILinkage iLinkage = cParameter.getLinkage();
+            IBinding iBindingOwner = cParameter.getOwner();
+            IType iType = cParameter.getType();
+            IScope iScope = cParameter.getScope();
             System.out.println();
         }
         return false;
@@ -169,7 +169,6 @@ public class CFunctionVariableUtil {
 
             }
         });
-
 
         IAST_NAME_WITH_IBINDING_SET.stream().forEach(iastName -> {
             IBinding iBinding = iastName.resolveBinding();
