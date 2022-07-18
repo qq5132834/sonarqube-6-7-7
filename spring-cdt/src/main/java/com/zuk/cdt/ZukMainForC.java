@@ -7,12 +7,42 @@ import com.zuk.cdt.file.function.call.FunctionCallDto;
 import org.eclipse.cdt.core.dom.ast.*;
 import org.eclipse.core.runtime.CoreException;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Consumer;
 
 public class ZukMainForC {
+
+    private static Set<String> SUFFIX_SET = new HashSet<>();
+    static {
+        SUFFIX_SET.add(".c");
+//        SUFFIX_SET.add(".cpp");
+//        SUFFIX_SET.add(".h");
+    }
+
+    public static void recus(File file) {
+
+        if ( file.isFile() && SUFFIX_SET.stream().filter(e->{
+            if (file.getName().endsWith(e)) {
+                return true;
+            }
+            return false;
+        }).count() > 0 ) {
+            try {
+                SUFFIX_SET.add(file.getCanonicalPath());
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (file.isDirectory()) {
+            Arrays.stream(file.listFiles()).forEach(ZukMainForCxx::recus);
+        }
+    }
 
     public static void main(String[] args) throws Exception {
         String filepath = "C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\spring-cdt\\src\\main\\resources\\c\\src\\btree.c";
