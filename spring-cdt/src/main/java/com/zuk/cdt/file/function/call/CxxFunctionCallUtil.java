@@ -13,19 +13,19 @@ import java.util.*;
  */
 public class CxxFunctionCallUtil {
 
-    private static Set<Class> CLASS_SET = new HashSet<>();
+    private Set<Class> CLASS_SET = new HashSet<>();
 
-    private static List<IASTNode> FUNCTION_DEFINITION = new ArrayList<>();
-    private static List<IASTNode> FUNCTION_CALL = new ArrayList<>();
-    private static List<IASTNode> FUNCTION_DECLARATOR = new ArrayList<>();
-    private static List<FunctionCallDto> DECLARE_VARIABLE_LIST = new ArrayList<>();
+    private List<IASTNode> FUNCTION_DEFINITION = new ArrayList<>();
+    private List<IASTNode> FUNCTION_CALL = new ArrayList<>();
+    private List<IASTNode> FUNCTION_DECLARATOR = new ArrayList<>();
+    private List<FunctionCallDto> DECLARE_VARIABLE_LIST = new ArrayList<>();
 
-    public static void funcationCall(IASTNode iastNode){
+    public void funcationCall(IASTNode iastNode){
         //CLASS_SET.add(iastNode.getClass());
         checkIASTNode(iastNode);
     }
 
-    private static void printResultAndClearSet(){
+    private void printResultAndClearSet(){
         //输出节点类型
         CLASS_SET.stream().forEach(e->{
             System.out.println(e.getName());
@@ -125,7 +125,7 @@ public class CxxFunctionCallUtil {
         });
     }
 
-    private static void checkIBinding(IASTNode iastNode){
+    private void checkIBinding(IASTNode iastNode){
 //        System.out.println(iastNode.getClass().getName());
 //        System.out.println(iastNode.getRawSignature());
         if(iastNode instanceof IASTName){
@@ -146,7 +146,7 @@ public class CxxFunctionCallUtil {
         }
     }
 
-    public static List<FunctionCallDto> getFunctionCall(){
+    public List<FunctionCallDto> getFunctionCall(){
         try {
             printResultAndClearSet();
             List<FunctionCallDto> list = new ArrayList<>();
@@ -158,7 +158,7 @@ public class CxxFunctionCallUtil {
         }
     }
 
-    private static void cleanAll(){
+    private void cleanAll(){
         CLASS_SET.clear();
         FUNCTION_DEFINITION.clear();
         FUNCTION_CALL.clear();
@@ -166,7 +166,7 @@ public class CxxFunctionCallUtil {
         DECLARE_VARIABLE_LIST.clear();
     }
 
-    private static boolean checkIASTNode(IASTNode iastNode){
+    private boolean checkIASTNode(IASTNode iastNode){
         if(iastNode instanceof CPPASTFunctionCallExpression){
             /***
              * 函数调用

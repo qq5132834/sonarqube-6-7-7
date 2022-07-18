@@ -27,6 +27,44 @@ public class CxxFunctionVariableUtil {
         return IAST_NAME_WITH_IBINDING_SET;
     }
 
+    public FunctionVariableVo getFunctionVariableVo(){
+        Set<IASTName> iastNameSet = IAST_NAME_WITH_IBINDING_SET;
+        Set<FunctionVariableDto> eClassSet = new HashSet<>();
+        Set<FunctionVariableDto> eGlobalSet = new HashSet<>();
+        Set<FunctionVariableDto> eLocalSet = new HashSet<>();
+        iastNameSet.stream().forEach(iastName->{
+            try {
+                IBinding iBinding = iastName.resolveBinding();
+                IScope iScope = iBinding.getScope();
+                EScopeKind eScopeKind = iScope.getKind();
+                IName iName = iScope.getScopeName();
+                IASTFileLocation iastFileLocation = iName.getFileLocation();
+                if(iastFileLocation == null){
+                    return;
+                }
+                FunctionVariableDto dto = FunctionVariableDto.builder()
+                        .seteScopeKind(eScopeKind)
+                        .setIastFileLocation(iastFileLocation)
+                        .setSimpleName(new String(iName.getSimpleID()))
+                        .setRawSignature(iastName.getRawSignature())
+                        .build();
+                if(eScopeKind == EScopeKind.eClassType){
+                    eClassSet.add(dto);
+                }
+                else if (eScopeKind == EScopeKind.eGlobal) {
+                    eGlobalSet.add(dto);
+                }
+                else if (eScopeKind == EScopeKind.eLocal) {
+                    eLocalSet.add(dto);
+                }
+            } catch (DOMException ex) {
+                ex.printStackTrace();
+            }
+        });
+        //cleanAllSet();
+        return new FunctionVariableVo(eClassSet, eGlobalSet, eLocalSet);
+    }
+
     public void methodParams(IASTNode iastNode){
         if(iastNode instanceof IASTName){
 
@@ -106,42 +144,42 @@ public class CxxFunctionVariableUtil {
         return false;
     }
 
-    public static FunctionVariableVo getFileFunctionVariableVo(Set<IASTName> iastNameSet){
-        Set<FunctionVariableDto> eClassSet = new HashSet<>();
-        Set<FunctionVariableDto> eGlobalSet = new HashSet<>();
-        Set<FunctionVariableDto> eLocalSet = new HashSet<>();
-        iastNameSet.stream().forEach(iastName->{
-            try {
-                IBinding iBinding = iastName.resolveBinding();
-                IScope iScope = iBinding.getScope();
-                EScopeKind eScopeKind = iScope.getKind();
-                IName iName = iScope.getScopeName();
-                IASTFileLocation iastFileLocation = iName.getFileLocation();
-                if(iastFileLocation == null){
-                     return;
-                }
-                FunctionVariableDto dto = FunctionVariableDto.builder()
-                        .seteScopeKind(eScopeKind)
-                        .setIastFileLocation(iastFileLocation)
-                        .setSimpleName(new String(iName.getSimpleID()))
-                        .setRawSignature(iastName.getRawSignature())
-                        .build();
-                if(eScopeKind == EScopeKind.eClassType){
-                    eClassSet.add(dto);
-                }
-                else if (eScopeKind == EScopeKind.eGlobal) {
-                    eGlobalSet.add(dto);
-                }
-                else if (eScopeKind == EScopeKind.eLocal) {
-                    eLocalSet.add(dto);
-                }
-            } catch (DOMException ex) {
-                ex.printStackTrace();
-            }
-        });
-        //cleanAllSet();
-        return new FunctionVariableVo(eClassSet, eGlobalSet, eLocalSet);
-    }
+//    public static FunctionVariableVo getFileFunctionVariableVo(Set<IASTName> iastNameSet){
+//        Set<FunctionVariableDto> eClassSet = new HashSet<>();
+//        Set<FunctionVariableDto> eGlobalSet = new HashSet<>();
+//        Set<FunctionVariableDto> eLocalSet = new HashSet<>();
+//        iastNameSet.stream().forEach(iastName->{
+//            try {
+//                IBinding iBinding = iastName.resolveBinding();
+//                IScope iScope = iBinding.getScope();
+//                EScopeKind eScopeKind = iScope.getKind();
+//                IName iName = iScope.getScopeName();
+//                IASTFileLocation iastFileLocation = iName.getFileLocation();
+//                if(iastFileLocation == null){
+//                     return;
+//                }
+//                FunctionVariableDto dto = FunctionVariableDto.builder()
+//                        .seteScopeKind(eScopeKind)
+//                        .setIastFileLocation(iastFileLocation)
+//                        .setSimpleName(new String(iName.getSimpleID()))
+//                        .setRawSignature(iastName.getRawSignature())
+//                        .build();
+//                if(eScopeKind == EScopeKind.eClassType){
+//                    eClassSet.add(dto);
+//                }
+//                else if (eScopeKind == EScopeKind.eGlobal) {
+//                    eGlobalSet.add(dto);
+//                }
+//                else if (eScopeKind == EScopeKind.eLocal) {
+//                    eLocalSet.add(dto);
+//                }
+//            } catch (DOMException ex) {
+//                ex.printStackTrace();
+//            }
+//        });
+//        //cleanAllSet();
+//        return new FunctionVariableVo(eClassSet, eGlobalSet, eLocalSet);
+//    }
 
     public void printResultAndClearSet(){
         //输出IBinding的主要类

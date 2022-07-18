@@ -1,16 +1,19 @@
 package com.zuk.cdt;
 
+import com.zuk.cdt.file.FileFrame;
 import com.zuk.cdt.file.function.CxxFileFunctionUtil;
+import com.zuk.cdt.file.function.FileFunctionDto;
 import com.zuk.cdt.file.function.call.CxxFunctionCallUtil;
 import com.zuk.cdt.file.function.call.FunctionCallDto;
-import com.zuk.cdt.file.FileFrame;
-import com.zuk.cdt.file.function.FileFunctionDto;
-import com.zuk.cdt.file.function.var.FunctionVariableVo;
 import com.zuk.cdt.file.function.var.CxxFunctionVariableUtil;
+import com.zuk.cdt.file.function.var.FunctionVariableVo;
 import com.zuk.cdt.report.File2CallsReport;
 import com.zuk.cdt.report.File2FuncsReport;
 import com.zuk.cdt.report.Func2VarsReport;
-import org.eclipse.cdt.core.dom.ast.*;
+import org.eclipse.cdt.core.dom.ast.EScopeKind;
+import org.eclipse.cdt.core.dom.ast.IASTFunctionDefinition;
+import org.eclipse.cdt.core.dom.ast.IASTNode;
+import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit;
 
 import java.io.File;
 import java.util.*;
@@ -144,14 +147,20 @@ public class ZukMainForCxx {
                         .build();
 
                 //处理当前函数节点，从中提取变量集合（入参、本地变量、全局变量、类变量等）
-                ZukMainForCxx.recur(e);
+
+                CxxFunctionVariableUtil cxxFunctionVariableUtil = new CxxFunctionVariableUtil();
+                CxxFunctionCallUtil cxxFunctionCallUtil = new CxxFunctionCallUtil();
+                List<Consumer<IASTNode>> consumeList = new ArrayList<>();
+                consumeList.add(ZukMainForCxx::printIASTNode);
+                consumeList.add(cxxFunctionVariableUtil::methodParams);
+                consumeList.add(cxxFunctionCallUtil::funcationCall);
+                ZukMainForCxx.recur(e, consumeList);
 
                 //获取函数中变量集
-                FunctionVariableVo fileFunctionVariableVo = CxxFunctionVariableUtil.getFileFunctionVariableVo(IAST_NAME_WITH_IBINDING_SET);
-                IAST_NAME_WITH_IBINDING_SET.clear();
+                FunctionVariableVo fileFunctionVariableVo = cxxFunctionVariableUtil.getFunctionVariableVo();
 
                 //方法内部调用外部函数集
-                List<FunctionCallDto> declareVariableDtos = CxxFunctionCallUtil.getFunctionCall();
+                List<FunctionCallDto> declareVariableDtos = cxxFunctionCallUtil.getFunctionCall();
 
                 FileFrame.Funtion cppFuntion = new FileFrame.Funtion();
                 cppFuntion.setFileFunctionDto(fileFunctionDto);
@@ -176,25 +185,27 @@ public class ZukMainForCxx {
         return null;
     }
 
-    private static Set<IASTName> IAST_NAME_WITH_IBINDING_SET = new HashSet<>();
     /***
      * 遍历AST
      */
-    public static void recur(IASTNode iastNode){
+    public static void recur(IASTNode iastNode, List<Consumer<IASTNode>> consumerList){
 
-        //输出节点信息
-        //doIASTNode(iastNode, IASTNodeRecursive::printIASTNode);
-
-        //获取方法中入参、变量信息
-        CxxFunctionVariableUtil cxxFunctionVariableUtil = new CxxFunctionVariableUtil();
-        doIASTNode(iastNode, cxxFunctionVariableUtil::methodParams);
-        IAST_NAME_WITH_IBINDING_SET.addAll(cxxFunctionVariableUtil.getIAST_NAME_WITH_IBINDING_SET());
-
-        //获取方法中函数调用信息
-        doIASTNode(iastNode, CxxFunctionCallUtil::funcationCall);
+        consumerList.forEach(e-> e.accept(iastNode));
+//        //输出节点信息
+//        doIASTNode(iastNode, ZukMainForCxx::printIASTNode);
+//
+//        //获取方法中入参、变量信息
+//        CxxFunctionVariableUtil cxxFunctionVariableUtil = new CxxFunctionVariableUtil();
+//        doIASTNode(iastNode, cxxFunctionVariableUtil::methodParams);
+//        IAST_NAME_WITH_IBINDING_SET.addAll(cxxFunctionVariableUtil.getIAST_NAME_WITH_IBINDING_SET());
+//
+//        //获取方法中函数调用信息
+//        doIASTNode(iastNode, CxxFunctionCallUtil::funcationCall);
 
         //递归遍历IASTNode的子节点
-        Arrays.stream(iastNode.getChildren()).forEach(ZukMainForCxx::recur);
+        Arrays.stream(iastNode.getChildren()).forEach(e -> {
+            recur(e, consumerList);
+        });
 
     }
 

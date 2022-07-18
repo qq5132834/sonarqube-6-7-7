@@ -59,13 +59,13 @@ public class ZukMainForC {
         String fileDir = "C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\spring-cdt\\src\\main\\resources\\c\\src";
         recus(new File(fileDir));
         long startTime = System.currentTimeMillis();
-//        FILE_SET.parallelStream().forEach(file -> {
-//            analyzeFile(file);
-//        });
-
-        FILE_SET.stream().forEach(file -> {
+        FILE_SET.parallelStream().forEach(file -> {
             analyzeFile(file);
         });
+
+//        FILE_SET.stream().forEach(file -> {
+//            analyzeFile(file);
+//        });
         long endTime = System.currentTimeMillis();
         System.out.println("总耗时:" + (endTime-startTime)  + " ms");
 
