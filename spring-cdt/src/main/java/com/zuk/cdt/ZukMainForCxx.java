@@ -102,7 +102,7 @@ public class ZukMainForCxx {
             cppFileFrame = analyzeFile(filePath);
         }
         if (cppFileFrame != null) {
-            List<FileFrame.CxxFuntion> list = cppFileFrame.getCppFuntionList().stream().filter(e->{
+            List<FileFrame.Funtion> list = cppFileFrame.getFuntionList().stream().filter(e->{
                 if(e.getFileFunctionDto().getBuilder().getFunctionName().endsWith(callFunctionName)){
                     return true;
                 }
@@ -110,7 +110,7 @@ public class ZukMainForCxx {
             }).collect(Collectors.toList());
 
             if(list != null && list.size() > 0){
-                FileFrame.CxxFuntion cppFuntion = list.get(0);
+                FileFrame.Funtion cppFuntion = list.get(0);
                 cppFuntion.getFunctionCallDtos().stream().forEach(functionCallDto -> {
                     String callFunctionName1 = functionCallDto.getBuilder().getCallFunctionName();
                     EScopeKind eScopeKind = functionCallDto.getBuilder().geteScopeKind();
@@ -153,13 +153,13 @@ public class ZukMainForCxx {
                 //方法内部调用外部函数集
                 List<FunctionCallDto> declareVariableDtos = CxxFunctionCallUtil.getFunctionCall();
 
-                FileFrame.CxxFuntion cppFuntion = new FileFrame.CxxFuntion();
+                FileFrame.Funtion cppFuntion = new FileFrame.Funtion();
                 cppFuntion.setFileFunctionDto(fileFunctionDto);
                 cppFuntion.setFileFunctionVariableVo(fileFunctionVariableVo);
                 cppFuntion.setFunctionCallDtos(declareVariableDtos);
 
                 //
-                cppFileFrame.addCppFuntion(cppFuntion);
+                cppFileFrame.addFuntion(cppFuntion);
                 //
                 System.out.println("");
             });

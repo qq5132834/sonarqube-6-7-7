@@ -10,7 +10,7 @@ import java.util.List;
 public class FileFrame {
 
     private final String filePath;
-    private List<CxxFuntion> cppFuntionList = new ArrayList<>();
+    private List<Funtion> funtionList = new ArrayList<>();
 
     public FileFrame(String filePath) {
         this.filePath = filePath;
@@ -24,16 +24,16 @@ public class FileFrame {
         return new FileFrame(filePath);
     }
 
-    public FileFrame addCppFuntion(CxxFuntion cppFuntion) {
-        this.cppFuntionList.add(cppFuntion);
+    public FileFrame addFuntion(Funtion funtion) {
+        this.funtionList.add(funtion);
         return this;
     }
 
-    public List<CxxFuntion> getCppFuntionList() {
-        return this.cppFuntionList;
+    public List<Funtion> getFuntionList() {
+        return this.funtionList;
     }
 
-    public static class CxxFuntion {
+    public static class Funtion {
         //函数基本信息
         private FileFunctionDto fileFunctionDto;
         //函数中变量信息
@@ -51,17 +51,17 @@ public class FileFrame {
 
         public List<FunctionCallDto> getFunctionCallDtos() { return functionCallDtos; }
 
-        public CxxFuntion setFileFunctionDto(FileFunctionDto fileFunctionDto) {
+        public Funtion setFileFunctionDto(FileFunctionDto fileFunctionDto) {
             this.fileFunctionDto = fileFunctionDto;
             return this;
         }
 
-        public CxxFuntion setFileFunctionVariableVo(FunctionVariableVo fileFunctionVariableVo) {
+        public Funtion setFileFunctionVariableVo(FunctionVariableVo fileFunctionVariableVo) {
             this.fileFunctionVariableVo = fileFunctionVariableVo;
             return this;
         }
 
-        public CxxFuntion setFunctionCallDtos(List<FunctionCallDto> functionCallDtos) {
+        public Funtion setFunctionCallDtos(List<FunctionCallDto> functionCallDtos) {
             this.functionCallDtos = functionCallDtos;
             return this;
         }

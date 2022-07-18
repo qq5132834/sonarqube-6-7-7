@@ -96,13 +96,13 @@ public class ZukMainForC {
                 IAST_NAME_WITH_IBINDING_SET.clear();
 
 
-                FileFrame.CxxFuntion cppFuntion = new FileFrame.CxxFuntion();
+                FileFrame.Funtion cppFuntion = new FileFrame.Funtion();
                 cppFuntion.setFileFunctionDto(fileFunctionDto);
                 cppFuntion.setFunctionCallDtos(cFunctionCallDtoList);
                 cppFuntion.setFileFunctionVariableVo(fileFunctionVariableVo);
 
                 //
-                cppFileFrame.addCppFuntion(cppFuntion);
+                cppFileFrame.addFuntion(cppFuntion);
 
                 System.out.println();
 

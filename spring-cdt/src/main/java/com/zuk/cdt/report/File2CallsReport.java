@@ -34,7 +34,7 @@ public class File2CallsReport implements DoReport {
             String filePath = cppFileFrame.getFilePath();
 
             //文件函数节点
-            cppFileFrame.getCppFuntionList().stream().forEach(cppFuntion -> {
+            cppFileFrame.getFuntionList().stream().forEach(cppFuntion -> {
                 String functionName = cppFuntion.getFileFunctionDto().getBuilder().getFunctionName();
                 int line = cppFuntion.getFileFunctionDto().getBuilder().getStartLineNumber();
 
