@@ -5,6 +5,9 @@ import com.zuk.cdt.file.function.CFileFunctionUtil;
 import com.zuk.cdt.file.function.FileFunctionDto;
 import com.zuk.cdt.file.function.call.CFunctionCallUtil;
 import com.zuk.cdt.file.function.call.FunctionCallDto;
+import com.zuk.cdt.file.function.var.CFunctionVariableUtil;
+import com.zuk.cdt.file.function.var.CxxFunctionVariableUtil;
+import com.zuk.cdt.file.function.var.FileFunctionVariableVo;
 import com.zuk.cdt.report.File2CallsReport;
 import org.eclipse.cdt.core.dom.ast.*;
 
@@ -90,9 +93,14 @@ public class ZukMainForC {
 
                 List<FunctionCallDto> cxxFunctionCallDtoList = CFunctionCallUtil.getFunctionCall();
 
+                FileFunctionVariableVo fileFunctionVariableVo = CFunctionVariableUtil.getFileFunctionVariableVo(IAST_NAME_WITH_IBINDING_SET);
+                IAST_NAME_WITH_IBINDING_SET.clear();
+
+
                 CxxFileFrame.CxxFuntion cppFuntion = new CxxFileFrame.CxxFuntion();
                 cppFuntion.setFileFunctionDto(fileFunctionDto);
                 cppFuntion.setFunctionCallDtos(cxxFunctionCallDtoList);
+                cppFuntion.setFileFunctionVariableVo(fileFunctionVariableVo);
 
                 //
                 cppFileFrame.addCppFuntion(cppFuntion);
@@ -112,6 +120,8 @@ public class ZukMainForC {
 
     }
 
+
+    private static Set<IASTName> IAST_NAME_WITH_IBINDING_SET = new HashSet<>();
     /***
      * 遍历AST
      */
@@ -122,6 +132,13 @@ public class ZukMainForC {
 
         //收集当前函数中的函数调用
         doIASTNode(iastNode, CFunctionCallUtil::funcationCall);
+
+        //
+        CFunctionVariableUtil cFunctionVariableUtil = new CFunctionVariableUtil();
+        doIASTNode(iastNode, cFunctionVariableUtil::methodParams);
+        Set<IASTName> iastNameSet = cFunctionVariableUtil.getIAST_NAME_WITH_IBINDING_SET();
+        IAST_NAME_WITH_IBINDING_SET.addAll(iastNameSet);
+        //
 
 //        if (iastNode instanceof CASTFieldReference) {
 //            //变量定义
