@@ -25,17 +25,19 @@ public class FunctionCallDto {
         if(!(iBinding instanceof ProblemBinding)){
             try {
                 IScope iScope = iBinding.getScope();
+                EScopeKind eScopeKind = iScope.getKind();
                 IName iName = iScope.getScopeName();
-                if(iName.getFileLocation() == null){
-                    System.out.println("");
+                if(iName != null){
+                    return FunctionCallDto.builder()
+                            .setScopeKind(eScopeKind)
+                            .setScopeSimpleName(new String(iName.getSimpleID()))
+                            .setIastFileLocation(iastName.getFileLocation())
+                            .setVariableName(iastName.getRawSignature())
+                            .build();
                 }
-                return FunctionCallDto.builder()
-                        .setScopeKind(iScope.getKind())
-                        .setScopeSimpleName(new String(iName.getSimpleID()))
-                        .setIastFileLocation(iastName.getFileLocation())
-                        .setVariableName(iastName.getRawSignature())
-                        .build();
-            }catch (Exception e) {}
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return null;
     }
