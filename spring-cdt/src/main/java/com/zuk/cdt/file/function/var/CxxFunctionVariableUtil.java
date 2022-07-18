@@ -106,10 +106,10 @@ public class CxxFunctionVariableUtil {
         return false;
     }
 
-    public static CxxFileFunctionVariableVo getFileFunctionVariableVo(Set<IASTName> iastNameSet){
-        Set<CxxFunctionVariableDto> eClassSet = new HashSet<>();
-        Set<CxxFunctionVariableDto> eGlobalSet = new HashSet<>();
-        Set<CxxFunctionVariableDto> eLocalSet = new HashSet<>();
+    public static FileFunctionVariableVo getFileFunctionVariableVo(Set<IASTName> iastNameSet){
+        Set<FunctionVariableDto> eClassSet = new HashSet<>();
+        Set<FunctionVariableDto> eGlobalSet = new HashSet<>();
+        Set<FunctionVariableDto> eLocalSet = new HashSet<>();
         iastNameSet.stream().forEach(iastName->{
             try {
                 IBinding iBinding = iastName.resolveBinding();
@@ -120,7 +120,7 @@ public class CxxFunctionVariableUtil {
                 if(iastFileLocation == null){
                      return;
                 }
-                CxxFunctionVariableDto dto = CxxFunctionVariableDto.builder()
+                FunctionVariableDto dto = FunctionVariableDto.builder()
                         .seteScopeKind(eScopeKind)
                         .setIastFileLocation(iastFileLocation)
                         .setSimpleName(new String(iName.getSimpleID()))
@@ -140,7 +140,7 @@ public class CxxFunctionVariableUtil {
             }
         });
         //cleanAllSet();
-        return new CxxFileFunctionVariableVo(eClassSet, eGlobalSet, eLocalSet);
+        return new FileFunctionVariableVo(eClassSet, eGlobalSet, eLocalSet);
     }
 
     public void printResultAndClearSet(){

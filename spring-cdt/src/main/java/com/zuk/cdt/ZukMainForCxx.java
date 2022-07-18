@@ -5,7 +5,7 @@ import com.zuk.cdt.file.function.call.CxxFunctionCallUtil;
 import com.zuk.cdt.file.function.call.FunctionCallDto;
 import com.zuk.cdt.file.CxxFileFrame;
 import com.zuk.cdt.file.function.FileFunctionDto;
-import com.zuk.cdt.file.function.var.CxxFileFunctionVariableVo;
+import com.zuk.cdt.file.function.var.FileFunctionVariableVo;
 import com.zuk.cdt.file.function.var.CxxFunctionVariableUtil;
 import com.zuk.cdt.report.File2CallsReport;
 import com.zuk.cdt.report.File2FuncsReport;
@@ -147,7 +147,7 @@ public class ZukMainForCxx {
                 ZukMainForCxx.recur(e);
 
                 //获取函数中变量集
-                CxxFileFunctionVariableVo fileFunctionVariableVo = CxxFunctionVariableUtil.getFileFunctionVariableVo(IAST_NAME_WITH_IBINDING_SET);
+                FileFunctionVariableVo fileFunctionVariableVo = CxxFunctionVariableUtil.getFileFunctionVariableVo(IAST_NAME_WITH_IBINDING_SET);
                 IAST_NAME_WITH_IBINDING_SET.clear();
 
                 //方法内部调用外部函数集

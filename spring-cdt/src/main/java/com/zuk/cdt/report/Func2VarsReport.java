@@ -1,7 +1,7 @@
 package com.zuk.cdt.report;
 
 import com.zuk.cdt.file.CxxFileFrame;
-import com.zuk.cdt.file.function.var.CxxFunctionVariableDto;
+import com.zuk.cdt.file.function.var.FunctionVariableDto;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
@@ -45,9 +45,9 @@ public class Func2VarsReport implements DoReport {
                 funcInfo.addAttribute("name", functionName);
                 funcInfo.addAttribute("line", String.valueOf(line));
 
-                Set<CxxFunctionVariableDto> classVarSet = cppFuntion.getFileFunctionVariableVo().getClassVariableSet();
-                Set<CxxFunctionVariableDto> globalVarSet = cppFuntion.getFileFunctionVariableVo().getGlobalVariableSet();
-                Set<CxxFunctionVariableDto> localVarSet = cppFuntion.getFileFunctionVariableVo().getLocalVariableSet();
+                Set<FunctionVariableDto> classVarSet = cppFuntion.getFileFunctionVariableVo().getClassVariableSet();
+                Set<FunctionVariableDto> globalVarSet = cppFuntion.getFileFunctionVariableVo().getGlobalVariableSet();
+                Set<FunctionVariableDto> localVarSet = cppFuntion.getFileFunctionVariableVo().getLocalVariableSet();
 
                 classVarSet.stream().forEach(e->{
                     Element element = funcInfo.addElement("VariableInfo");
