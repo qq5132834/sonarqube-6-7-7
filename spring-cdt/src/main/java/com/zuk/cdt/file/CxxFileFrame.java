@@ -1,6 +1,6 @@
 package com.zuk.cdt.file;
 
-import com.zuk.cdt.file.function.CxxFileFunctionDto;
+import com.zuk.cdt.file.function.FileFunctionDto;
 import com.zuk.cdt.file.function.call.FunctionCallDto;
 import com.zuk.cdt.file.function.var.CxxFileFunctionVariableVo;
 
@@ -35,13 +35,13 @@ public class CxxFileFrame {
 
     public static class CxxFuntion {
         //函数基本信息
-        private CxxFileFunctionDto fileFunctionDto;
+        private FileFunctionDto fileFunctionDto;
         //函数中变量信息
         private CxxFileFunctionVariableVo fileFunctionVariableVo;
         //函数调用外部集
         private List<FunctionCallDto> functionCallDtos;
 
-        public CxxFileFunctionDto getFileFunctionDto() {
+        public FileFunctionDto getFileFunctionDto() {
             return fileFunctionDto;
         }
 
@@ -51,7 +51,7 @@ public class CxxFileFrame {
 
         public List<FunctionCallDto> getFunctionCallDtos() { return functionCallDtos; }
 
-        public CxxFuntion setFileFunctionDto(CxxFileFunctionDto fileFunctionDto) {
+        public CxxFuntion setFileFunctionDto(FileFunctionDto fileFunctionDto) {
             this.fileFunctionDto = fileFunctionDto;
             return this;
         }

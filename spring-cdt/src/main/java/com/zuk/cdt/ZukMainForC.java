@@ -2,15 +2,13 @@ package com.zuk.cdt;
 
 import com.zuk.cdt.file.CxxFileFrame;
 import com.zuk.cdt.file.function.CFileFunctionUtil;
-import com.zuk.cdt.file.function.CxxFileFunctionDto;
+import com.zuk.cdt.file.function.FileFunctionDto;
 import com.zuk.cdt.file.function.call.CFunctionCallUtil;
 import com.zuk.cdt.file.function.call.FunctionCallDto;
 import com.zuk.cdt.report.File2CallsReport;
 import org.eclipse.cdt.core.dom.ast.*;
-import org.eclipse.core.runtime.CoreException;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
@@ -74,7 +72,7 @@ public class ZukMainForC {
             List<IASTFunctionDefinition>  iastFunctionDefinitionList = CFileFunctionUtil.getFuncationDefinistion(iastTranslationUnit);
             iastFunctionDefinitionList.stream().forEach(fun -> {
 
-                CxxFileFunctionDto fileFunctionDto = CxxFileFunctionDto.builder()
+                FileFunctionDto fileFunctionDto = FileFunctionDto.builder()
                         .setFunctionName(fun.getDeclarator().getName().toString())
                         .setStartLineNumber(fun.getFileLocation().getStartingLineNumber())
                         .setEndLineNumber(fun.getFileLocation().getEndingLineNumber())

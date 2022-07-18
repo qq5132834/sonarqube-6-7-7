@@ -4,7 +4,7 @@ import com.zuk.cdt.file.function.CxxFileFunctionUtil;
 import com.zuk.cdt.file.function.call.CxxFunctionCallUtil;
 import com.zuk.cdt.file.function.call.FunctionCallDto;
 import com.zuk.cdt.file.CxxFileFrame;
-import com.zuk.cdt.file.function.CxxFileFunctionDto;
+import com.zuk.cdt.file.function.FileFunctionDto;
 import com.zuk.cdt.file.function.var.CxxFileFunctionVariableVo;
 import com.zuk.cdt.file.function.var.CxxFunctionVariableUtil;
 import com.zuk.cdt.report.File2CallsReport;
@@ -136,7 +136,7 @@ public class ZukMainForCxx {
             List<IASTFunctionDefinition> functionDefinitions = CxxFileFunctionUtil.getFuncationDefinistion(iastTranslationUnit);
             functionDefinitions.stream().forEach(e->{
 
-                CxxFileFunctionDto fileFunctionDto = CxxFileFunctionDto.builder()
+                FileFunctionDto fileFunctionDto = FileFunctionDto.builder()
                         .setFunctionName(e.getDeclarator().getName().toString())
                         .setStartLineNumber(e.getFileLocation().getStartingLineNumber())
                         .setEndLineNumber(e.getFileLocation().getEndingLineNumber())
