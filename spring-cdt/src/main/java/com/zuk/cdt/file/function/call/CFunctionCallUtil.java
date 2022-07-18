@@ -3,8 +3,10 @@ package com.zuk.cdt.file.function.call;
 import org.eclipse.cdt.core.dom.IName;
 import org.eclipse.cdt.core.dom.ast.*;
 import org.eclipse.cdt.internal.core.dom.parser.ProblemBinding;
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTFieldReference;
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTIdExpression;
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTName;
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFieldReference;
-import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTIdExpression;
 import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTName;
 
 import java.util.*;
@@ -40,7 +42,7 @@ public class CFunctionCallUtil {
          * 推断CPPASTName为叶子节点。
          */
         FUNCTION_CALL.stream().forEach(e->{
-            System.out.println(e.getFileLocation().getStartingLineNumber() + "," + e.getRawSignature()); checkIBinding(e);
+            System.out.println("\\n" + e.getFileLocation().getStartingLineNumber() + "," + e.getRawSignature()); checkIBinding(e);
             Arrays.stream(e.getChildren()).forEach(e1->{
                 System.out.println("--" + e1.getRawSignature() + ",class:" + e1.getClass().getName()); checkIBinding(e1);
                 Arrays.stream(e1.getChildren()).forEach(e2->{
@@ -66,21 +68,24 @@ public class CFunctionCallUtil {
             IASTNode[] iastNodeChildren = e.getChildren();
             if(iastNodeChildren != null && iastNodeChildren.length > 0){
                 IASTNode iastNodeFirst = iastNodeChildren[0];
-
-                if (iastNodeFirst instanceof CPPASTIdExpression) {
+                System.out.println(iastNodeFirst.getClass().getName());
+                if (iastNodeFirst instanceof CASTIdExpression) {
                     //内部调用，例如：lock(mutex_)
-                    CPPASTIdExpression cppastIdExpression = (CPPASTIdExpression) iastNodeFirst;
-                    IASTNode iastNode = cppastIdExpression.getChildren()[0];
+                    CASTIdExpression castIdExpression = (CASTIdExpression) iastNodeFirst;
+                    IASTNode iastNode = castIdExpression.getChildren()[0];
                     String functionCallName = iastNode.getRawSignature(); //方法调用名称；
                     int functionCallLineNumber = iastNode.getFileLocation().getStartingLineNumber(); //
                     // 方法调用行号
                     //多态暂时采用入参的个数进行区别，将来再优化
                     CxxFunctionCallDto dto = null;
-                    CPPASTName cppastName = new GetCPPASTName(iastNode).getCPPASTName();
-                    if(cppastName != null){
-                        dto = CxxFunctionCallDto.createInstanceByIASTName((IASTName) cppastName);
+                    CASTName castName = new GetCASTName(iastNode).getCASTName();
+                    if(castName != null){
+                        dto = CxxFunctionCallDto.createInstanceByIASTName((IASTName) castName);
                         if(dto == null){
-                            dto = CxxFunctionCallDto.builder().setCallFunctionName(functionCallName).build();
+                            dto = CxxFunctionCallDto.builder()
+                                                .setCallFunctionName(functionCallName)
+                                                .setCallFunctionLineNumber(functionCallLineNumber)
+                                                .build();
                         }
                         DECLARE_VARIABLE_LIST.add(dto);
                         System.out.println();
@@ -88,12 +93,12 @@ public class CFunctionCallUtil {
                     System.out.println();
                 }
 
-                if (iastNodeFirst instanceof CPPASTFieldReference) {
+                if (iastNodeFirst instanceof CASTFieldReference) {
                     //类调用，例如：cache_pool_.get(host_port)
-                    CPPASTFieldReference cppastFieldReference = (CPPASTFieldReference) iastNodeFirst;
-                    int functionCallLineNumber = cppastFieldReference.getChildren()[0].getFileLocation().getStartingLineNumber(); //方法调用行号
-                    String reference = cppastFieldReference.getChildren()[0].getRawSignature(); //引用类变量名称
-                    CPPASTName cppastName = new GetCPPASTName(cppastFieldReference.getChildren()[0]).getCPPASTName();
+                    CASTFieldReference castFieldReference = (CASTFieldReference) iastNodeFirst;
+                    int functionCallLineNumber = castFieldReference.getChildren()[0].getFileLocation().getStartingLineNumber(); //方法调用行号
+                    String reference = castFieldReference.getChildren()[0].getRawSignature(); //引用类变量名称
+                    CASTName cppastName = new GetCASTName(castFieldReference.getChildren()[0]).getCASTName();
                     CxxFunctionCallDto dto = null;
                     if(cppastName != null){
                         //获取作用域，根据作用域
@@ -113,7 +118,7 @@ public class CFunctionCallUtil {
                     }
 
                     if(dto != null){
-                        String callFunctionName = cppastFieldReference.getChildren()[1].getRawSignature();
+                        String callFunctionName = castFieldReference.getChildren()[1].getRawSignature();
                         dto.getBuilder().setCallFunctionName(callFunctionName);
                         DECLARE_VARIABLE_LIST.add(dto);
                     }
@@ -179,21 +184,21 @@ public class CFunctionCallUtil {
     /***
      * 获取作用域
      */
-    private static class GetCPPASTName{
-        private  CPPASTName cppastName;
-        private GetCPPASTName(IASTNode iastNode) {
+    private static class GetCASTName {
+        private CASTName castName;
+        private GetCASTName(IASTNode iastNode) {
             this.searchCPPASTName(iastNode);
         }
         private void searchCPPASTName(IASTNode iastNode){
-            if(iastNode instanceof CPPASTName){
-                this.cppastName = (CPPASTName)iastNode;
+            if(iastNode instanceof CASTName){
+                this.castName = (CASTName)iastNode;
             }
             for (IASTNode n : iastNode.getChildren()) {
                 this.searchCPPASTName(n);
             }
         }
-        private CPPASTName getCPPASTName(){
-            return this.cppastName;
+        private CASTName getCASTName(){
+            return this.castName;
         }
     }
 

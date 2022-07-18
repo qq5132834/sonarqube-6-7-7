@@ -75,6 +75,8 @@ public class CxxFunctionCallDto {
 
         //调用函数名称
         private String callFunctionName;
+        //调用函数的位置
+        private Integer callFunctionLineNumber;
 
         public CxxFunctionCallDto build(){
             return new CxxFunctionCallDto(this);
@@ -105,6 +107,8 @@ public class CxxFunctionCallDto {
             return this;
         }
 
+        public Integer getCallFunctionLineNumber() { return callFunctionLineNumber; }
+
         public Builder setIastFileLocation(IASTFileLocation iastFileLocation) {
             this.iastFileLocation = iastFileLocation;
             this.startLineNumber = iastFileLocation.getStartingLineNumber();
@@ -134,6 +138,11 @@ public class CxxFunctionCallDto {
 
         public Builder setFileName(String fileName) {
             this.fileName = fileName;
+            return this;
+        }
+
+        public Builder setCallFunctionLineNumber(Integer callFunctionLineNumber) {
+            this.callFunctionLineNumber = callFunctionLineNumber;
             return this;
         }
     }

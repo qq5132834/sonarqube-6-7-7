@@ -22,7 +22,7 @@ import java.util.function.Consumer;
 public class ZukMainForC {
 
     public static void main(String[] args) throws Exception {
-        String filepath = "C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\spring-cdt\\src\\main\\resources\\c\\src\\btree1.c";
+        String filepath = "C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\spring-cdt\\src\\main\\resources\\c\\src\\btree.c";
         analyzeFile(filepath);
     }
 
@@ -42,7 +42,7 @@ public class ZukMainForC {
             recur(fun);
 
             List<CxxFunctionCallDto> cxxFunctionCallDtoList = CFunctionCallUtil.getFunctionCall();
-
+            System.out.println();
         });
         return null;
     }
