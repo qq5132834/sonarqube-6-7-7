@@ -91,7 +91,7 @@ public class ZukMainForC {
 
                 recur(fun);
 
-                List<FunctionCallDto> cxxFunctionCallDtoList = CFunctionCallUtil.getFunctionCall();
+                List<FunctionCallDto> cFunctionCallDtoList = CFunctionCallUtil.getFunctionCall();
 
                 FileFunctionVariableVo fileFunctionVariableVo = CFunctionVariableUtil.getFileFunctionVariableVo(IAST_NAME_WITH_IBINDING_SET);
                 IAST_NAME_WITH_IBINDING_SET.clear();
@@ -99,7 +99,7 @@ public class ZukMainForC {
 
                 CxxFileFrame.CxxFuntion cppFuntion = new CxxFileFrame.CxxFuntion();
                 cppFuntion.setFileFunctionDto(fileFunctionDto);
-                cppFuntion.setFunctionCallDtos(cxxFunctionCallDtoList);
+                cppFuntion.setFunctionCallDtos(cFunctionCallDtoList);
                 cppFuntion.setFileFunctionVariableVo(fileFunctionVariableVo);
 
                 //
