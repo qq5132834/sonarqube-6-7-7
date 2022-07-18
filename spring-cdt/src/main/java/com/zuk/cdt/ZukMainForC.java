@@ -58,9 +58,16 @@ public class ZukMainForC {
         //
         String fileDir = "C:\\Users\\51328\\Desktop\\sonarqube-6.7.7\\sonarqube-6.7.7\\spring-cdt\\src\\main\\resources\\c\\src";
         recus(new File(fileDir));
-        FILE_SET.parallelStream().forEach(file -> {
+        long startTime = System.currentTimeMillis();
+//        FILE_SET.parallelStream().forEach(file -> {
+//            analyzeFile(file);
+//        });
+
+        FILE_SET.stream().forEach(file -> {
             analyzeFile(file);
         });
+        long endTime = System.currentTimeMillis();
+        System.out.println("总耗时:" + (endTime-startTime)  + " ms");
 
         new File2CallsReport().report(CPP_FILE_FRAME_MAP);
         new File2FuncsReport().report(CPP_FILE_FRAME_MAP);
