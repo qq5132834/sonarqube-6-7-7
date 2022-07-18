@@ -69,7 +69,7 @@ public class FunctionCallDto {
     //
     public static class Builder {
 
-        //作用域
+        //被调函数信息
         private EScopeKind eScopeKind; //作用域类型
         private IASTFileLocation iastFileLocation; //文件路径
         private String scopeSimpleName; //作用域名称
