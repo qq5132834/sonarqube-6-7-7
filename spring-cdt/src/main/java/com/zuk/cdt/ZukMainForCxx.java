@@ -2,7 +2,7 @@ package com.zuk.cdt;
 
 import com.zuk.cdt.file.function.CxxFileFunctionUtil;
 import com.zuk.cdt.file.function.call.CxxFunctionCallUtil;
-import com.zuk.cdt.file.function.call.CxxFunctionCallDto;
+import com.zuk.cdt.file.function.call.FunctionCallDto;
 import com.zuk.cdt.file.CxxFileFrame;
 import com.zuk.cdt.file.function.CxxFileFunctionDto;
 import com.zuk.cdt.file.function.var.CxxFileFunctionVariableVo;
@@ -150,7 +150,7 @@ public class ZukMainForCxx {
                 IAST_NAME_WITH_IBINDING_SET.clear();
 
                 //方法内部调用外部函数集
-                List<CxxFunctionCallDto> declareVariableDtos = CxxFunctionCallUtil.getFunctionCall();
+                List<FunctionCallDto> declareVariableDtos = CxxFunctionCallUtil.getFunctionCall();
 
                 CxxFileFrame.CxxFuntion cppFuntion = new CxxFileFrame.CxxFuntion();
                 cppFuntion.setFileFunctionDto(fileFunctionDto);

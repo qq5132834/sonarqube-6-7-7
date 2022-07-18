@@ -6,8 +6,6 @@ import org.eclipse.cdt.internal.core.dom.parser.ProblemBinding;
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTFieldReference;
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTIdExpression;
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTName;
-import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTFieldReference;
-import org.eclipse.cdt.internal.core.dom.parser.cpp.CPPASTName;
 
 import java.util.*;
 
@@ -22,7 +20,7 @@ public class CFunctionCallUtil {
     private static List<IASTNode> FUNCTION_DEFINITION = new ArrayList<>();
     private static List<IASTNode> FUNCTION_CALL = new ArrayList<>();
     private static List<IASTNode> FUNCTION_DECLARATOR = new ArrayList<>();
-    private static List<CxxFunctionCallDto> DECLARE_VARIABLE_LIST = new ArrayList<>();
+    private static List<FunctionCallDto> DECLARE_VARIABLE_LIST = new ArrayList<>();
 
     public static void funcationCall(IASTNode iastNode){
         //CLASS_SET.add(iastNode.getClass());
@@ -77,12 +75,12 @@ public class CFunctionCallUtil {
                     int functionCallLineNumber = iastNode.getFileLocation().getStartingLineNumber(); //
                     // 方法调用行号
                     //多态暂时采用入参的个数进行区别，将来再优化
-                    CxxFunctionCallDto dto = null;
+                    FunctionCallDto dto = null;
                     CASTName castName = new GetCASTName(iastNode).getCASTName();
                     if(castName != null){
-                        dto = CxxFunctionCallDto.createInstanceByIASTName((IASTName) castName);
+                        dto = FunctionCallDto.createInstanceByIASTName((IASTName) castName);
                         if(dto == null){
-                            dto = CxxFunctionCallDto.builder()
+                            dto = FunctionCallDto.builder()
                                                 .setCallFunctionName(functionCallName)
                                                 .setCallFunctionLineNumber(functionCallLineNumber)
                                                 .build();
@@ -99,10 +97,10 @@ public class CFunctionCallUtil {
                     int functionCallLineNumber = castFieldReference.getChildren()[0].getFileLocation().getStartingLineNumber(); //方法调用行号
                     String reference = castFieldReference.getChildren()[0].getRawSignature(); //引用类变量名称
                     CASTName cppastName = new GetCASTName(castFieldReference.getChildren()[0]).getCASTName();
-                    CxxFunctionCallDto dto = null;
+                    FunctionCallDto dto = null;
                     if(cppastName != null){
                         //获取作用域，根据作用域
-                        dto = CxxFunctionCallDto.createInstanceByIASTName((IASTName) cppastName);
+                        dto = FunctionCallDto.createInstanceByIASTName((IASTName) cppastName);
                         if(dto != null){
                             EScopeKind eScopeKind = dto.getBuilder().geteScopeKind();
                             String simpleName = dto.getBuilder().getScopeSimpleName();
@@ -151,10 +149,10 @@ public class CFunctionCallUtil {
         }
     }
 
-    public static List<CxxFunctionCallDto> getFunctionCall(){
+    public static List<FunctionCallDto> getFunctionCall(){
         try {
             printResultAndClearSet();
-            List<CxxFunctionCallDto> list = new ArrayList<>();
+            List<FunctionCallDto> list = new ArrayList<>();
             list.addAll(DECLARE_VARIABLE_LIST);
             return list;
         }

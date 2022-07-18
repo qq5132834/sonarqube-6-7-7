@@ -3,15 +3,8 @@ package com.zuk.cdt;
 import com.zuk.cdt.file.CxxFileFrame;
 import com.zuk.cdt.file.function.CFileFunctionUtil;
 import com.zuk.cdt.file.function.call.CFunctionCallUtil;
-import com.zuk.cdt.file.function.call.CxxFunctionCallDto;
-import com.zuk.cdt.file.function.call.CxxFunctionCallUtil;
-import com.zuk.cdt.file.function.var.CxxFunctionVariableUtil;
-import org.eclipse.cdt.core.dom.IName;
+import com.zuk.cdt.file.function.call.FunctionCallDto;
 import org.eclipse.cdt.core.dom.ast.*;
-import org.eclipse.cdt.internal.core.dom.parser.c.CASTFieldReference;
-import org.eclipse.cdt.internal.core.dom.parser.c.CASTFunctionCallExpression;
-import org.eclipse.cdt.internal.core.dom.parser.c.CField;
-import org.eclipse.cdt.internal.core.dom.parser.c.CVariable;
 import org.eclipse.core.runtime.CoreException;
 
 import java.io.IOException;
@@ -41,7 +34,7 @@ public class ZukMainForC {
 
             recur(fun);
 
-            List<CxxFunctionCallDto> cxxFunctionCallDtoList = CFunctionCallUtil.getFunctionCall();
+            List<FunctionCallDto> cxxFunctionCallDtoList = CFunctionCallUtil.getFunctionCall();
             System.out.println();
         });
         return null;

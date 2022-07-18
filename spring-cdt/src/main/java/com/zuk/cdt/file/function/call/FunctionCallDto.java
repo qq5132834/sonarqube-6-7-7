@@ -5,11 +5,14 @@ import org.eclipse.cdt.core.dom.IName;
 import org.eclipse.cdt.core.dom.ast.*;
 import org.eclipse.cdt.internal.core.dom.parser.ProblemBinding;
 
-public class CxxFunctionCallDto {
+/***
+ * 方法中函数调用dto
+ */
+public class FunctionCallDto {
 
     private Builder builder;
 
-    private CxxFunctionCallDto(Builder builder){
+    private FunctionCallDto(Builder builder){
         this.builder = builder;
     }
 
@@ -17,7 +20,7 @@ public class CxxFunctionCallDto {
 
     public static Builder builder(){return new Builder();}
 
-    public static CxxFunctionCallDto createInstanceByIASTName(@NotNull IASTName iastName){
+    public static FunctionCallDto createInstanceByIASTName(@NotNull IASTName iastName){
         IBinding iBinding = iastName.resolveBinding();
         if(!(iBinding instanceof ProblemBinding)){
             try {
@@ -26,7 +29,7 @@ public class CxxFunctionCallDto {
                 if(iName.getFileLocation() == null){
                     System.out.println("");
                 }
-                return CxxFunctionCallDto.builder()
+                return FunctionCallDto.builder()
                         .setScopeKind(iScope.getKind())
                         .setScopeSimpleName(new String(iName.getSimpleID()))
                         .setIastFileLocation(iastName.getFileLocation())
@@ -78,8 +81,8 @@ public class CxxFunctionCallDto {
         //调用函数的位置
         private Integer callFunctionLineNumber;
 
-        public CxxFunctionCallDto build(){
-            return new CxxFunctionCallDto(this);
+        public FunctionCallDto build(){
+            return new FunctionCallDto(this);
         }
 
         public EScopeKind geteScopeKind() {
