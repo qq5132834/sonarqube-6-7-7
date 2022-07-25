@@ -24,6 +24,1014 @@
             <version>4.9</version>
         </dependency>
 
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft1</artifactId>
+            <version>1</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.pldt.mpi.fortran_5.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft2</artifactId>
+            <version>2</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.etfw.feedback.perfsuite_1.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft3</artifactId>
+            <version>3</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rm.lml.da_1.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft4</artifactId>
+            <version>4</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.core.source_8.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft5</artifactId>
+            <version>5</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.linux_9.1.3.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft6</artifactId>
+            <version>6</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.etfw.tau.selinstfort_1.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft7</artifactId>
+            <version>7</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rm.slurm.help_1.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft8</artifactId>
+            <version>8</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.photran.core.xlf_9.0.0.201708300154.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft9</artifactId>
+            <version>9</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rm.lml.monitor.ui.source_2.1.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft10</artifactId>
+            <version>10</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.etfw.parallel_2.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft11</artifactId>
+            <version>11</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rm.jaxb.control.ui.source_2.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft12</artifactId>
+            <version>12</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rm.lml.monitor.core_2.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft13</artifactId>
+            <version>13</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.photran.managedbuilder.intel.ui_9.0.0.201708300154.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft14</artifactId>
+            <version>14</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.etfw.feedback_6.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft15</artifactId>
+            <version>15</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rm.ibm.platform.lsf.ui_1.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft16</artifactId>
+            <version>16</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.debug.core.source_7.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft17</artifactId>
+            <version>17</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.etfw.toolopts_5.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft18</artifactId>
+            <version>18</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rm.lml.monitor.ui_2.1.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft19</artifactId>
+            <version>19</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rdt.sync.cdt.core_1.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft20</artifactId>
+            <version>20</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.etfw.jaxb_1.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft21</artifactId>
+            <version>21</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.core.jobs_3.7.0.v20150330-2103.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft22</artifactId>
+            <version>22</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.cdt.compilers.core_6.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft23</artifactId>
+            <version>23</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.core_8.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft24</artifactId>
+            <version>24</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.etfw.tau.ui_1.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft25</artifactId>
+            <version>25</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp_9.1.3.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft26</artifactId>
+            <version>26</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.debug.sdm.core_7.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft27</artifactId>
+            <version>27</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.ems.core_3.1.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft28</artifactId>
+            <version>28</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.debug.ui_5.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft29</artifactId>
+            <version>29</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.pldt.doc.user_6.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft30</artifactId>
+            <version>30</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rm.lml.core_2.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft31</artifactId>
+            <version>31</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rm.jaxb.ui_1.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft32</artifactId>
+            <version>32</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.doc.isv_9.1.3.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft33</artifactId>
+            <version>33</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.ems.core.source_3.1.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft34</artifactId>
+            <version>34</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rm.jaxb.core.source_1.2.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft35</artifactId>
+            <version>35</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rdt.sync.git.ui_1.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft36</artifactId>
+            <version>36</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rm.ibm.pe.ui_1.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft37</artifactId>
+            <version>37</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rdt.sync.fortran.ui_1.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft38</artifactId>
+            <version>38</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rm.jaxb.core_1.2.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft39</artifactId>
+            <version>39</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.launch_7.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft40</artifactId>
+            <version>40</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.equinox.registry_3.6.0.v20150318-1503.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft41</artifactId>
+            <version>41</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.pldt.openacc.core_7.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft42</artifactId>
+            <version>42</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.etfw.tau.perfdmf_3.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft43</artifactId>
+            <version>43</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rm.ibm.ll.doc.user_4.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft44</artifactId>
+            <version>44</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rm.lml.monitor.core.source_2.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft45</artifactId>
+            <version>45</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.proxy_9.1.3.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft46</artifactId>
+            <version>46</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.photran.core.intel_9.0.0.201708300154.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft47</artifactId>
+            <version>47</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rm.ibm.pe.doc.user_5.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft48</artifactId>
+            <version>48</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.ui_7.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft49</artifactId>
+            <version>49</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/com.ibm.icu_54.1.1.v201501272100.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft50</artifactId>
+            <version>50</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.osgi_3.10.102.v20160118-1700.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft51</artifactId>
+            <version>51</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rm.jaxb.control.core_2.1.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft52</artifactId>
+            <version>52</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.pldt.mpi.analysis.cdt_6.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft53</artifactId>
+            <version>53</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rdt.sync.ui_2.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft54</artifactId>
+            <version>54</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rm.lml.da.server.source_2.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft55</artifactId>
+            <version>55</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.ems.ui_3.1.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft56</artifactId>
+            <version>56</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rm.lml.da.server_2.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft57</artifactId>
+            <version>57</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.gem_1.3.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft58</artifactId>
+            <version>58</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rm.jaxb.control.core.source_2.1.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft59</artifactId>
+            <version>59</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.etfw.feedback.perfsuite.doc.user_1.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft60</artifactId>
+            <version>60</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.pldt.upc_6.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft61</artifactId>
+            <version>61</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.pldt.wizards_6.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft62</artifactId>
+            <version>62</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.sci_9.1.3.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft63</artifactId>
+            <version>63</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.etfw.tau.selinst_1.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft64</artifactId>
+            <version>64</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.photran.core_9.0.0.201708300154.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft65</artifactId>
+            <version>65</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.aix_9.1.3.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft66</artifactId>
+            <version>66</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.pldt.openshmem_6.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft67</artifactId>
+            <version>67</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.macosx_9.1.3.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft68</artifactId>
+            <version>68</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rdt.sync.cdt.ui_1.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft69</artifactId>
+            <version>69</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.equinox.common_3.7.0.v20150402-1709.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft70</artifactId>
+            <version>70</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.photran.doc.user_9.0.0.201708300154.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft71</artifactId>
+            <version>71</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.photran.managedbuilder.xlf.ui_9.0.0.201708300154.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft72</artifactId>
+            <version>72</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.etfw.launch_1.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft73</artifactId>
+            <version>73</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.etfw_7.1.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft74</artifactId>
+            <version>74</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.proxy.protocol_6.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft75</artifactId>
+            <version>75</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.gem.help_1.3.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft76</artifactId>
+            <version>76</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.core.contenttype_3.5.0.v20150421-2214.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft77</artifactId>
+            <version>77</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.core.runtime_3.11.1.v20150903-1804.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft78</artifactId>
+            <version>78</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rm.ibm.platform.lsf.doc.user_1.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft79</artifactId>
+            <version>79</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.debug.sdm_9.1.3.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft80</artifactId>
+            <version>80</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.photran.cdtinterface.vpg_9.0.0.201708300154.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft81</artifactId>
+            <version>81</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.cdt.compilers.core.source_6.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft82</artifactId>
+            <version>82</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.doc.user_9.1.3.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft83</artifactId>
+            <version>83</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rm.jaxb.ui.source_1.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft84</artifactId>
+            <version>84</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.pldt.common_6.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft85</artifactId>
+            <version>85</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.pldt.mpi.core_6.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft86</artifactId>
+            <version>86</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.photran.cdtinterface_9.0.0.201708300154.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft87</artifactId>
+            <version>87</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.photran.ui.vpg.preprocessor.c_9.0.0.201708300154.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft88</artifactId>
+            <version>88</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rm.jaxb.doc.user_1.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft89</artifactId>
+            <version>89</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.etfw.tau_1.0.1.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft90</artifactId>
+            <version>90</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.debug.ui.source_5.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft91</artifactId>
+            <version>91</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.equinox.preferences_3.5.300.v20150408-1437.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft92</artifactId>
+            <version>92</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.pldt.openmp.analysis_6.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft93</artifactId>
+            <version>93</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.photran.core.vpg_9.0.0.201708300154.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft94</artifactId>
+            <version>94</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rm.jaxb.configs_1.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft95</artifactId>
+            <version>95</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.photran.ui_9.0.0.201708300154.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft96</artifactId>
+            <version>96</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.remote.server.core_3.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft97</artifactId>
+            <version>97</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.photran.core.vpg.preprocessor.c_9.0.0.201708300154.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft98</artifactId>
+            <version>98</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.pldt.openacc.ui_7.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft99</artifactId>
+            <version>99</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.utils_9.1.3.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft100</artifactId>
+            <version>100</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rm.jaxb.control.ui_2.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft101</artifactId>
+            <version>101</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.pldt.openmp.ui.pv_6.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft102</artifactId>
+            <version>102</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.core.resources_3.10.1.v20150725-1910.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft103</artifactId>
+            <version>103</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.etfw.doc.user_1.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft104</artifactId>
+            <version>104</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rdt.sync.core_5.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft105</artifactId>
+            <version>105</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.etfw.tau.papiselect_4.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft106</artifactId>
+            <version>106</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.pldt.openmp.core_6.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft107</artifactId>
+            <version>107</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.pldt.openmp.fortran_5.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft108</artifactId>
+            <version>108</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.ems.ui.source_3.1.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft109</artifactId>
+            <version>109</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.debug.core_7.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft110</artifactId>
+            <version>110</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.photran.managedbuilder.ui_9.0.0.201708300154.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft111</artifactId>
+            <version>111</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.pldt.openacc.fortran_6.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft112</artifactId>
+            <version>112</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rm.lml.ui.source_2.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft113</artifactId>
+            <version>113</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rm.lml.ui_2.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft114</artifactId>
+            <version>114</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.remote.terminal_2.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft115</artifactId>
+            <version>115</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.proxy.protocol.source_6.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft116</artifactId>
+            <version>116</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rm.lml.core.source_2.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft117</artifactId>
+            <version>117</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.photran.managedbuilder.gnu.ui_9.0.0.201708300154.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft118</artifactId>
+            <version>118</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rdt.sync.git.core_2.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft119</artifactId>
+            <version>119</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rm.jaxb.doc.isv_1.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft120</artifactId>
+            <version>120</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.photran.ui.vpg_9.0.0.201708300154.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft121</artifactId>
+            <version>121</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rm.jaxb.contrib_1.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft122</artifactId>
+            <version>122</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.ui.source_7.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft123</artifactId>
+            <version>123</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.pldt.mpi.analysis_6.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft124</artifactId>
+            <version>124</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.launch.source_7.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft125</artifactId>
+            <version>125</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.rm.ibm.ll.ui_1.0.0.201708300222.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ft</groupId>
+            <artifactId>ft126</artifactId>
+            <version>126</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/lib/org.eclipse.ptp.debug.sdm.ui_5.0.0.201708300222.jar</systemPath>
+        </dependency>
+
     </dependencies>
 
 
